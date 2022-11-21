@@ -2,13 +2,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  final emailController = TextEditingController();
+
+  final passwordController = TextEditingController();
   LoginPage({
     Key? key,
   }) : super(key: key);
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  var errorMassge = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,33 +37,39 @@ class LoginPage extends StatelessWidget {
                   width: 150,
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Text(
                   'LOGOWANIE',
                   style: GoogleFonts.kanit(fontSize: 16),
                 ),
                 TextField(
-                  controller: emailController,
+                  controller: widget.emailController,
                   decoration: const InputDecoration(hintText: 'E-mail'),
                 ),
                 TextField(
-                  controller: passwordController,
+                  controller: widget.passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(hintText: 'Hasło'),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
+                ),
+                Text(errorMassge),
+                SizedBox(
+                  height: 10,
                 ),
                 ElevatedButton(
                   onPressed: () async {
                     try {
                       await FirebaseAuth.instance.signInWithEmailAndPassword(
-                        email: emailController.text,
-                        password: passwordController.text,
+                        email: widget.emailController.text,
+                        password: widget.passwordController.text,
                       );
                     } catch (error) {
-                      print(error);
+                      setState(() {
+                        errorMassge = error.toString();
+                      });
                     }
                   },
                   child: const Text('Zaloguj się'),
