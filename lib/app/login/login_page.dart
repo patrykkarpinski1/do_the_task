@@ -16,6 +16,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   var errorMassge = '';
+  var isCreatingAccount = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,18 +31,19 @@ class _LoginPageState extends State<LoginPage> {
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
+            child: ListView(
               children: [
-                const Image(
-                  image: AssetImage('images/checklist.webp'),
-                  width: 150,
-                ),
+                const CircleAvatar(
+                    backgroundImage: AssetImage('images/checklist.webp'),
+                    radius: 150),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
-                Text(
-                  'LOGOWANIE',
-                  style: GoogleFonts.kanit(fontSize: 16),
+                Center(
+                  child: Text(
+                    isCreatingAccount == true ? 'REJSTRACJA' : 'LOGOWANIE',
+                    style: GoogleFonts.kanit(fontSize: 16),
+                  ),
                 ),
                 TextField(
                   controller: widget.emailController,
@@ -56,11 +58,37 @@ class _LoginPageState extends State<LoginPage> {
                   height: 10,
                 ),
                 Text(errorMassge),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 ElevatedButton(
                   onPressed: () async {
+                    if (isCreatingAccount == true) {
+                      //rejstracja
+                      try {
+                        await FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                          email: widget.emailController.text,
+                          password: widget.passwordController.text,
+                        );
+                      } catch (error) {
+                        setState(() {
+                          errorMassge = error.toString();
+                        });
+                      }
+                    } else {
+                      //logowanie
+                      try {
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          email: widget.emailController.text,
+                          password: widget.passwordController.text,
+                        );
+                      } catch (error) {
+                        setState(() {
+                          errorMassge = error.toString();
+                        });
+                      }
+                    }
                     try {
                       await FirebaseAuth.instance.signInWithEmailAndPassword(
                         email: widget.emailController.text,
@@ -72,8 +100,32 @@ class _LoginPageState extends State<LoginPage> {
                       });
                     }
                   },
-                  child: const Text('Zaloguj się'),
-                )
+                  child: Text(
+                    isCreatingAccount == true
+                        ? 'Zarejestruj się'
+                        : 'Zaloguj się',
+                  ),
+                ),
+                if (isCreatingAccount == false) ...[
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        isCreatingAccount = true;
+                      });
+                    },
+                    child: const Text('Utwórz konto'),
+                  ),
+                ],
+                if (isCreatingAccount == true) ...[
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        isCreatingAccount = false;
+                      });
+                    },
+                    child: const Text('Masz już konto?'),
+                  ),
+                ],
               ],
             ),
           ),
