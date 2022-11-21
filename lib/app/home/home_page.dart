@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:modyfikacja_aplikacja/app/home/check/check_page_content.dart';
+import 'package:modyfikacja_aplikacja/app/home/my_account/my_account_page_content.dart';
+import 'package:modyfikacja_aplikacja/app/home/settings/setting_page_content.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -20,29 +23,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Builder(builder: (context) {
         if (currentIndex == 1) {
-          return const Center(
-            child: Text('jeden'),
-          );
+          return const CheckPageContent();
         }
         if (currentIndex == 2) {
-          return const Center(
-            child: Text('dwa'),
-          );
+          return const SettingsPageContent();
         }
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('jesteś zalogowany jako ${widget.user.email}'),
-              ElevatedButton(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                },
-                child: const Text('Wyloguj się'),
-              ),
-            ],
-          ),
-        );
+        return MyAccountPageContent(widget: widget);
       }),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,

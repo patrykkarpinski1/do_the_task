@@ -29,6 +29,13 @@
             {
               "client_id": "1016212216569-704ua16sdhlfcpl0fi5otg1io0luubgf.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1016212216569-ht3pomhpl0dscoj0m17p8mj8cf2mc7om.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.patrykkarpinski.modyfikacjaAplikacja"
+              }
             }
           ]
         }
