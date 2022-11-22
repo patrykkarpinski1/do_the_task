@@ -21,7 +21,7 @@ class MyAccountPageContent extends StatelessWidget {
             onPressed: () {
               FirebaseAuth.instance.signOut();
             },
-            child: const Text('Wyloguj się'),
+            child: const Text('Logout'),
           ),
         ],
       ),

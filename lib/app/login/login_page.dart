@@ -24,8 +24,10 @@ class _LoginPageState extends State<LoginPage> {
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 1, 100, 146),
           title: Text(
-            'TWÓJ CODZIENNY PLANER',
-            style: GoogleFonts.rubikBeastly(),
+            'YOURS TASKS LIST',
+            style: GoogleFonts.rubikBeastly(
+              color: const Color.fromARGB(255, 247, 143, 15),
+            ),
           ),
         ),
         body: Center(
@@ -41,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Center(
                   child: Text(
-                    isCreatingAccount == true ? 'REJSTRACJA' : 'LOGOWANIE',
+                    isCreatingAccount == true ? 'REGISTRATION' : 'LOGIN',
                     style: GoogleFonts.kanit(fontSize: 16),
                   ),
                 ),
@@ -52,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                 TextField(
                   controller: widget.passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(hintText: 'Hasło'),
+                  decoration: const InputDecoration(hintText: 'Password'),
                 ),
                 const SizedBox(
                   height: 10,
@@ -62,6 +64,10 @@ class _LoginPageState extends State<LoginPage> {
                   height: 10,
                 ),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(15),
+                    backgroundColor: const Color.fromARGB(255, 1, 100, 146),
+                  ),
                   onPressed: () async {
                     if (isCreatingAccount == true) {
                       //rejstracja
@@ -101,9 +107,10 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   },
                   child: Text(
-                    isCreatingAccount == true
-                        ? 'Zarejestruj się'
-                        : 'Zaloguj się',
+                    isCreatingAccount == true ? 'Register' : 'Login',
+                    style: GoogleFonts.arimo(
+                        fontWeight: FontWeight.bold,
+                        color: const Color.fromARGB(255, 247, 143, 15)),
                   ),
                 ),
                 if (isCreatingAccount == false) ...[
@@ -113,7 +120,11 @@ class _LoginPageState extends State<LoginPage> {
                         isCreatingAccount = true;
                       });
                     },
-                    child: const Text('Utwórz konto'),
+                    child: Text(
+                      'Create Account',
+                      style: GoogleFonts.arimo(
+                          fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
                   ),
                 ],
                 if (isCreatingAccount == true) ...[
@@ -123,7 +134,11 @@ class _LoginPageState extends State<LoginPage> {
                         isCreatingAccount = false;
                       });
                     },
-                    child: const Text('Masz już konto?'),
+                    child: Text(
+                      'Do you have an account?',
+                      style: GoogleFonts.arimo(
+                          fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
                   ),
                 ],
               ],

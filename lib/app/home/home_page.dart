@@ -31,6 +31,9 @@ class _HomePageState extends State<HomePage> {
         return MyAccountPageContent(widget: widget);
       }),
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: const Color.fromARGB(255, 247, 143, 15),
+        unselectedItemColor: const Color.fromARGB(255, 172, 149, 149),
+        backgroundColor: const Color.fromARGB(255, 1, 100, 146),
         currentIndex: currentIndex,
         onTap: (newIndex) {
           setState(() {
@@ -39,10 +42,20 @@ class _HomePageState extends State<HomePage> {
         },
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.person), label: 'Moje konto'),
-          BottomNavigationBarItem(icon: Icon(Icons.check), label: 'Zadania'),
+              icon: Icon(
+                Icons.person,
+              ),
+              label: 'My Account'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: 'Ustawienia'),
+              icon: Icon(
+                Icons.check,
+              ),
+              label: 'Check'),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.settings,
+              ),
+              label: 'Settings'),
         ],
       ),
     );
