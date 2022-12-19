@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/app/home/check/category_page/bills_page.dart';
-import 'package:modyfikacja_aplikacja/app/home/check/category_page/family_page.dart';
-import 'package:modyfikacja_aplikacja/app/home/check/category_page/fun_page.dart';
-import 'package:modyfikacja_aplikacja/app/home/check/category_page/house_page.dart';
-import 'package:modyfikacja_aplikacja/app/home/check/category_page/learn_page.dart';
-import 'package:modyfikacja_aplikacja/app/home/check/category_page/other_page.dart';
-import 'package:modyfikacja_aplikacja/app/home/check/category_page/shopping_page.dart';
-import 'package:modyfikacja_aplikacja/app/home/check/category_page/trainig_page.dart';
-import 'package:modyfikacja_aplikacja/app/home/check/category_page/work_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/check/category_page/bills_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/check/category_page/family_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/check/category_page/fun_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/check/category_page/house_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/check/category_page/learn_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/check/category_page/other_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/check/category_page/shopping_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/check/category_page/trainig_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/check/category_page/work_page.dart';
 
 class CheckPageContent extends StatelessWidget {
   const CheckPageContent({
