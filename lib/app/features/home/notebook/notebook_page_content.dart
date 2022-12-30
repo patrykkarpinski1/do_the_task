@@ -17,7 +17,7 @@ class NotebookPageContent extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (_) => const UserPage(),
+                  builder: (_) => const UserProfile(),
                 ),
               );
             },

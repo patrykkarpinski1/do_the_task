@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:modyfikacja_aplikacja/app/features/auth/pages/user_profile.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/check/category_pages/bills_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/check/category_pages/family_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/check/category_pages/fun_page.dart';
@@ -38,6 +39,21 @@ class CheckPageContent extends StatelessWidget {
                   color: const Color.fromARGB(255, 247, 143, 15),
                 ),
               ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const UserProfile(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.person,
+                    color: Color.fromARGB(255, 247, 143, 15),
+                  ),
+                ),
+              ],
             ),
             body: Padding(
               padding: const EdgeInsets.all(20.0),

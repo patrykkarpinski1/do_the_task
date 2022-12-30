@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modyfikacja_aplikacja/app/features/auth/pages/user_profile.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/home_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,7 +18,13 @@ class AddTasksPageContent extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const UserProfile(),
+                ),
+              );
+            },
             icon: const Icon(
               Icons.person,
               color: Color.fromARGB(255, 247, 143, 15),

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/check/check_page_content.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/add_tasks/add_tasks_page_content.dart';
