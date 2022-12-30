@@ -1,17 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/check/check_page_content.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/my_account/my_account_page_content.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/settings/setting_page_content.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/add_tasks/add_tasks_page_content.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/notebook/notebook_page_content.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
     Key? key,
-    required this.user,
   }) : super(key: key);
-
-  final User user;
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -26,9 +22,9 @@ class _HomePageState extends State<HomePage> {
           return const CheckPageContent();
         }
         if (currentIndex == 2) {
-          return const SettingsPageContent();
+          return const NotebookPageContent();
         }
-        return MyAccountPageContent(widget: widget);
+        return AddTasksPageContent(widget: widget);
       }),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: const Color.fromARGB(255, 247, 143, 15),
@@ -43,9 +39,9 @@ class _HomePageState extends State<HomePage> {
         items: const [
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.person,
+                Icons.task,
               ),
-              label: 'My Account'),
+              label: 'Add Tasks'),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.check,
@@ -53,9 +49,9 @@ class _HomePageState extends State<HomePage> {
               label: 'Check'),
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.settings,
+                Icons.note,
               ),
-              label: 'Settings'),
+              label: 'Notebook'),
         ],
       ),
     );

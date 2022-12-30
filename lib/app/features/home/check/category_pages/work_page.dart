@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:modyfikacja_aplikacja/app/features/add/page/add_page.dart';
 
 class WorkPage extends StatelessWidget {
   const WorkPage({
@@ -50,7 +51,13 @@ class WorkPage extends StatelessWidget {
           Icons.add,
           color: Color.fromARGB(255, 247, 143, 15),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => const AddPage(),
+            ),
+          );
+        },
       ),
     );
   }
