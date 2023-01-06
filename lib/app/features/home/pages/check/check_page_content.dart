@@ -2,15 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/features/auth/pages/user_profile.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/check/category_pages/bills_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/check/category_pages/family_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/check/category_pages/fun_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/check/category_pages/house_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/check/category_pages/learn_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/check/category_pages/other_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/check/category_pages/shopping_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/check/category_pages/trainig_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/check/category_pages/work_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/bills_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/family_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/fun_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/house_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/learn_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/other_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/shopping_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/trainig_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/work_page.dart';
 
 class CheckPageContent extends StatelessWidget {
   const CheckPageContent({

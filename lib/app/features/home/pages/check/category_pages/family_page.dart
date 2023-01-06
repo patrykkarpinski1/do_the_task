@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/app/features/add/page/add_page.dart';
 
-class WorkPage extends StatelessWidget {
-  const WorkPage({
+class FamilyPage extends StatelessWidget {
+  const FamilyPage({
     Key? key,
   }) : super(key: key);
 
@@ -23,7 +22,7 @@ class WorkPage extends StatelessWidget {
         ),
         backgroundColor: const Color.fromARGB(255, 1, 100, 146),
         title: Text(
-          'WORK',
+          'FAMILY',
           style: GoogleFonts.rubikBeastly(
             color: const Color.fromARGB(255, 247, 143, 15),
           ),
@@ -44,20 +43,6 @@ class WorkPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 1, 100, 146),
-        child: const Icon(
-          Icons.add,
-          color: Color.fromARGB(255, 247, 143, 15),
-        ),
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => const AddPage(),
-            ),
-          );
-        },
       ),
     );
   }

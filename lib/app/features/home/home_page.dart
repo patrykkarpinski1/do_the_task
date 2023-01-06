@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/check/check_page_content.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/add_tasks/add_tasks_page_content.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/notebook/notebook_page_content.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/check_page_content.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/add_tasks/add_tasks_page_content.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/notebook/pages/notebook_page_content.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
         if (currentIndex == 2) {
           return const NotebookPageContent();
         }
-        return AddTasksPageContent(widget: widget);
+        return const AddTasksPageContent();
       }),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: const Color.fromARGB(255, 247, 143, 15),

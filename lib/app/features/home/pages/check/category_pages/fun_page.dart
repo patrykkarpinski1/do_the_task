@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class FamilyPage extends StatelessWidget {
-  const FamilyPage({
+class FunPage extends StatelessWidget {
+  const FunPage({
     Key? key,
   }) : super(key: key);
 
@@ -22,7 +22,7 @@ class FamilyPage extends StatelessWidget {
         ),
         backgroundColor: const Color.fromARGB(255, 1, 100, 146),
         title: Text(
-          'FAMILY',
+          'ENTERTAINMENT',
           style: GoogleFonts.rubikBeastly(
             color: const Color.fromARGB(255, 247, 143, 15),
           ),
@@ -43,14 +43,6 @@ class FamilyPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 1, 100, 146),
-        child: const Icon(
-          Icons.add,
-          color: Color.fromARGB(255, 247, 143, 15),
-        ),
-        onPressed: () {},
       ),
     );
   }
