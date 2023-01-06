@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/features/auth/pages/user_profile.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notebook/cubit/notebook_cubit.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/notebook/pages/add_notes_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/notebook/pages/add_notes_page/add_notes_page.dart';
 
 class NotebookPageContent extends StatelessWidget {
   const NotebookPageContent({
@@ -72,6 +72,7 @@ class NotebookPageContent extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 1, 100, 146),
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -80,7 +81,10 @@ class NotebookPageContent extends StatelessWidget {
             ),
           );
         },
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: Color.fromARGB(255, 247, 143, 15),
+        ),
       ),
     );
   }
