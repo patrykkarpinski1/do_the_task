@@ -1,16 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/features/auth/pages/user_profile.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/bills_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/family_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/fun_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/house_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/learn_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/other_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/shopping_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/trainig_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/check/category_pages/work_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/bills_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/family_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/fun_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/house_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/learn_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/other_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/shopping_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/trainig_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/work_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/check_page/cubit/check_page_cubit.dart';
 
 class CheckPageContent extends StatelessWidget {
   const CheckPageContent({
@@ -19,16 +20,23 @@ class CheckPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: FirebaseFirestore.instance.collection('categories').snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Center(child: Text('wystąpił błąd'));
+    return BlocProvider(
+      create: (context) => CheckPageCubit()..start(),
+      child: BlocBuilder<CheckPageCubit, CheckPageState>(
+        builder: (context, state) {
+          if (state.errorMessage.isNotEmpty) {
+            return Center(
+              child: Text(
+                'Something went wrong ${state.errorMessage}',
+              ),
+            );
           }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: Text('ładowanie strony'));
+          if (state.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
-          final documents = snapshot.data!.docs;
+          final documents = state.documents;
           return Scaffold(
             backgroundColor: const Color.fromARGB(255, 49, 171, 175),
             appBar: AppBar(
@@ -153,7 +161,9 @@ class CheckPageContent extends StatelessWidget {
               ),
             ),
           );
-        });
+        },
+      ),
+    );
   }
 }
 

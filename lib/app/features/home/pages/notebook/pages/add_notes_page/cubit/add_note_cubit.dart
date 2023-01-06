@@ -18,7 +18,9 @@ class AddNoteCubit extends Cubit<AddNoteState> {
     );
   }
 
-  Future<void> changetextNote(String newTextNote) async {
+  Future<void> changetextNote(
+    String newTextNote,
+  ) async {
     emit(
       AddNoteState(textNote: newTextNote),
     );

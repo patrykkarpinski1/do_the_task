@@ -98,8 +98,11 @@ class _NoteWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: const Color.fromARGB(255, 247, 143, 15),
-      child: Text(
-        notes['title'],
+      child: Container(
+        margin: const EdgeInsets.all(10),
+        child: Text(
+          notes['title'],
+        ),
       ),
     );
   }
