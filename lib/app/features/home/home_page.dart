@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/check_page/check_page_content.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/add_tasks/add_tasks_page_content.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/notebook/pages/notebook_page/notebook_page_content.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/check_page/pages/check_page_content.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/add_tasks/pages/add_tasks_page_content.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/notepad_page/notebook_page_content.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
           return const CheckPageContent();
         }
         if (currentIndex == 2) {
-          return const NotebookPageContent();
+          return const NotepadPageContent();
         }
         return const AddTasksPageContent();
       }),
@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(
                 Icons.note,
               ),
-              label: 'Notebook'),
+              label: 'Notepad'),
         ],
       ),
     );
