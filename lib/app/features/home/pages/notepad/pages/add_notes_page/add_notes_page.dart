@@ -17,6 +17,14 @@ class AddNotes extends StatelessWidget {
           if (state.saved) {
             Navigator.of(context).pop();
           }
+          if (state.errorMessage.isNotEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.red,
+                content: Text(state.errorMessage),
+              ),
+            );
+          }
         },
         child: BlocBuilder<AddNoteCubit, AddNoteState>(
           builder: (context, state) {
