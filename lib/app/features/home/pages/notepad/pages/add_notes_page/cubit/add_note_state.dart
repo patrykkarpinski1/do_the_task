@@ -1,6 +1,5 @@
 part of 'add_note_cubit.dart';
 
-@immutable
 class AddNoteState {
   final String errorMessage;
   final String textNote;

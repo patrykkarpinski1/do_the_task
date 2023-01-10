@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:dropdown_textfield/dropdown_textfield.dart';
 
 class AddTasksPageContent extends StatefulWidget {
   const AddTasksPageContent(
@@ -15,18 +14,7 @@ class AddTasksPageContent extends StatefulWidget {
 }
 
 class _AddTasksPageContentState extends State<AddTasksPageContent> {
-  String dropdownvalue = 'WORK';
-  var items = [
-    'WORK',
-    'HOME',
-    'SPORT WORKOUTS',
-    'FEES',
-    'FAMILY',
-    'ENTERTAINMENT',
-    'SHOPING',
-    'LEARNING',
-    'OTHER TASKS',
-  ];
+  int value = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,23 +51,49 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
                 BoxShadow(blurRadius: 1),
               ],
             ),
-            child: Padding(
+            child: Container(
               padding: const EdgeInsets.only(left: 30, right: 30),
               child: DropdownButton(
-                style: Theme.of(context).textTheme.titleMedium,
-                value: dropdownvalue,
-                icon: const Icon(Icons.keyboard_arrow_down),
-                items: items.map((String items) {
-                  return DropdownMenuItem(
-                    value: items,
-                    child: Text(items),
-                  );
-                }).toList(),
-                onChanged: (newValue) {
-                  setState(() {
-                    dropdownvalue = newValue!;
-                  });
-                },
+                value: value,
+                items: const [
+                  DropdownMenuItem(
+                    value: 1,
+                    child: Text("WORK"),
+                  ),
+                  DropdownMenuItem(
+                    value: 2,
+                    child: Text("HOME"),
+                  ),
+                  DropdownMenuItem(
+                    value: 3,
+                    child: Text("SPORT WORKOUTS"),
+                  ),
+                  DropdownMenuItem(
+                    value: 4,
+                    child: Text("FEES"),
+                  ),
+                  DropdownMenuItem(
+                    value: 5,
+                    child: Text("FAMILY"),
+                  ),
+                  DropdownMenuItem(
+                    value: 6,
+                    child: Text("ENTERTAINMENT"),
+                  ),
+                  DropdownMenuItem(
+                    value: 7,
+                    child: Text("SHOPING"),
+                  ),
+                  DropdownMenuItem(
+                    value: 8,
+                    child: Text("LEARNING"),
+                  ),
+                  DropdownMenuItem(
+                    value: 9,
+                    child: Text("OTHER TASKS"),
+                  ),
+                ],
+                onChanged: (value) {},
                 isExpanded: true,
                 underline: Container(),
                 dropdownColor: const Color.fromARGB(255, 49, 171, 175),
@@ -92,7 +106,7 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
           ),
           const TextField(
             maxLength: 1000,
-            maxLines: 1,
+            maxLines: 10,
             decoration: InputDecoration(
               hintText: 'co chcesz zrobić',
               border: OutlineInputBorder(),
@@ -120,14 +134,14 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
           ElevatedButton(
             child: const Text('Select a time'),
             onPressed: () async {
-              final selectedTime = await showTimePicker(
+              final selectedDate = await showTimePicker(
                 context: context,
                 initialTime: TimeOfDay.now(),
                 cancelText: "Cancel",
                 confirmText: "Save",
                 helpText: "Select time",
               );
-              (selectedTime);
+              (selectedDate);
             },
           ),
         ],

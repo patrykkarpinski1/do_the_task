@@ -2,18 +2,25 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
-part 'add_task_state.dart';
+part 'add_work_task_state.dart';
 
-class AddTaskCubit extends Cubit<AddTaskState> {
-  AddTaskCubit() : super(AddTaskState());
+class AddWorkTaskCubit extends Cubit<AddWorkTaskState> {
+  AddWorkTaskCubit() : super(AddWorkTaskState());
   StreamSubscription? _streamSubscription;
   Future<void> start() async {
     emit(
-      AddTaskState(
+      AddWorkTaskState(
         errorMessage: '',
         textNote: '',
       ),
+    );
+  }
+
+  Future<void> onDateChange() async {
+    emit(
+      AddWorkTaskState(),
     );
   }
 
@@ -21,23 +28,27 @@ class AddTaskCubit extends Cubit<AddTaskState> {
     String newTextNote,
   ) async {
     emit(
-      AddTaskState(textNote: newTextNote),
+      AddWorkTaskState(textNote: newTextNote),
     );
   }
 
-  Future<void> add(String text, Timestamp date) async {
+  Future<void> add(
+    String text,
+    DateTime releaseDate,
+    TimeOfDay releaseTime,
+  ) async {
     try {
       await FirebaseFirestore.instance.collection('tasks').add({
         'text': text,
-        'category_id': '',
-        'date': date,
+        'category_id': 'kmwtczQ4I989UJaG9ukI',
+        'date': releaseDate,
       });
       emit(
-        AddTaskState(saved: true),
+        AddWorkTaskState(saved: true),
       );
     } catch (error) {
       emit(
-        AddTaskState(
+        AddWorkTaskState(
           errorMessage: error.toString(),
         ),
       );

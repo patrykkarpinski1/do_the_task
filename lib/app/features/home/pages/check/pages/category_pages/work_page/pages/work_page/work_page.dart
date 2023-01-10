@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/work_page/cubit/work_cubit.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/work_page/pages/add_work_task/add_work_task_page.dart';
 
 class WorkPage extends StatelessWidget {
   const WorkPage({
@@ -29,6 +30,21 @@ class WorkPage extends StatelessWidget {
           style: GoogleFonts.rubikBeastly(
             color: const Color.fromARGB(255, 247, 143, 15),
           ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 1, 100, 146),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const AddWorkTask(),
+              fullscreenDialog: true,
+            ),
+          );
+        },
+        child: const Icon(
+          Icons.add,
+          color: Color.fromARGB(255, 247, 143, 15),
         ),
       ),
       body: BlocProvider(

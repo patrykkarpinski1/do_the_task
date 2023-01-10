@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/features/auth/pages/user_profile.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/cubit/notepad_cubit.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/add_notes_page/add_notes_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/notepad_page/cubit/notepad_cubit.dart';
 
 class NotepadPageContent extends StatelessWidget {
   const NotepadPageContent({

@@ -10,7 +10,7 @@ import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/catego
 import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/other_tasks_page/pages/other_tasks_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/shopping_page/pages/shopping_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/sport_workouts_page/pages/sport_workouts_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/work_page/pages/work_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/work_page/pages/work_page/work_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/check_page/cubit/check_page_cubit.dart';
 
 class CheckPageContent extends StatelessWidget {

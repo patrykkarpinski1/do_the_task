@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/check_page/pages/check_page_content.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/add_tasks/pages/add_tasks_page_content.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/notepad_page/notebook_page_content.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/notepad_page/notepad_page_content.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
