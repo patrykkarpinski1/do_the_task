@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:modyfikacja_aplikacja/models/task_model.dart';
 
 part 'work_state.dart';
 
@@ -15,9 +16,16 @@ class WorkCubit extends Cubit<WorkState> {
         .snapshots()
         .listen(
       (tasks) {
+        final taskModels = tasks.docs.map((doc) {
+          return (TaskModel(
+            id: doc.id,
+            text: doc['text'],
+            releaseDate: (doc['date'] as Timestamp).toDate(),
+          ));
+        }).toList();
         emit(
           WorkState(
-            tasks: tasks,
+            tasks: taskModels,
           ),
         );
       },

@@ -1,11 +1,7 @@
 class TaskModel {
-  TaskModel(
-      {required this.note,
-      required this.title,
-      required this.text,
-      required this.releaseDate});
-  final String note;
-  final String title;
+  TaskModel({required this.id, required this.text, required this.releaseDate});
+
   final String text;
+  final String id;
   final DateTime releaseDate;
 }

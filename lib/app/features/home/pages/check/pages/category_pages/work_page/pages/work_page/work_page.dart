@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/work_page/cubit/work_cubit.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/category_pages/work_page/pages/add_work_task/add_work_task_page.dart';
+import 'package:modyfikacja_aplikacja/models/task_model.dart';
 
 class WorkPage extends StatelessWidget {
   const WorkPage({
@@ -51,15 +52,15 @@ class WorkPage extends StatelessWidget {
         create: (context) => WorkCubit()..start(),
         child: BlocBuilder<WorkCubit, WorkState>(
           builder: (context, state) {
-            final docs = state.tasks?.docs;
-            if (docs == null) {
+            final taskModels = state.tasks;
+            if (taskModels.isEmpty) {
               return const SizedBox.shrink();
             }
             return ListView(
               children: [
-                for (final doc in docs) ...[
+                for (final taskModel in taskModels) ...[
                   WorkTasks(
-                    document: doc,
+                    taskModel: taskModel,
                   ),
                 ],
               ],
@@ -73,10 +74,10 @@ class WorkPage extends StatelessWidget {
 
 class WorkTasks extends StatelessWidget {
   const WorkTasks({
-    required this.document,
+    required this.taskModel,
     Key? key,
   }) : super(key: key);
-  final QueryDocumentSnapshot<Map<String, dynamic>> document;
+  final TaskModel taskModel;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +103,7 @@ class WorkTasks extends StatelessWidget {
                     height: 180,
                     color: const Color.fromARGB(255, 49, 171, 175),
                     child: Text(
-                      document['text'],
+                      taskModel.text,
                     ),
                   ),
                 ],
@@ -116,7 +117,7 @@ class WorkTasks extends StatelessWidget {
                     width: 120,
                     color: const Color.fromARGB(255, 49, 171, 175),
                     child: Text(
-                      (document['date'] as Timestamp).toDate().toString(),
+                      taskModel.releaseDate.toString(),
                     ),
                   ),
                   const SizedBox(
@@ -124,7 +125,9 @@ class WorkTasks extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {
-                      context.read<WorkCubit>().remove(documentID: document.id);
+                      context
+                          .read<WorkCubit>()
+                          .remove(documentID: taskModel.id);
                     },
                     icon: const Icon(Icons.delete),
                   ),

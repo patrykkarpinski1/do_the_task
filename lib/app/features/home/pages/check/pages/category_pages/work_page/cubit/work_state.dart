@@ -1,12 +1,12 @@
 part of 'work_cubit.dart';
 
 class WorkState {
-  final QuerySnapshot<Map<String, dynamic>>? tasks;
+  final List<TaskModel> tasks;
   final bool loadingErrorOccured;
   final bool removingErrorOccured;
 
   const WorkState(
-      {this.tasks,
+      {this.tasks = const [],
       this.loadingErrorOccured = false,
       this.removingErrorOccured = false});
 }
