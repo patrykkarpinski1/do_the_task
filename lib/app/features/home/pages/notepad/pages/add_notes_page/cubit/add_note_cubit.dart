@@ -25,10 +25,10 @@ class AddNoteCubit extends Cubit<AddNoteState> {
     );
   }
 
-  Future<void> add(String title) async {
+  Future<void> add(String note) async {
     try {
       await FirebaseFirestore.instance.collection('notepad').add(
-        {'title': title},
+        {'note': note},
       );
       emit(
         const AddNoteState(saved: true),

@@ -22,146 +22,153 @@ class CheckPageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CheckPageCubit()..start(),
-      child: BlocBuilder<CheckPageCubit, CheckPageState>(
-        builder: (context, state) {
+      child: BlocListener<CheckPageCubit, CheckPageState>(
+        listener: (context, state) {
           if (state.errorMessage.isNotEmpty) {
-            return Center(
-              child: Text(
-                'Something went wrong ${state.errorMessage}',
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.errorMessage),
               ),
             );
           }
-          if (state.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          final documents = state.documents;
-          return Scaffold(
-            backgroundColor: const Color.fromARGB(255, 49, 171, 175),
-            appBar: AppBar(
-              backgroundColor: const Color.fromARGB(255, 1, 100, 146),
-              title: Text(
-                'CHOOSE TASKS CATEGORY',
-                style: GoogleFonts.rubikBeastly(
-                  color: const Color.fromARGB(255, 247, 143, 15),
+        },
+        child: BlocBuilder<CheckPageCubit, CheckPageState>(
+          builder: (context, state) {
+            if (state.isLoading) {
+              return const Scaffold(
+                backgroundColor: Color.fromARGB(255, 49, 171, 175),
+                body: Center(
+                  child: CircularProgressIndicator(),
                 ),
-              ),
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const UserProfile(),
-                      ),
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.person,
-                    color: Color.fromARGB(255, 247, 143, 15),
+              );
+            }
+            final documents = state.documents;
+            return Scaffold(
+              backgroundColor: const Color.fromARGB(255, 49, 171, 175),
+              appBar: AppBar(
+                backgroundColor: const Color.fromARGB(255, 1, 100, 146),
+                title: Text(
+                  'CHOOSE TASKS CATEGORY',
+                  style: GoogleFonts.rubikBeastly(
+                    color: const Color.fromARGB(255, 247, 143, 15),
                   ),
                 ),
-              ],
-            ),
-            body: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: ListView(
-                children: [
-                  CategoryWidget(
-                    documents[5]['title'],
+                actions: [
+                  IconButton(
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const WorkPage(),
+                          builder: (_) => const UserProfile(),
                         ),
                       );
                     },
-                  ),
-                  CategoryWidget(
-                    documents[8]['title'],
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const HousePage(),
-                        ),
-                      );
-                    },
-                  ),
-                  CategoryWidget(
-                    documents[6]['title'],
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const TrainingPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  CategoryWidget(
-                    documents[1]['title'],
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const BillsPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  CategoryWidget(
-                    documents[4]['title'],
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const FamilyPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  CategoryWidget(
-                    documents[3]['title'],
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const FunPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  CategoryWidget(
-                    documents[0]['title'],
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const ShoppingPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  CategoryWidget(
-                    documents[2]['title'],
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const LearnPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  CategoryWidget(
-                    documents[7]['title'],
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const OtherPage(),
-                        ),
-                      );
-                    },
+                    icon: const Icon(
+                      Icons.person,
+                      color: Color.fromARGB(255, 247, 143, 15),
+                    ),
                   ),
                 ],
               ),
-            ),
-          );
-        },
+              body: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: ListView(
+                  children: [
+                    CategoryWidget(
+                      documents[5]['title'],
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const WorkPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    CategoryWidget(
+                      documents[8]['title'],
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const HousePage(),
+                          ),
+                        );
+                      },
+                    ),
+                    CategoryWidget(
+                      documents[6]['title'],
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const TrainingPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    CategoryWidget(
+                      documents[1]['title'],
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const BillsPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    CategoryWidget(
+                      documents[4]['title'],
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const FamilyPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    CategoryWidget(
+                      documents[3]['title'],
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const FunPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    CategoryWidget(
+                      documents[0]['title'],
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const ShoppingPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    CategoryWidget(
+                      documents[2]['title'],
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const LearnPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    CategoryWidget(
+                      documents[7]['title'],
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const OtherPage(),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/features/auth/pages/user_profile.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/add_notes_page/add_notes_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/notepad_page/cubit/notepad_cubit.dart';
+import 'package:modyfikacja_aplikacja/models/note_model.dart';
 
 class NotepadPageContent extends StatelessWidget {
   const NotepadPageContent({
@@ -43,8 +44,8 @@ class NotepadPageContent extends StatelessWidget {
         create: (context) => NotepadCubit()..start(),
         child: BlocBuilder<NotepadCubit, NotepadState>(
           builder: (context, state) {
-            final docs = state.notes?.docs;
-            if (docs == null) {
+            final noteModels = state.notes;
+            if (noteModels.isEmpty) {
               return const SizedBox.shrink();
             }
             return GridView(
@@ -55,14 +56,16 @@ class NotepadPageContent extends StatelessWidget {
                 mainAxisSpacing: 5,
               ),
               children: [
-                for (final doc in docs) ...[
+                for (final noteModel in noteModels) ...[
                   Dismissible(
-                    key: ValueKey(doc.id),
+                    key: ValueKey(noteModel.id),
                     onDismissed: (direction) {
-                      context.read<NotepadCubit>().remove(documentID: doc.id);
+                      context
+                          .read<NotepadCubit>()
+                          .remove(documentID: noteModel.id);
                     },
                     child: _NoteWidget(
-                      document: doc,
+                      noteModel: noteModel,
                     ),
                   ),
                 ]
@@ -93,9 +96,9 @@ class NotepadPageContent extends StatelessWidget {
 class _NoteWidget extends StatelessWidget {
   const _NoteWidget({
     Key? key,
-    required this.document,
+    required this.noteModel,
   }) : super(key: key);
-  final QueryDocumentSnapshot<Map<String, dynamic>> document;
+  final NoteModel noteModel;
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +107,7 @@ class _NoteWidget extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.all(10),
         child: Text(
-          document['title'],
+          noteModel.note,
         ),
       ),
     );
