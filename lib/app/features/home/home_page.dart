@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/check/pages/check_page/pages/check_page_content.dart';
+
 import 'package:modyfikacja_aplikacja/app/features/home/pages/add_tasks/pages/add_tasks_page_content.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/notepad_page/notepad_page_content.dart';
+
+import 'pages/tasks/pages/categories_page/pages/category_page_content.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -18,7 +20,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Builder(builder: (context) {
         if (currentIndex == 1) {
-          return const CheckPageContent();
+          return const TaskPageContent();
         }
         if (currentIndex == 2) {
           return const NotepadPageContent();
