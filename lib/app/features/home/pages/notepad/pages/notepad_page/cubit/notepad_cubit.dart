@@ -1,49 +1,39 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 import 'package:modyfikacja_aplikacja/models/note_model.dart';
+import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
 part 'notepad_state.dart';
 
 class NotepadCubit extends Cubit<NotepadState> {
-  NotepadCubit() : super(const NotepadState());
+  NotepadCubit(this._itemsRepository) : super(const NotepadState());
+  final ItemsRepository _itemsRepository;
 
   StreamSubscription? _streamSubscription;
   Future<void> start() async {
-    _streamSubscription =
-        FirebaseFirestore.instance.collection('notepad').snapshots().listen(
+    _streamSubscription = _itemsRepository.getNotesStream().listen(
       (notes) {
-        final noteModels = notes.docs.map((doc) {
-          return NoteModel(
-            note: doc['note'],
-            id: doc.id,
-          );
-        }).toList();
         emit(
           NotepadState(
-            notes: noteModels,
+            notes: notes,
           ),
         );
       },
     )..onError(
-            (error) {
-              {
-                emit(
-                  const NotepadState(loadingErrorOccured: true),
-                );
-              }
-            },
-          );
+        (error) {
+          {
+            emit(
+              const NotepadState(loadingErrorOccured: true),
+            );
+          }
+        },
+      );
   }
 
   Future<void> remove({required String documentID}) async {
     try {
-      await FirebaseFirestore.instance
-          .collection('notepad')
-          .doc(documentID)
-          .delete();
+      await _itemsRepository.deleteNote(id: documentID);
     } catch (error) {
       emit(
         const NotepadState(removingErrorOccured: true),

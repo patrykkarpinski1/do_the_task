@@ -1,14 +1,14 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
+import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
 part 'tasks_state.dart';
 
 class TaskPageCubit extends Cubit<TaskPageState> {
-  TaskPageCubit() : super(const TaskPageState());
+  TaskPageCubit(this._itemsRepository) : super(const TaskPageState());
+  final ItemsRepository _itemsRepository;
   StreamSubscription? _streamSubscription;
 
   Future<void> start() async {
@@ -19,35 +19,27 @@ class TaskPageCubit extends Cubit<TaskPageState> {
         errorMessage: '',
       ),
     );
-    _streamSubscription = FirebaseFirestore.instance
-        .collection('categories')
-        .snapshots()
-        .listen((categories) {
-      final categoryModels = categories.docs.map((doc) {
-        return (CategoryModel(
-          id: doc.id,
-          title: doc['title'],
-        ));
-      }).toList();
+    _streamSubscription =
+        _itemsRepository.getCategoriesStream().listen((categories) {
       emit(
         TaskPageState(
-          categories: categoryModels,
+          categories: categories,
           isLoading: false,
           errorMessage: '',
         ),
       );
     })
-      ..onError((error) {
-        {
-          emit(
-            TaskPageState(
-              categories: const [],
-              isLoading: false,
-              errorMessage: error.toString(),
-            ),
-          );
-        }
-      });
+          ..onError((error) {
+            {
+              emit(
+                TaskPageState(
+                  categories: const [],
+                  isLoading: false,
+                  errorMessage: error.toString(),
+                ),
+              );
+            }
+          });
   }
 
   @override

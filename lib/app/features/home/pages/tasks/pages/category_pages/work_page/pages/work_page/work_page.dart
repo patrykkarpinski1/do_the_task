@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/pages/category_pages/work_page/cubit/work_cubit.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/pages/category_pages/work_page/pages/add_work_task/add_work_task_page.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
+import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
 class WorkPage extends StatelessWidget {
   const WorkPage({
@@ -48,7 +49,7 @@ class WorkPage extends StatelessWidget {
         ),
       ),
       body: BlocProvider(
-        create: (context) => WorkCubit()..start(),
+        create: (context) => WorkCubit(ItemsRepository())..start(),
         child: BlocBuilder<WorkCubit, WorkState>(
           builder: (context, state) {
             final taskModels = state.tasks;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/pages/category_pages/work_page/pages/add_work_task/cubit/add_work_task_cubit.dart';
+import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
 class AddWorkTask extends StatefulWidget {
   const AddWorkTask({
@@ -19,7 +20,7 @@ class _AddWorkTaskState extends State<AddWorkTask> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddWorkTaskCubit()..start(),
+      create: (context) => AddWorkTaskCubit(ItemsRepository())..start(),
       child: BlocBuilder<AddWorkTaskCubit, AddWorkTaskState>(
         builder: (context, state) {
           return Scaffold(

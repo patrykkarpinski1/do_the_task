@@ -1,13 +1,13 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
 part 'add_work_task_state.dart';
 
 class AddWorkTaskCubit extends Cubit<AddWorkTaskState> {
-  AddWorkTaskCubit() : super(AddWorkTaskState());
+  AddWorkTaskCubit(this._itemsRepository) : super(AddWorkTaskState());
+  final ItemsRepository _itemsRepository;
   StreamSubscription? _streamSubscription;
   Future<void> start() async {
     emit(
@@ -38,11 +38,7 @@ class AddWorkTaskCubit extends Cubit<AddWorkTaskState> {
     TimeOfDay releaseTime,
   ) async {
     try {
-      await FirebaseFirestore.instance.collection('tasks').add({
-        'text': text,
-        'category_id': 'kmwtczQ4I989UJaG9ukI',
-        'date': releaseDate,
-      });
+      await _itemsRepository.addWork(text, releaseDate, releaseTime);
       emit(
         AddWorkTaskState(saved: true),
       );

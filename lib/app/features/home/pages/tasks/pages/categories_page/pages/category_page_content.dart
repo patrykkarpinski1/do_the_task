@@ -13,6 +13,7 @@ import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/pages/catego
 import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/pages/category_pages/sport_workouts_page/pages/sport_workouts_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/pages/category_pages/work_page/pages/work_page/work_page.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
+import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
 class TaskPageContent extends StatelessWidget {
   const TaskPageContent({
@@ -22,7 +23,7 @@ class TaskPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TaskPageCubit()..start(),
+      create: (context) => TaskPageCubit(ItemsRepository())..start(),
       child: BlocListener<TaskPageCubit, TaskPageState>(
         listener: (context, state) {
           if (state.errorMessage.isNotEmpty) {

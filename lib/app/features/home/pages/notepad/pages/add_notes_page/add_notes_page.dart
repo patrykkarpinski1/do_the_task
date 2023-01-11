@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/add_notes_page/cubit/add_note_cubit.dart';
+import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
 class AddNotes extends StatelessWidget {
   const AddNotes({
@@ -11,7 +12,7 @@ class AddNotes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddNoteCubit()..start(),
+      create: (context) => AddNoteCubit(ItemsRepository())..start(),
       child: BlocListener<AddNoteCubit, AddNoteState>(
         listener: (context, state) {
           if (state.saved) {

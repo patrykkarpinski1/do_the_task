@@ -1,12 +1,12 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
 part 'add_note_state.dart';
 
 class AddNoteCubit extends Cubit<AddNoteState> {
-  AddNoteCubit() : super(const AddNoteState());
+  AddNoteCubit(this._itemsRepository) : super(const AddNoteState());
+  final ItemsRepository _itemsRepository;
   StreamSubscription? _streamSubscription;
   Future<void> start() async {
     emit(
@@ -27,9 +27,7 @@ class AddNoteCubit extends Cubit<AddNoteState> {
 
   Future<void> add(String note) async {
     try {
-      await FirebaseFirestore.instance.collection('notepad').add(
-        {'note': note},
-      );
+      await _itemsRepository.addNote(note);
       emit(
         const AddNoteState(saved: true),
       );
