@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class TaskModel {
   TaskModel({required this.id, required this.text, required this.releaseDate});
 
@@ -5,6 +7,6 @@ class TaskModel {
   final String id;
   final DateTime releaseDate;
   String releaseDateFormatted() {
-    return 'example';
+    return DateFormat.MMMEd().format(releaseDate);
   }
 }
