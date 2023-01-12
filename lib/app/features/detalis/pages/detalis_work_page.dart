@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/app/features/detalis/pages/detalis_work_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/pages/category_pages/work_page/cubit/work_cubit.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/pages/category_pages/work_page/pages/add_work_task/add_work_task_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/detalis/cubit/detalis_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
-class WorkPage extends StatelessWidget {
-  const WorkPage({
+class DetalisWorkPage extends StatelessWidget {
+  const DetalisWorkPage({
+    required this.id,
     Key? key,
   }) : super(key: key);
-
+  final String id;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,36 +33,22 @@ class WorkPage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 1, 100, 146),
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const AddWorkTask(),
-              fullscreenDialog: true,
-            ),
-          );
-        },
-        child: const Icon(
-          Icons.add,
-          color: Color.fromARGB(255, 247, 143, 15),
-        ),
-      ),
       body: BlocProvider(
-        create: (context) => WorkCubit(ItemsRepository())..start(),
-        child: BlocBuilder<WorkCubit, WorkState>(
+        create: (context) => DetalisCubit(ItemsRepository())..getTaskWithID(id),
+        child: BlocBuilder<DetalisCubit, DetalisState>(
           builder: (context, state) {
-            final taskModels = state.tasks;
-            if (taskModels.isEmpty) {
-              return const SizedBox.shrink();
+            final taskModel = state.taskModel;
+            if (taskModel == null) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
+
             return ListView(
               children: [
-                for (final taskModel in taskModels) ...[
-                  WorkTasks(
-                    taskModel: taskModel,
-                  ),
-                ],
+                WorkTasks(
+                  taskModel: taskModel,
+                ),
               ],
             );
           },
@@ -98,23 +83,13 @@ class WorkTasks extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              DetalisWorkPage(id: taskModel.id),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      width: 180,
-                      height: 180,
-                      color: const Color.fromARGB(255, 49, 171, 175),
-                      child: Text(
-                        taskModel.text,
-                      ),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    width: 180,
+                    height: 180,
+                    color: const Color.fromARGB(255, 49, 171, 175),
+                    child: Text(
+                      taskModel.text,
                     ),
                   ),
                 ],
@@ -133,14 +108,6 @@ class WorkTasks extends StatelessWidget {
                   ),
                   const SizedBox(
                     height: 80,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      context
-                          .read<WorkCubit>()
-                          .remove(documentID: taskModel.id);
-                    },
-                    icon: const Icon(Icons.delete),
                   ),
                 ],
               ),

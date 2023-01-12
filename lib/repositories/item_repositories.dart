@@ -74,4 +74,14 @@ class ItemsRepository {
       'date': releaseDate,
     });
   }
+
+  Future<TaskModel> getWork({required String id}) async {
+    final doc =
+        await FirebaseFirestore.instance.collection('tasks').doc(id).get();
+    return TaskModel(
+      id: doc.id,
+      text: doc['text'],
+      releaseDate: (doc['date'] as Timestamp).toDate(),
+    );
+  }
 }
