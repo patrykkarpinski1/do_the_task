@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
 import 'package:modyfikacja_aplikacja/models/note_model.dart';
@@ -6,7 +7,13 @@ import 'package:modyfikacja_aplikacja/models/task_model.dart';
 
 class ItemsRepository {
   Stream<List<CategoryModel>> getCategoriesStream() {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
     return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
         .collection('categories')
         .snapshots()
         .map((querySnapshot) {
@@ -20,7 +27,13 @@ class ItemsRepository {
   }
 
   Stream<List<NoteModel>> getNotesStream() {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
     return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
         .collection('notepad')
         .snapshots()
         .map((querySnapshot) {
@@ -34,17 +47,40 @@ class ItemsRepository {
   }
 
   Future<void> deleteNote({required String id}) {
-    return FirebaseFirestore.instance.collection('notepad').doc(id).delete();
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('notepad')
+        .doc(id)
+        .delete();
   }
 
   Future<void> addNote(String note) async {
-    await FirebaseFirestore.instance.collection('notepad').add(
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('notepad')
+        .add(
       {'note': note},
     );
   }
 
   Stream<List<TaskModel>> getWorkStream() {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
     return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
         .collection('tasks')
         .where("category_id", isEqualTo: "kmwtczQ4I989UJaG9ukI")
         .snapshots()
@@ -60,7 +96,16 @@ class ItemsRepository {
   }
 
   Future<void> deleteWork({required String id}) async {
-    await FirebaseFirestore.instance.collection('tasks').doc(id).delete();
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('tasks')
+        .doc(id)
+        .delete();
   }
 
   Future<void> addWork(
@@ -68,7 +113,15 @@ class ItemsRepository {
     DateTime releaseDate,
     TimeOfDay releaseTime,
   ) async {
-    await FirebaseFirestore.instance.collection('tasks').add({
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('tasks')
+        .add({
       'text': text,
       'category_id': 'kmwtczQ4I989UJaG9ukI',
       'date': releaseDate,
@@ -76,8 +129,16 @@ class ItemsRepository {
   }
 
   Future<TaskModel> getWork({required String id}) async {
-    final doc =
-        await FirebaseFirestore.instance.collection('tasks').doc(id).get();
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('tasks')
+        .doc(id)
+        .get();
     return TaskModel(
       id: doc.id,
       text: doc['text'],
