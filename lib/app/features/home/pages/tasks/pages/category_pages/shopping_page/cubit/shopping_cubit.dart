@@ -10,15 +10,9 @@ class ShoppingCubit extends Cubit<ShoppingState> {
   ShoppingCubit() : super(const ShoppingState());
   StreamSubscription? _streamSubscription;
   Future<void> start() async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
     _streamSubscription = FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
         .collection('tasks')
-        .where("category_id", isEqualTo: "24kOmApX1f2PbFOkbDgP")
+        .where("category_id", isEqualTo: "1")
         .snapshots()
         .listen(
       (tasks) {

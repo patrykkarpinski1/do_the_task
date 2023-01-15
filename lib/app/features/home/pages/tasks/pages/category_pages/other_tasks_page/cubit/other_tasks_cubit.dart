@@ -10,15 +10,9 @@ class OtherTasksCubit extends Cubit<OtherTasksState> {
   OtherTasksCubit() : super(const OtherTasksState());
   StreamSubscription? _streamSubscription;
   Future<void> start() async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
     _streamSubscription = FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
         .collection('tasks')
-        .where("category_id", isEqualTo: "u8xdtbT3eGo7dzoLbpS5")
+        .where("category_id", isEqualTo: "8")
         .snapshots()
         .listen(
       (tasks) {

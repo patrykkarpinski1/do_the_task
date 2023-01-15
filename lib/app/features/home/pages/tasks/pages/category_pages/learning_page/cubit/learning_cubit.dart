@@ -10,15 +10,9 @@ class LearningCubit extends Cubit<LearningState> {
   LearningCubit() : super(const LearningState());
   StreamSubscription? _streamSubscription;
   Future<void> start() async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
     _streamSubscription = FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
         .collection('tasks')
-        .where("category_id", isEqualTo: "8I9GvUM1xDM9XSnHyxUb")
+        .where("category_id", isEqualTo: "3")
         .snapshots()
         .listen(
       (tasks) {

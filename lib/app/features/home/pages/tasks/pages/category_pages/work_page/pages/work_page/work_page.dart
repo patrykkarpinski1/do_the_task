@@ -124,11 +124,20 @@ class WorkTasks extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(10),
-                    width: 120,
+                    padding: const EdgeInsets.all(3),
+                    width: 140,
                     color: const Color.fromARGB(255, 49, 171, 175),
-                    child: Text(
-                      taskModel.releaseDate.toString(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(taskModel.releaseDateFormatted()),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          taskModel.releaseTimeFormatted(),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(

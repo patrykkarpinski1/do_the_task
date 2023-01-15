@@ -10,15 +10,9 @@ class SportWorkoutsCubit extends Cubit<SportWorkoutsState> {
   SportWorkoutsCubit() : super(const SportWorkoutsState());
   StreamSubscription? _streamSubscription;
   Future<void> start() async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
     _streamSubscription = FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
         .collection('tasks')
-        .where("category_id", isEqualTo: "mW4XEXybkI8axLObJXi7")
+        .where("category_id", isEqualTo: "7")
         .snapshots()
         .listen(
       (tasks) {

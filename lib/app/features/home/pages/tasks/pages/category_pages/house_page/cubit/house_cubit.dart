@@ -11,15 +11,9 @@ class HouseCubit extends Cubit<HouseState> {
 
   StreamSubscription? _streamSubscription;
   Future<void> start() async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
     _streamSubscription = FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
         .collection('tasks')
-        .where("category_id", isEqualTo: "wRhqK5cwqBaQdrkPk6nT")
+        .where("category_id", isEqualTo: "9")
         .snapshots()
         .listen(
       (tasks) {

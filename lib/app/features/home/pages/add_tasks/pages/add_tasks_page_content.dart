@@ -14,7 +14,20 @@ class AddTasksPageContent extends StatefulWidget {
 }
 
 class _AddTasksPageContentState extends State<AddTasksPageContent> {
-  int value = 1;
+  String dropdownvalue = 'WORK';
+
+  var items = [
+    'WORK',
+    'HOME',
+    'SPORT WORKOUTS',
+    'FEES',
+    'FAMILY',
+    'ENTERTAINMENT',
+    'SHOPPING',
+    'LEARNING',
+    'OTHER TASKS',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,46 +67,21 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
             child: Container(
               padding: const EdgeInsets.only(left: 30, right: 30),
               child: DropdownButton(
-                value: value,
-                items: const [
-                  DropdownMenuItem(
-                    value: 1,
-                    child: Text("WORK"),
-                  ),
-                  DropdownMenuItem(
-                    value: 2,
-                    child: Text("HOME"),
-                  ),
-                  DropdownMenuItem(
-                    value: 3,
-                    child: Text("SPORT WORKOUTS"),
-                  ),
-                  DropdownMenuItem(
-                    value: 4,
-                    child: Text("FEES"),
-                  ),
-                  DropdownMenuItem(
-                    value: 5,
-                    child: Text("FAMILY"),
-                  ),
-                  DropdownMenuItem(
-                    value: 6,
-                    child: Text("ENTERTAINMENT"),
-                  ),
-                  DropdownMenuItem(
-                    value: 7,
-                    child: Text("SHOPING"),
-                  ),
-                  DropdownMenuItem(
-                    value: 8,
-                    child: Text("LEARNING"),
-                  ),
-                  DropdownMenuItem(
-                    value: 9,
-                    child: Text("OTHER TASKS"),
-                  ),
-                ],
-                onChanged: (value) {},
+                items: items.map((itemsname) {
+                  return DropdownMenuItem(
+                    value: itemsname,
+                    child: Text(itemsname),
+                    onTap: () {
+                      setState(() {});
+                    },
+                  );
+                }).toList(),
+                onChanged: (newValue) {
+                  setState(() {
+                    dropdownvalue = newValue!;
+                  });
+                },
+                value: dropdownvalue,
                 isExpanded: true,
                 underline: Container(),
                 dropdownColor: const Color.fromARGB(255, 49, 171, 175),

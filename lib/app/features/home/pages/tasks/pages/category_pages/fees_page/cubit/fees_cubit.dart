@@ -10,15 +10,9 @@ class FeesCubit extends Cubit<FeesState> {
   FeesCubit() : super(const FeesState());
   StreamSubscription? _streamSubscription;
   Future<void> start() async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
     _streamSubscription = FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
         .collection('tasks')
-        .where("category_id", isEqualTo: "2sOimYJGU7kuX4MQCu3v")
+        .where("category_id", isEqualTo: "2")
         .snapshots()
         .listen(
       (tasks) {

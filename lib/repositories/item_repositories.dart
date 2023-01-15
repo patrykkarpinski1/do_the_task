@@ -7,13 +7,7 @@ import 'package:modyfikacja_aplikacja/models/task_model.dart';
 
 class ItemsRepository {
   Stream<List<CategoryModel>> getCategoriesStream() {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
     return FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
         .collection('categories')
         .snapshots()
         .map((querySnapshot) {
@@ -82,7 +76,7 @@ class ItemsRepository {
         .collection('users')
         .doc(userID)
         .collection('tasks')
-        .where("category_id", isEqualTo: "kmwtczQ4I989UJaG9ukI")
+        .where("category_id", isEqualTo: "6")
         .snapshots()
         .map((querySnapschot) {
       return querySnapschot.docs.map((doc) {
@@ -123,8 +117,14 @@ class ItemsRepository {
         .collection('tasks')
         .add({
       'text': text,
-      'category_id': 'kmwtczQ4I989UJaG9ukI',
-      'date': releaseDate,
+      'category_id': '6',
+      'date': DateTime(
+        releaseDate.year,
+        releaseDate.month,
+        releaseDate.day,
+        releaseTime.hour,
+        releaseTime.minute,
+      ),
     });
   }
 

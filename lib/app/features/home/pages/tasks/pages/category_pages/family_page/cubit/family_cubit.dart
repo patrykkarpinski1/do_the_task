@@ -10,15 +10,9 @@ class FamilyCubit extends Cubit<FamilyState> {
   FamilyCubit() : super(const FamilyState());
   StreamSubscription? _streamSubscription;
   Future<void> start() async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
     _streamSubscription = FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
         .collection('tasks')
-        .where("category_id", isEqualTo: "eZhVFQmLWirJXdySFljK")
+        .where("category_id", isEqualTo: "5")
         .snapshots()
         .listen(
       (tasks) {
