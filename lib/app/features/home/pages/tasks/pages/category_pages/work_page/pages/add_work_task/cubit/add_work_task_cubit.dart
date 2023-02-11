@@ -18,12 +18,6 @@ class AddWorkTaskCubit extends Cubit<AddWorkTaskState> {
     );
   }
 
-  Future<void> onDateChange() async {
-    emit(
-      AddWorkTaskState(),
-    );
-  }
-
   Future<void> changetextNote(
     String newTextNote,
   ) async {

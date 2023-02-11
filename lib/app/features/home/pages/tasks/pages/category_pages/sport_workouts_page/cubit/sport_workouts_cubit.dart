@@ -12,7 +12,10 @@ class SportWorkoutsCubit extends Cubit<SportWorkoutsState> {
   Future<void> start() async {
     _streamSubscription = FirebaseFirestore.instance
         .collection('tasks')
-        .where("category_id", isEqualTo: "7")
+        .where(
+          "category_id",
+          isEqualTo: "7",
+        )
         .snapshots()
         .listen(
       (tasks) {

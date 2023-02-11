@@ -74,7 +74,9 @@ class ItemsRepository {
     }
     return FirebaseFirestore.instance
         .collection('users')
-        .doc(userID)
+        .doc(
+          userID,
+        )
         .collection('tasks')
         .where("category_id", isEqualTo: "6")
         .snapshots()
