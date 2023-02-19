@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:modyfikacja_aplikacja/app/features/home/pages/add_tasks/pages/add_tasks_page_content.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/notepad_page/notepad_page_content.dart';
-
 import 'pages/tasks/pages/categories_page/pages/category_page_content.dart';
 
 class HomePage extends StatefulWidget {

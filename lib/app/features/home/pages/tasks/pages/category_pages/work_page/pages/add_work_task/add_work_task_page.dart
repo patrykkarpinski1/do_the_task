@@ -88,12 +88,6 @@ class AddWidget extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       children: [
-        const SizedBox(
-          height: 20,
-        ),
-        const SizedBox(
-          height: 20,
-        ),
         TextField(
           maxLength: 1000,
           maxLines: 10,

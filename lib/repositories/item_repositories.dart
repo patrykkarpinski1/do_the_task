@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
+import 'package:modyfikacja_aplikacja/models/list/category_model2.dart';
 import 'package:modyfikacja_aplikacja/models/note_model.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 
@@ -146,5 +147,75 @@ class ItemsRepository {
       text: doc['text'],
       releaseDate: (doc['date'] as Timestamp).toDate(),
     );
+  }
+
+  Future<void> addTask(
+    String text,
+    DateTime releaseDate,
+    TimeOfDay releaseTime,
+  ) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('tasks')
+        .add({
+      'text': text,
+      'category_id': '6',
+      'date': DateTime(
+        releaseDate.year,
+        releaseDate.month,
+        releaseDate.day,
+        releaseTime.hour,
+        releaseTime.minute,
+      ),
+    });
+  }
+
+  Future<void> addProba(
+    String text,
+    DateTime releaseDate,
+    TimeOfDay releaseTime,
+    String categoryId,
+  ) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('tasks')
+        .add({
+      'text': text,
+      'category_id': categoryId,
+      'date': DateTime(
+        releaseDate.year,
+        releaseDate.month,
+        releaseDate.day,
+        releaseTime.hour,
+        releaseTime.minute,
+      ),
+    });
+  }
+
+  Stream<List<CategoryModel2>> getCategoriesStream2() {
+    // final categoriesList = snapshot.data?.docs
+    //     .map((doc) => CategoryModel2(id: doc.id, title: doc['title']))
+    //     .toList();
+    return FirebaseFirestore.instance
+        .collection('categories')
+        .snapshots()
+        .map((querySnapshot) {
+      return querySnapshot.docs.map((doc) {
+        return (CategoryModel2(
+          id: doc.id,
+          title: doc['title'],
+        ));
+      }).toList();
+    });
   }
 }
