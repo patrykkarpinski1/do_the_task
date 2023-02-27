@@ -1,30 +1,28 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
-part 'add_task_state.dart';
+part 'category_state.dart';
 
-class AddTaskCubit extends Cubit<AddTaskState> {
-  AddTaskCubit(
-    this._itemsRepository,
-  ) : super(AddTaskState());
+class CategoryPageCubit extends Cubit<CategoryPageState> {
+  CategoryPageCubit(this._itemsRepository) : super(const CategoryPageState());
   final ItemsRepository _itemsRepository;
-
   StreamSubscription? _streamSubscription;
+
   Future<void> start() async {
     emit(
-      AddTaskState(
-        errorMessage: '',
+      const CategoryPageState(
         categories: [],
+        isLoading: true,
+        errorMessage: '',
       ),
     );
-
     _streamSubscription =
         _itemsRepository.getCategoriesStream().listen((categories) {
       emit(
-        AddTaskState(
+        CategoryPageState(
           categories: categories,
           isLoading: false,
           errorMessage: '',
@@ -34,7 +32,7 @@ class AddTaskCubit extends Cubit<AddTaskState> {
           ..onError((error) {
             {
               emit(
-                AddTaskState(
+                CategoryPageState(
                   categories: const [],
                   isLoading: false,
                   errorMessage: error.toString(),
@@ -42,35 +40,6 @@ class AddTaskCubit extends Cubit<AddTaskState> {
               );
             }
           });
-  }
-
-  Future<void> changetextNote(
-    String newTextNote,
-  ) async {
-    emit(
-      AddTaskState(textNote: newTextNote, categories: state.categories),
-    );
-  }
-
-  Future<void> add(
-    String text,
-    DateTime releaseDate,
-    TimeOfDay releaseTime,
-    String categoryId,
-  ) async {
-    try {
-      await _itemsRepository.addTasks(
-          text, releaseDate, releaseTime, categoryId);
-      emit(
-        AddTaskState(saved: true),
-      );
-    } catch (error) {
-      emit(
-        AddTaskState(
-          errorMessage: error.toString(),
-        ),
-      );
-    }
   }
 
   @override

@@ -6,6 +6,8 @@ class AddTaskState {
   final bool saved;
   DateTime? releaseDate;
   TimeOfDay? releaseTime;
+  final List<CategoryModel> categories;
+  final bool isLoading;
 
   AddTaskState({
     this.releaseTime,
@@ -13,5 +15,7 @@ class AddTaskState {
     this.errorMessage = '',
     this.textNote = '',
     this.saved = false,
+    this.categories = const [],
+    this.isLoading = false,
   });
 }

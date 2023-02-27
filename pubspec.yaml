@@ -46,6 +46,8 @@ dependencies:
   dropdown_textfield: ^1.0.7
   flutter_bloc: ^8.1.1
   intl: ^0.17.0
+  new_gradient_app_bar: ^0.2.0
+  fancy_bottom_navigation_2: ^0.3.5
 
 dev_dependencies:
   flutter_test:

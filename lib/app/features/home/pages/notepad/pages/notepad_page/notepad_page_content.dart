@@ -15,7 +15,7 @@ class NotepadPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 49, 171, 175),
+      backgroundColor: const Color.fromARGB(255, 208, 225, 234),
       appBar: AppBar(
         actions: [
           IconButton(
