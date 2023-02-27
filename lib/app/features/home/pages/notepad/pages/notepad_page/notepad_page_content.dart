@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/auth/pages/user_profile.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/add_notes_page/add_notes_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/notepad_page/cubit/notepad_cubit.dart';
@@ -42,37 +43,59 @@ class NotepadPageContent extends StatelessWidget {
       ),
       body: BlocProvider(
         create: (context) => NotepadCubit(ItemsRepository())..start(),
-        child: BlocBuilder<NotepadCubit, NotepadState>(
-          builder: (context, state) {
-            final noteModels = state.notes;
+        child: BlocConsumer<NotepadCubit, NotepadState>(
+            listener: (context, state) {
+          if (state.status == Status.error) {
+            final errorMessage = state.errorMessage ?? 'Unkown error';
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(errorMessage),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        }, builder: (context, state) {
+          final noteModels = state.notes;
+          if (state.status == Status.initial) {
+            return const Center(
+              child: Text('Initial state'),
+            );
+          }
+          if (state.status == Status.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (state.status == Status.success) {
             if (noteModels.isEmpty) {
               return const SizedBox.shrink();
             }
-            return GridView(
-              padding: const EdgeInsets.all(10),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 5,
-              ),
-              children: [
-                for (final noteModel in noteModels) ...[
-                  Dismissible(
-                    key: ValueKey(noteModel.id),
-                    onDismissed: (direction) {
-                      context
-                          .read<NotepadCubit>()
-                          .remove(documentID: noteModel.id);
-                    },
-                    child: _NoteWidget(
-                      noteModel: noteModel,
-                    ),
+          }
+
+          return GridView(
+            padding: const EdgeInsets.all(10),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 5,
+            ),
+            children: [
+              for (final noteModel in noteModels) ...[
+                Dismissible(
+                  key: ValueKey(noteModel.id),
+                  onDismissed: (direction) {
+                    context
+                        .read<NotepadCubit>()
+                        .remove(documentID: noteModel.id);
+                  },
+                  child: _NoteWidget(
+                    noteModel: noteModel,
                   ),
-                ]
-              ],
-            );
-          },
-        ),
+                ),
+              ]
+            ],
+          );
+        }),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 1, 100, 146),

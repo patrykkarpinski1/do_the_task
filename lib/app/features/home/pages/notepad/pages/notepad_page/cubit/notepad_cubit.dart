@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/models/note_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
@@ -12,10 +13,12 @@ class NotepadCubit extends Cubit<NotepadState> {
 
   StreamSubscription? _streamSubscription;
   Future<void> start() async {
+    emit(const NotepadState(status: Status.loading));
     _streamSubscription = _itemsRepository.getNotesStream().listen(
       (notes) {
         emit(
           NotepadState(
+            status: Status.success,
             notes: notes,
           ),
         );
@@ -24,7 +27,10 @@ class NotepadCubit extends Cubit<NotepadState> {
         (error) {
           {
             emit(
-              const NotepadState(loadingErrorOccured: true),
+              NotepadState(
+                status: Status.error,
+                errorMessage: error.toString(),
+              ),
             );
           }
         },

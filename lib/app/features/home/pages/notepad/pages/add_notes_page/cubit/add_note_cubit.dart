@@ -7,15 +7,6 @@ part 'add_note_state.dart';
 class AddNoteCubit extends Cubit<AddNoteState> {
   AddNoteCubit(this._itemsRepository) : super(const AddNoteState());
   final ItemsRepository _itemsRepository;
-  StreamSubscription? _streamSubscription;
-  Future<void> start() async {
-    emit(
-      const AddNoteState(
-        errorMessage: '',
-        textNote: '',
-      ),
-    );
-  }
 
   Future<void> changetextNote(
     String newTextNote,
@@ -38,11 +29,5 @@ class AddNoteCubit extends Cubit<AddNoteState> {
         ),
       );
     }
-  }
-
-  @override
-  Future<void> close() {
-    _streamSubscription?.cancel();
-    return super.close();
   }
 }

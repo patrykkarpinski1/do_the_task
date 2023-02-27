@@ -12,7 +12,7 @@ class AddNotes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddNoteCubit(ItemsRepository())..start(),
+      create: (context) => AddNoteCubit(ItemsRepository()),
       child: BlocListener<AddNoteCubit, AddNoteState>(
         listener: (context, state) {
           if (state.saved) {
