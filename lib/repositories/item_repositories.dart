@@ -6,17 +6,102 @@ import 'package:modyfikacja_aplikacja/models/note_model.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 
 class ItemsRepository {
-  Stream<List<CategoryModel>> getCategoriesStream() {
-    return FirebaseFirestore.instance
-        .collection('categories')
-        .snapshots()
-        .map((querySnapshot) {
-      return querySnapshot.docs.map((doc) {
-        return (CategoryModel(
-          id: doc.id,
-          title: doc['title'],
-        ));
-      }).toList();
+  // Stream<List<CategoryModel>> getCategoriesStream() {
+  //   return FirebaseFirestore.instance
+  //       .collection('categories')
+  //       .snapshots()
+  //       .map((querySnapshot) {
+  //     return querySnapshot.docs.map((doc) {
+  //       return (CategoryModel(
+  //         id: doc.id,
+  //         title: doc['title'],
+  //         images: doc['images'],
+  //       ));
+  //     }).toList();
+  //   });
+  // }
+
+  Future<List<CategoryModel>> getCategories() async {
+    final doc = await FirebaseFirestore.instance.collection('categories').get();
+    return doc.docs.map((doc) {
+      return (CategoryModel(
+        id: doc.id,
+        title: doc['title'],
+        images: doc['images'],
+      ));
+    }).toList();
+  }
+
+  Future<CategoryModel> getCategory({required String id}) async {
+    final doc =
+        await FirebaseFirestore.instance.collection('categories').doc(id).get();
+    return CategoryModel(
+      id: doc.id,
+      title: doc['title'],
+    );
+  }
+
+  Future<List<TaskModel>> getTasks({
+    required String categoryId,
+  }) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('tasks')
+        .where('category_id', isEqualTo: categoryId)
+        .get();
+
+    return doc.docs.map((doc) {
+      return (TaskModel(
+        id: doc.id,
+        text: doc['text'],
+        releaseDate: (doc['date'] as Timestamp).toDate(),
+        categoryId: doc['category_id'],
+      ));
+    }).toList();
+  }
+
+  Future<void> deleteTask({required String id}) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('tasks')
+        .doc(id)
+        .delete();
+  }
+
+  Future<void> addTasks(
+    String text,
+    DateTime releaseDate,
+    TimeOfDay releaseTime,
+    String categoryId,
+  ) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('tasks')
+        .add({
+      'text': text,
+      'category_id': categoryId,
+      'date': DateTime(
+        releaseDate.year,
+        releaseDate.month,
+        releaseDate.day,
+        releaseTime.hour,
+        releaseTime.minute,
+      ),
     });
   }
 
@@ -67,43 +152,7 @@ class ItemsRepository {
     );
   }
 
-  Future<List<TaskModel>> getTasks(
-    int categoryId,
-  ) async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
-    final doc = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
-        .collection('tasks')
-        .where('category_id', isEqualTo: categoryId.toString())
-        .get();
-
-    return doc.docs.map((doc) {
-      return (TaskModel(
-        id: doc.id,
-        text: doc['text'],
-        releaseDate: (doc['date'] as Timestamp).toDate(),
-      ));
-    }).toList();
-  }
-
-  Future<void> deleteTask({required String id}) async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
-        .collection('tasks')
-        .doc(id)
-        .delete();
-  }
-
-  Future<TaskModel> getWork({required String id}) async {
+  Future<TaskModel> getDetalisTask({required String id}) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
@@ -118,43 +167,7 @@ class ItemsRepository {
       id: doc.id,
       text: doc['text'],
       releaseDate: (doc['date'] as Timestamp).toDate(),
+      categoryId: doc['category_id'],
     );
-  }
-
-  Future<void> addTasks(
-    String text,
-    DateTime releaseDate,
-    TimeOfDay releaseTime,
-    String categoryId,
-  ) async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
-        .collection('tasks')
-        .add({
-      'text': text,
-      'category_id': categoryId,
-      'date': DateTime(
-        releaseDate.year,
-        releaseDate.month,
-        releaseDate.day,
-        releaseTime.hour,
-        releaseTime.minute,
-      ),
-    });
-  }
-
-  Future<List<CategoryModel>> getCategories() async {
-    final doc = await FirebaseFirestore.instance.collection('categories').get();
-    return doc.docs.map((doc) {
-      return (CategoryModel(
-        id: doc.id,
-        title: doc['title'],
-      ));
-    }).toList();
   }
 }

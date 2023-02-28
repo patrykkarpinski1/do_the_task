@@ -8,7 +8,7 @@ class DetalisCubit extends Cubit<DetalisState> {
   DetalisCubit(this._itemsRepository) : super(DetalisState(taskModel: null));
   final ItemsRepository _itemsRepository;
   Future<void> getTaskWithID(String id) async {
-    final taskModel = await _itemsRepository.getWork(id: id);
+    final taskModel = await _itemsRepository.getDetalisTask(id: id);
     emit(DetalisState(taskModel: taskModel));
   }
 }

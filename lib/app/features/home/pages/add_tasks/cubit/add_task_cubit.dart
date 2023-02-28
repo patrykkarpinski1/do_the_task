@@ -11,38 +11,42 @@ class AddTaskCubit extends Cubit<AddTaskState> {
     this._itemsRepository,
   ) : super(AddTaskState());
   final ItemsRepository _itemsRepository;
-
-  StreamSubscription? _streamSubscription;
   Future<void> start() async {
-    emit(
-      AddTaskState(
-        errorMessage: '',
-        categories: [],
-      ),
-    );
-
-    _streamSubscription =
-        _itemsRepository.getCategoriesStream().listen((categories) {
-      emit(
-        AddTaskState(
-          categories: categories,
-          isLoading: false,
-          errorMessage: '',
-        ),
-      );
-    })
-          ..onError((error) {
-            {
-              emit(
-                AddTaskState(
-                  categories: const [],
-                  isLoading: false,
-                  errorMessage: error.toString(),
-                ),
-              );
-            }
-          });
+    final categories = await _itemsRepository.getCategories();
+    emit(AddTaskState(categories: categories));
   }
+
+  // StreamSubscription? _streamSubscription;
+  // Future<void> start() async {
+  //   emit(
+  //     AddTaskState(
+  //       errorMessage: '',
+  //       categories: [],
+  //     ),
+  //   );
+
+  //   _streamSubscription =
+  //       _itemsRepository.getCategoriesStream().listen((categories) {
+  //     emit(
+  //       AddTaskState(
+  //         categories: categories,
+  //         isLoading: false,
+  //         errorMessage: '',
+  //       ),
+  //     );
+  //   })
+  //         ..onError((error) {
+  //           {
+  //             emit(
+  //               AddTaskState(
+  //                 categories: const [],
+  //                 isLoading: false,
+  //                 errorMessage: error.toString(),
+  //               ),
+  //             );
+  //           }
+  //         });
+  // }
 
   Future<void> changetextNote(
     String newTextNote,
@@ -73,9 +77,9 @@ class AddTaskCubit extends Cubit<AddTaskState> {
     }
   }
 
-  @override
-  Future<void> close() {
-    _streamSubscription?.cancel();
-    return super.close();
-  }
+  // @override
+  // Future<void> close() {
+  //   _streamSubscription?.cancel();
+  //   return super.close();
+  // }
 }

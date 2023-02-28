@@ -1,6 +1,7 @@
 class CategoryModel {
   final String title;
   final String id;
+  final String? images;
 
-  CategoryModel({required this.id, required this.title});
+  CategoryModel({this.images, required this.id, required this.title});
 }

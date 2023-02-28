@@ -5,54 +5,54 @@ import 'package:modyfikacja_aplikacja/app/features/detalis/cubit/detalis_cubit.d
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
-class DetalisWorkPage extends StatelessWidget {
-  const DetalisWorkPage({
+class DetalisTasksWidget extends StatelessWidget {
+  const DetalisTasksWidget({
     required this.id,
     Key? key,
   }) : super(key: key);
   final String id;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 49, 171, 175),
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Color.fromARGB(255, 247, 143, 15),
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(255, 1, 100, 146),
-        title: Text(
-          'WORK',
-          style: GoogleFonts.rubikBeastly(
-            color: const Color.fromARGB(255, 247, 143, 15),
-          ),
-        ),
-      ),
-      body: BlocProvider(
-        create: (context) => DetalisCubit(ItemsRepository())..getTaskWithID(id),
-        child: BlocBuilder<DetalisCubit, DetalisState>(
-          builder: (context, state) {
-            final taskModel = state.taskModel;
-            if (taskModel == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-
-            return ListView(
+    return BlocProvider(
+      create: (context) => DetalisCubit(ItemsRepository())..getTaskWithID(id),
+      child: BlocConsumer<DetalisCubit, DetalisState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          final taskModel = state.taskModel;
+          if (taskModel == null) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Scaffold(
+            backgroundColor: const Color.fromARGB(255, 49, 171, 175),
+            appBar: AppBar(
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Color.fromARGB(255, 247, 143, 15),
+                ),
+              ),
+              backgroundColor: const Color.fromARGB(255, 1, 100, 146),
+              title: Text(
+                'WORK',
+                style: GoogleFonts.rubikBeastly(
+                  color: const Color.fromARGB(255, 247, 143, 15),
+                ),
+              ),
+            ),
+            body: ListView(
               children: [
                 WorkTasks(
                   taskModel: taskModel,
                 ),
               ],
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

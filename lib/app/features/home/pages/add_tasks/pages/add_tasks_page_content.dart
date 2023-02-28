@@ -19,6 +19,7 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
   DateTime? releaseDate;
   TimeOfDay? releaseTime;
   String? selectedCategoryId;
+  String? text;
   // String? text;
   @override
   Widget build(BuildContext context) {
@@ -34,96 +35,78 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
             );
           }
         },
-        child: BlocBuilder<AddTaskCubit, AddTaskState>(
-          builder: (context, state) {
-            if (state.isLoading) {
-              return const Scaffold(
-                backgroundColor: Color.fromARGB(255, 49, 171, 175),
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-            return Scaffold(
-              backgroundColor: const Color.fromARGB(255, 208, 225, 234),
-              appBar: AppBar(
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      context.read<AddTaskCubit>().add(state.textNote,
-                          releaseDate!, releaseTime!, selectedCategoryId!);
-                    },
-                    icon: const Icon(
-                      Icons.check,
-                      color: Color.fromARGB(255, 247, 143, 15),
-                    ),
-                  ),
-                ],
-                backgroundColor: const Color.fromARGB(255, 1, 100, 146),
-                title: Text(
-                  'ADD NEW TASKS',
-                  style: GoogleFonts.rubikBeastly(
-                    color: const Color.fromARGB(255, 247, 143, 15),
-                  ),
+        child: Scaffold(
+          backgroundColor: const Color.fromARGB(255, 208, 225, 234),
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                onPressed: () {
+                  context.read<AddTaskCubit>().add(
+                      text!, releaseDate!, releaseTime!, selectedCategoryId!);
+                },
+                icon: const Icon(
+                  Icons.check,
+                  color: Color.fromARGB(255, 247, 143, 15),
                 ),
               ),
-              body: ListView(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                children: [
-                  const TextFieldWidget(
-                      // onTextChanged: (newValue) {
-                      //   setState(() {
-                      //     text = newValue;
-                      //   });
-                      // },
+            ],
+            backgroundColor: const Color.fromARGB(255, 1, 100, 146),
+            title: Text(
+              'ADD NEW TASKS',
+              style: GoogleFonts.rubikBeastly(
+                color: const Color.fromARGB(255, 247, 143, 15),
+              ),
+            ),
+          ),
+          body: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+            children: [
+              TextFieldWidget(
+                onTextChanged: (newValue) {
+                  setState(() {
+                    text = newValue;
+                  });
+                },
+              ),
+              DateButtonWidget(
+                onDateChanged: (newValue) {
+                  setState(() {
+                    releaseDate = newValue;
+                  });
+                },
+                selectedDateFormatted: releaseDate == null
+                    ? null
+                    : DateFormat.yMMMMEEEEd().format(releaseDate!),
+              ),
+              TimeButtonWidget(
+                  selectedTimeFormatted: releaseTime?.toString(),
+                  onTimeChanged: (newValue) {
+                    setState(() {
+                      releaseTime = newValue;
+                    });
+                  }),
+              BlocBuilder<AddTaskCubit, AddTaskState>(
+                builder: (context, state) {
+                  if (state.isLoading) {
+                    return const Scaffold(
+                      backgroundColor: Color.fromARGB(255, 49, 171, 175),
+                      body: Center(
+                        child: CircularProgressIndicator(),
                       ),
-                  DateButtonWidget(
-                    onDateChanged: (newValue) {
-                      setState(() {
-                        releaseDate = newValue;
-                      });
-                    },
-                    selectedDateFormatted: releaseDate == null
-                        ? null
-                        : DateFormat.yMMMMEEEEd().format(releaseDate!),
-                  ),
-                  TimeButtonWidget(
-                      selectedTimeFormatted: releaseTime?.toString(),
-                      onTimeChanged: (newValue) {
-                        setState(() {
-                          releaseTime = newValue;
-                        });
-                      }),
-                  BlocBuilder<AddTaskCubit, AddTaskState>(
-                    builder: (
-                      context,
-                      state,
-                    ) {
-                      if (state.isLoading) {
-                        return const Scaffold(
-                          backgroundColor: Color.fromARGB(255, 49, 171, 175),
-                          body: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      }
-                      // final categoriesList = state.categories;
-                      final categoriesList = state.categories
-                          .map((doc) =>
-                              CategoryModel(id: doc.id, title: doc.title))
-                          .toList();
-                      return DropDownButtonWidget(
-                          onValueChanged: (newValue) {
-                            selectedCategoryId = newValue!;
-                          },
-                          categoriesList: categoriesList);
-                    },
-                  ),
-                ],
+                    );
+                  }
+                  final categoriesList = state.categories
+                      .map((doc) => CategoryModel(id: doc.id, title: doc.title))
+                      .toList();
+                  return DropDownButtonWidget(
+                      onValueChanged: (newValue) {
+                        selectedCategoryId = newValue!;
+                      },
+                      categoriesList: categoriesList);
+                },
               ),
-            );
-          },
+            ],
+          ),
         ),
       ),
     );
@@ -275,10 +258,10 @@ class _DateButtonWidgetState extends State<DateButtonWidget> {
 
 class TextFieldWidget extends StatefulWidget {
   const TextFieldWidget({
-    // required this.onTextChanged,
+    required this.onTextChanged,
     Key? key,
   }) : super(key: key);
-  // final Function(String) onTextChanged;
+  final Function(String) onTextChanged;
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -294,9 +277,10 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         hintText: 'co chcesz zrobić',
         border: OutlineInputBorder(),
       ),
-      onChanged: (newTextNote) {
-        context.read<AddTaskCubit>().changetextNote(newTextNote);
-      },
+      onChanged: widget.onTextChanged,
+      // (newTextNote) {
+      //   context.read<AddTaskCubit>().changetextNote(newTextNote);
+      // },
     );
   }
 }

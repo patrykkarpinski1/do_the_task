@@ -1,68 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/app/features/detalis/pages/detalis_work_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/detalis/pages/detalis_task_widget_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/pages/tasks_pages/cubit/task_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
-class WorkPage extends StatelessWidget {
-  const WorkPage({
+class TasksWidget extends StatelessWidget {
+  const TasksWidget({
+    required this.categoryId,
+    this.taskmodel,
     Key? key,
   }) : super(key: key);
+  final TaskModel? taskmodel;
+  final String categoryId;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 49, 171, 175),
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Color.fromARGB(255, 247, 143, 15),
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(255, 1, 100, 146),
-        title: Text(
-          'WORK',
-          style: GoogleFonts.rubikBeastly(
-            color: const Color.fromARGB(255, 247, 143, 15),
-          ),
-        ),
-      ),
-      body: BlocProvider(
-        create: (context) => TaskCubit(ItemsRepository())..getTasks(6),
-        child: BlocBuilder<TaskCubit, TaskState>(
-          builder: (context, state) {
-            final taskModels = state.tasks;
-            if (taskModels.isEmpty) {
-              return const SizedBox.shrink();
-            }
-            return ListView(
-              children: [
-                for (final taskModel in taskModels) ...[
-                  WorkTasks(
-                    taskModel: taskModel,
-                  ),
-                ],
+    return BlocProvider(
+      create: (context) => TaskCubit(ItemsRepository())..getTasks(categoryId),
+      child: BlocBuilder<TaskCubit, TaskState>(
+        builder: (context, state) {
+          final taskModels = state.tasks;
+          if (taskModels.isEmpty) {
+            return const SizedBox.shrink();
+          }
+          return ListView(
+            children: [
+              for (final taskModel in taskModels) ...[
+                Dismissible(
+                    key: ValueKey(taskModel.id),
+                    onDismissed: (direction) {
+                      context.read<TaskCubit>().remove(
+                            documentID: taskModel.id,
+                          );
+                    },
+                    child: _TasksWidget(taskmodel: taskModel)),
               ],
-            );
-          },
-        ),
+            ],
+          );
+        },
       ),
     );
   }
 }
 
-class WorkTasks extends StatelessWidget {
-  const WorkTasks({
-    required this.taskModel,
+class _TasksWidget extends StatelessWidget {
+  const _TasksWidget({
     Key? key,
+    required this.taskmodel,
   }) : super(key: key);
-  final TaskModel taskModel;
+
+  final TaskModel? taskmodel;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +75,7 @@ class WorkTasks extends StatelessWidget {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) =>
-                              DetalisWorkPage(id: taskModel.id),
+                              DetalisTasksWidget(id: taskmodel!.id),
                         ),
                       );
                     },
@@ -97,7 +85,7 @@ class WorkTasks extends StatelessWidget {
                       height: 180,
                       color: const Color.fromARGB(255, 49, 171, 175),
                       child: Text(
-                        taskModel.text,
+                        taskmodel!.text,
                       ),
                     ),
                   ),
@@ -114,12 +102,12 @@ class WorkTasks extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(taskModel.releaseDateFormatted()),
+                        Text(taskmodel!.releaseDateFormatted()),
                         const SizedBox(
                           height: 10,
                         ),
                         Text(
-                          taskModel.releaseTimeFormatted(),
+                          taskmodel!.releaseTimeFormatted(),
                         ),
                       ],
                     ),
@@ -129,9 +117,9 @@ class WorkTasks extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {
-                      context
-                          .read<TaskCubit>()
-                          .remove(documentID: taskModel.id, categoryId: 6);
+                      context.read<TaskCubit>().remove(
+                            documentID: taskmodel!.id,
+                          );
                     },
                     icon: const Icon(Icons.delete),
                   ),

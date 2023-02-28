@@ -11,11 +11,11 @@ class TaskCubit extends Cubit<TaskState> {
   final ItemsRepository _itemsRepository;
 
   Future<void> getTasks(
-    int categoryId,
+    String categoryId,
   ) async {
     try {
       final results = await _itemsRepository.getTasks(
-        categoryId,
+        categoryId: categoryId,
       );
       emit(
         TaskState(tasks: results),
@@ -31,7 +31,7 @@ class TaskCubit extends Cubit<TaskState> {
 
   Future<void> remove({
     required String documentID,
-    required int categoryId,
+    String? categoryId,
   }) async {
     try {
       await _itemsRepository.deleteTask(id: documentID);
@@ -39,7 +39,7 @@ class TaskCubit extends Cubit<TaskState> {
       emit(
         const TaskState(removingErrorOccured: true),
       );
-      getTasks(categoryId);
+      getTasks(categoryId!);
     }
   }
 }
