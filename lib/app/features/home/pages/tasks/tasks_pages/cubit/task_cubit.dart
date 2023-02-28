@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
@@ -13,17 +14,27 @@ class TaskCubit extends Cubit<TaskState> {
   Future<void> getTasks(
     String categoryId,
   ) async {
+    emit(
+      const TaskState(
+        status: Status.loading,
+        tasks: [],
+      ),
+    );
     try {
       final results = await _itemsRepository.getTasks(
         categoryId: categoryId,
       );
       emit(
-        TaskState(tasks: results),
+        TaskState(
+          status: Status.success,
+          tasks: results,
+        ),
       );
     } catch (error) {
       emit(
-        const TaskState(
-          removingErrorOccured: true,
+        TaskState(
+          status: Status.error,
+          errorMessage: error.toString(),
         ),
       );
     }

@@ -6,21 +6,6 @@ import 'package:modyfikacja_aplikacja/models/note_model.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 
 class ItemsRepository {
-  // Stream<List<CategoryModel>> getCategoriesStream() {
-  //   return FirebaseFirestore.instance
-  //       .collection('categories')
-  //       .snapshots()
-  //       .map((querySnapshot) {
-  //     return querySnapshot.docs.map((doc) {
-  //       return (CategoryModel(
-  //         id: doc.id,
-  //         title: doc['title'],
-  //         images: doc['images'],
-  //       ));
-  //     }).toList();
-  //   });
-  // }
-
   Future<List<CategoryModel>> getCategories() async {
     final doc = await FirebaseFirestore.instance.collection('categories').get();
     return doc.docs.map((doc) {

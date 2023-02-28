@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/add_tasks/cubit/add_task_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
@@ -20,94 +21,98 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
   TimeOfDay? releaseTime;
   String? selectedCategoryId;
   String? text;
-  // String? text;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddTaskCubit(ItemsRepository())..start(),
-      child: BlocListener<AddTaskCubit, AddTaskState>(
+      child: BlocConsumer<AddTaskCubit, AddTaskState>(
         listener: (context, state) {
-          if (state.errorMessage.isNotEmpty) {
+          if (state.status == Status.error) {
+            final errorMessage = state.errorMessage ?? 'Unkown error';
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage),
+                content: Text(errorMessage),
+                backgroundColor: Colors.red,
               ),
             );
           }
         },
-        child: Scaffold(
-          backgroundColor: const Color.fromARGB(255, 208, 225, 234),
-          appBar: AppBar(
-            actions: [
-              IconButton(
-                onPressed: () {
-                  context.read<AddTaskCubit>().add(
-                      text!, releaseDate!, releaseTime!, selectedCategoryId!);
-                },
-                icon: const Icon(
-                  Icons.check,
-                  color: Color.fromARGB(255, 247, 143, 15),
+        builder: (context, state) {
+          if (state.status == Status.initial) {
+            return const Center(
+              child: Text('Initial state'),
+            );
+          }
+          if (state.status == Status.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (state.status == Status.success) {
+            if (state.categories.isEmpty) {
+              return const SizedBox.shrink();
+            }
+          }
+          final categoriesList = state.categories;
+          return Scaffold(
+            backgroundColor: const Color.fromARGB(255, 208, 225, 234),
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    context.read<AddTaskCubit>().add(
+                        text!, releaseDate!, releaseTime!, selectedCategoryId!);
+                  },
+                  icon: const Icon(
+                    Icons.check,
+                    color: Color.fromARGB(255, 247, 143, 15),
+                  ),
+                ),
+              ],
+              backgroundColor: const Color.fromARGB(255, 1, 100, 146),
+              title: Text(
+                'ADD NEW TASKS',
+                style: GoogleFonts.rubikBeastly(
+                  color: const Color.fromARGB(255, 247, 143, 15),
                 ),
               ),
-            ],
-            backgroundColor: const Color.fromARGB(255, 1, 100, 146),
-            title: Text(
-              'ADD NEW TASKS',
-              style: GoogleFonts.rubikBeastly(
-                color: const Color.fromARGB(255, 247, 143, 15),
-              ),
             ),
-          ),
-          body: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-            children: [
-              TextFieldWidget(
-                onTextChanged: (newValue) {
-                  setState(() {
-                    text = newValue;
-                  });
-                },
-              ),
-              DateButtonWidget(
-                onDateChanged: (newValue) {
-                  setState(() {
-                    releaseDate = newValue;
-                  });
-                },
-                selectedDateFormatted: releaseDate == null
-                    ? null
-                    : DateFormat.yMMMMEEEEd().format(releaseDate!),
-              ),
-              TimeButtonWidget(
-                  selectedTimeFormatted: releaseTime?.toString(),
-                  onTimeChanged: (newValue) {
+            body: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              children: [
+                TextFieldWidget(
+                  onTextChanged: (newValue) {
                     setState(() {
-                      releaseTime = newValue;
+                      text = newValue;
                     });
-                  }),
-              BlocBuilder<AddTaskCubit, AddTaskState>(
-                builder: (context, state) {
-                  if (state.isLoading) {
-                    return const Scaffold(
-                      backgroundColor: Color.fromARGB(255, 49, 171, 175),
-                      body: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }
-                  final categoriesList = state.categories
-                      .map((doc) => CategoryModel(id: doc.id, title: doc.title))
-                      .toList();
-                  return DropDownButtonWidget(
-                      onValueChanged: (newValue) {
-                        selectedCategoryId = newValue!;
-                      },
-                      categoriesList: categoriesList);
-                },
-              ),
-            ],
-          ),
-        ),
+                  },
+                ),
+                DateButtonWidget(
+                  onDateChanged: (newValue) {
+                    setState(() {
+                      releaseDate = newValue;
+                    });
+                  },
+                  selectedDateFormatted: releaseDate == null
+                      ? null
+                      : DateFormat.yMMMMEEEEd().format(releaseDate!),
+                ),
+                TimeButtonWidget(
+                    selectedTimeFormatted: releaseTime?.toString(),
+                    onTimeChanged: (newValue) {
+                      setState(() {
+                        releaseTime = newValue;
+                      });
+                    }),
+                DropDownButtonWidget(
+                    onValueChanged: (newValue) {
+                      selectedCategoryId = newValue!;
+                    },
+                    categoriesList: categoriesList),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -125,10 +130,10 @@ class DropDownButtonWidget extends StatefulWidget {
   final CategoryModel? categoryModels;
 
   @override
-  State<DropDownButtonWidget> createState() => _AddWidgetState();
+  State<DropDownButtonWidget> createState() => _DropDownButtonWidget();
 }
 
-class _AddWidgetState extends State<DropDownButtonWidget> {
+class _DropDownButtonWidget extends State<DropDownButtonWidget> {
   CategoryModel? selectedValue;
   @override
   Widget build(BuildContext context) {
@@ -183,7 +188,7 @@ class _AddWidgetState extends State<DropDownButtonWidget> {
   }
 }
 
-class TimeButtonWidget extends StatefulWidget {
+class TimeButtonWidget extends StatelessWidget {
   const TimeButtonWidget({
     this.categoryModels,
     required this.selectedTimeFormatted,
@@ -193,13 +198,6 @@ class TimeButtonWidget extends StatefulWidget {
   final CategoryModel? categoryModels;
   final String? selectedTimeFormatted;
   final Function(TimeOfDay?) onTimeChanged;
-
-  @override
-  State<TimeButtonWidget> createState() => _TimeButtonWidgetState();
-}
-
-class _TimeButtonWidgetState extends State<TimeButtonWidget> {
-  TimeOfDay? releaseTime;
 
   @override
   Widget build(BuildContext context) {
@@ -212,14 +210,14 @@ class _TimeButtonWidgetState extends State<TimeButtonWidget> {
           confirmText: "Save",
           helpText: "Select time",
         );
-        widget.onTimeChanged(selectedTime);
+        onTimeChanged(selectedTime);
       },
-      child: Text(widget.selectedTimeFormatted ?? 'Select a Time'),
+      child: Text(selectedTimeFormatted ?? 'Select a Time'),
     );
   }
 }
 
-class DateButtonWidget extends StatefulWidget {
+class DateButtonWidget extends StatelessWidget {
   const DateButtonWidget({
     Key? key,
     required this.onDateChanged,
@@ -232,12 +230,6 @@ class DateButtonWidget extends StatefulWidget {
   final CategoryModel? categoryModels;
 
   @override
-  State<DateButtonWidget> createState() => _DateButtonWidgetState();
-}
-
-class _DateButtonWidgetState extends State<DateButtonWidget> {
-  DateTime? releaseDate;
-  @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
@@ -249,25 +241,20 @@ class _DateButtonWidgetState extends State<DateButtonWidget> {
             const Duration(days: 365 * 10),
           ),
         );
-        widget.onDateChanged(selectedDate);
+        onDateChanged(selectedDate);
       },
-      child: Text(widget.selectedDateFormatted ?? 'Select a date'),
+      child: Text(selectedDateFormatted ?? 'Select a date'),
     );
   }
 }
 
-class TextFieldWidget extends StatefulWidget {
+class TextFieldWidget extends StatelessWidget {
   const TextFieldWidget({
     required this.onTextChanged,
     Key? key,
   }) : super(key: key);
   final Function(String) onTextChanged;
 
-  @override
-  State<TextFieldWidget> createState() => _TextFieldWidgetState();
-}
-
-class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -277,10 +264,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         hintText: 'co chcesz zrobić',
         border: OutlineInputBorder(),
       ),
-      onChanged: widget.onTextChanged,
-      // (newTextNote) {
-      //   context.read<AddTaskCubit>().changetextNote(newTextNote);
-      // },
+      onChanged: onTextChanged,
     );
   }
 }

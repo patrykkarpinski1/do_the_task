@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/pages/category_page/cubit/category_page_cubit.dart';
+import 'package:modyfikacja_aplikacja/app/core/enums.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/category_page/cubit/category_page_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
@@ -22,14 +23,36 @@ class TasksPage extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           CategoryPageCubit(ItemsRepository())..getCategoryWithID(id),
-      child: BlocBuilder<CategoryPageCubit, CategoryPageState>(
+      child: BlocConsumer<CategoryPageCubit, CategoryPageState>(
+        listener: (context, state) {
+          if (state.status == Status.error) {
+            final errorMessage = state.errorMessage ?? 'Unkown error';
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(errorMessage),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
         builder: (context, state) {
-          final categoryModel = state.categoryModel;
-          if (categoryModel == null) {
+          if (state.status == Status.initial) {
+            return const Center(
+              child: Text('Initial state'),
+            );
+          }
+          if (state.status == Status.loading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
+          if (state.status == Status.success) {
+            if (state.categoryModel == null) {
+              return const SizedBox.shrink();
+            }
+          }
+          final categoryModel = state.categoryModel;
+
           return Scaffold(
             backgroundColor: const Color.fromARGB(255, 49, 171, 175),
             appBar: AppBar(
@@ -44,7 +67,7 @@ class TasksPage extends StatelessWidget {
               ),
               backgroundColor: const Color.fromARGB(255, 1, 100, 146),
               title: Text(
-                categoryModel.title,
+                categoryModel!.title,
                 style: GoogleFonts.rubikBeastly(
                   color: const Color.fromARGB(255, 247, 143, 15),
                 ),

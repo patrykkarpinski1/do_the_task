@@ -2,7 +2,8 @@ import 'package:fancy_bottom_navigation_2/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/add_tasks/pages/add_tasks_page_content.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/notepad_page/notepad_page_content.dart';
-import 'pages/tasks/pages/category_page/pages/category_page_content.dart';
+
+import 'pages/tasks/category_page/pages/category_page_content.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({

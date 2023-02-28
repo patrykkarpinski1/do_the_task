@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/detalis/pages/detalis_task_widget_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/pages/tasks_pages/cubit/task_cubit.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/tasks_pages/cubit/task_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
@@ -18,12 +19,35 @@ class TasksWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => TaskCubit(ItemsRepository())..getTasks(categoryId),
-      child: BlocBuilder<TaskCubit, TaskState>(
-        builder: (context, state) {
-          final taskModels = state.tasks;
-          if (taskModels.isEmpty) {
-            return const SizedBox.shrink();
+      child: BlocConsumer<TaskCubit, TaskState>(
+        listener: (context, state) {
+          if (state.status == Status.error) {
+            final errorMessage = state.errorMessage ?? 'Unkown error';
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(errorMessage),
+                backgroundColor: Colors.red,
+              ),
+            );
           }
+        },
+        builder: (context, state) {
+          if (state.status == Status.initial) {
+            return const Center(
+              child: Text('Initial state'),
+            );
+          }
+          if (state.status == Status.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (state.status == Status.success) {
+            if (state.tasks.isEmpty) {
+              return const SizedBox.shrink();
+            }
+          }
+          final taskModels = state.tasks;
           return ListView(
             children: [
               for (final taskModel in taskModels) ...[

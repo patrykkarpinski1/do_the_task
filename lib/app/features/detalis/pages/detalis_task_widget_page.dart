@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/detalis/cubit/detalis_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
@@ -16,14 +17,35 @@ class DetalisTasksWidget extends StatelessWidget {
     return BlocProvider(
       create: (context) => DetalisCubit(ItemsRepository())..getTaskWithID(id),
       child: BlocConsumer<DetalisCubit, DetalisState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state.status == Status.error) {
+            final errorMessage = state.errorMessage ?? 'Unkown error';
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(errorMessage),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
         builder: (context, state) {
-          final taskModel = state.taskModel;
-          if (taskModel == null) {
+          if (state.status == Status.initial) {
+            return const Center(
+              child: Text('Initial state'),
+            );
+          }
+          if (state.status == Status.loading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
+          if (state.status == Status.success) {
+            if (state.taskModel == null) {
+              return const SizedBox.shrink();
+            }
+          }
+          final taskModel = state.taskModel;
+
           return Scaffold(
             backgroundColor: const Color.fromARGB(255, 49, 171, 175),
             appBar: AppBar(
@@ -47,7 +69,7 @@ class DetalisTasksWidget extends StatelessWidget {
             body: ListView(
               children: [
                 WorkTasks(
-                  taskModel: taskModel,
+                  taskModel: taskModel!,
                 ),
               ],
             ),
