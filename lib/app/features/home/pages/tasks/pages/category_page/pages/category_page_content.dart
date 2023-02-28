@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/features/auth/pages/user_profile.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/pages/category_page/cubit/category_page_cubit.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/pages/tasks_pages/pages/task_page/tasks_page.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/pages/tasks_pages/pages/tasks_page.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
