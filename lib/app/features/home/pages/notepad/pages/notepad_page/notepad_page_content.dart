@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:modyfikacja_aplikacja/app/features/auth/pages/user_profile.dart';
+import 'package:modyfikacja_aplikacja/app/features/detalis/pages/detalis_note.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/add_notes_page/add_notes_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/notepad_page/cubit/notepad_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/note_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class NotepadPageContent extends StatelessWidget {
   const NotepadPageContent({
@@ -17,27 +18,18 @@ class NotepadPageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 208, 225, 234),
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const UserProfile(),
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.person,
-              color: Color.fromARGB(255, 247, 143, 15),
+      appBar: NewGradientAppBar(
+        gradient: const LinearGradient(
+          colors: [Colors.cyan, Colors.indigo],
+        ),
+        title: Center(
+          child: Text(
+            'NOTEPAD',
+            style: GoogleFonts.arimo(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 56, 55, 55),
             ),
-          ),
-        ],
-        backgroundColor: const Color.fromARGB(255, 1, 100, 146),
-        title: Text(
-          'NOTEPAD',
-          style: GoogleFonts.rubikBeastly(
-            color: const Color.fromARGB(255, 247, 143, 15),
           ),
         ),
       ),
@@ -81,16 +73,8 @@ class NotepadPageContent extends StatelessWidget {
             ),
             children: [
               for (final noteModel in noteModels) ...[
-                Dismissible(
-                  key: ValueKey(noteModel.id),
-                  onDismissed: (direction) {
-                    context
-                        .read<NotepadCubit>()
-                        .remove(documentID: noteModel.id);
-                  },
-                  child: _NoteWidget(
-                    noteModel: noteModel,
-                  ),
+                _NoteWidget(
+                  noteModel: noteModel,
                 ),
               ]
             ],
@@ -98,7 +82,8 @@ class NotepadPageContent extends StatelessWidget {
         }),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 1, 100, 146),
+        splashColor: const Color.fromARGB(255, 41, 117, 199),
+        backgroundColor: const Color.fromARGB(255, 122, 166, 192),
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -109,7 +94,7 @@ class NotepadPageContent extends StatelessWidget {
         },
         child: const Icon(
           Icons.add,
-          color: Color.fromARGB(255, 247, 143, 15),
+          color: Color.fromARGB(255, 56, 55, 55),
         ),
       ),
     );
@@ -125,12 +110,52 @@ class _NoteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: const Color.fromARGB(255, 133, 220, 223),
-      child: Container(
-        margin: const EdgeInsets.all(10),
-        child: Text(
-          noteModel.note,
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => DetalisNotePage()),
+        );
+      },
+      child: Card(
+        color: Colors.white,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: SizedBox(
+                width: 160,
+                height: 115,
+                child: Text(
+                  noteModel.note,
+                ),
+              ),
+            ),
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        noteModel.releaseDateFormatted(),
+                        style: GoogleFonts.gruppo(
+                            color: const Color.fromARGB(255, 29, 28, 28),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          context
+                              .read<NotepadCubit>()
+                              .remove(documentID: noteModel.id);
+                        },
+                        icon: const Icon(Icons.delete_sweep_outlined))
+                  ],
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );

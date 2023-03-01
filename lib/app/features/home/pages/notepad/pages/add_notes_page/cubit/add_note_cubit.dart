@@ -16,9 +16,12 @@ class AddNoteCubit extends Cubit<AddNoteState> {
     );
   }
 
-  Future<void> add(String note) async {
+  Future<void> add(
+    String note,
+    DateTime releaseDate,
+  ) async {
     try {
-      await _itemsRepository.addNote(note);
+      await _itemsRepository.addNote(note, releaseDate);
       emit(
         const AddNoteState(saved: true),
       );

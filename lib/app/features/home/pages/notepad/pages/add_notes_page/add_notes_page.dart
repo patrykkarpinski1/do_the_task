@@ -3,12 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/add_notes_page/cubit/add_note_cubit.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
-class AddNotes extends StatelessWidget {
+class AddNotes extends StatefulWidget {
   const AddNotes({
     super.key,
   });
 
+  @override
+  State<AddNotes> createState() => _AddNotesState();
+}
+
+class _AddNotesState extends State<AddNotes> {
+  final releaseDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -29,15 +36,15 @@ class AddNotes extends StatelessWidget {
         },
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: const Color.fromARGB(255, 49, 171, 175),
-            appBar: AppBar(
+            backgroundColor: const Color.fromARGB(255, 208, 225, 234),
+            appBar: NewGradientAppBar(
               leading: IconButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 icon: const Icon(
                   Icons.arrow_back,
-                  color: Color.fromARGB(255, 247, 143, 15),
+                  color: Color.fromARGB(255, 56, 55, 55),
                 ),
               ),
               actions: [
@@ -45,19 +52,26 @@ class AddNotes extends StatelessWidget {
                   onPressed: state.textNote.isEmpty
                       ? null
                       : () {
-                          context.read<AddNoteCubit>().add(state.textNote);
+                          context
+                              .read<AddNoteCubit>()
+                              .add(state.textNote, releaseDate);
                         },
                   icon: const Icon(
                     Icons.check,
-                    color: Color.fromARGB(255, 247, 143, 15),
+                    color: Color.fromARGB(255, 56, 55, 55),
                   ),
                 ),
               ],
-              backgroundColor: const Color.fromARGB(255, 1, 100, 146),
-              title: Text(
-                'NOTE',
-                style: GoogleFonts.rubikBeastly(
-                  color: const Color.fromARGB(255, 247, 143, 15),
+              gradient:
+                  const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
+              title: Center(
+                child: Text(
+                  'NOTE',
+                  style: GoogleFonts.arimo(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 56, 55, 55),
+                  ),
                 ),
               ),
             ),
@@ -66,11 +80,12 @@ class AddNotes extends StatelessWidget {
               children: [
                 TextField(
                   decoration: const InputDecoration(
-                      hintText: "Your note",
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Color.fromARGB(255, 133, 220, 223)),
-                  maxLength: 10000,
+                    hintText: "Your note",
+                    border: OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  maxLength: 1000,
                   maxLines: 30,
                   onChanged: (newTextNote) {
                     context.read<AddNoteCubit>().changetextNote(newTextNote);

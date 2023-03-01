@@ -105,6 +105,7 @@ class ItemsRepository {
         return NoteModel(
           note: doc['note'],
           id: doc.id,
+          releaseDate: (doc['date'] as Timestamp).toDate(),
         );
       }).toList();
     });
@@ -123,17 +124,24 @@ class ItemsRepository {
         .delete();
   }
 
-  Future<void> addNote(String note) async {
+  Future<void> addNote(
+    String note,
+    DateTime releaseDate,
+  ) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
     }
+
     await FirebaseFirestore.instance
         .collection('users')
         .doc(userID)
         .collection('notepad')
         .add(
-      {'note': note},
+      {
+        'note': note,
+        'date': DateTime.now(),
+      },
     );
   }
 
@@ -153,6 +161,24 @@ class ItemsRepository {
       text: doc['text'],
       releaseDate: (doc['date'] as Timestamp).toDate(),
       categoryId: doc['category_id'],
+    );
+  }
+
+  Future<NoteModel> getDetalisNote({required String id}) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('notepad')
+        .doc(id)
+        .get();
+    return NoteModel(
+      id: doc.id,
+      note: doc['note'],
+      releaseDate: (doc['date'] as Timestamp).toDate(),
     );
   }
 }

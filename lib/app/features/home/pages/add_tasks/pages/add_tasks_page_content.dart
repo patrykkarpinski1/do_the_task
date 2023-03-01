@@ -6,6 +6,7 @@ import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/add_tasks/cubit/add_task_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class AddTasksPageContent extends StatefulWidget {
   const AddTasksPageContent({
@@ -56,7 +57,7 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
           final categoriesList = state.categories;
           return Scaffold(
             backgroundColor: const Color.fromARGB(255, 208, 225, 234),
-            appBar: AppBar(
+            appBar: NewGradientAppBar(
               actions: [
                 IconButton(
                   onPressed: () {
@@ -65,15 +66,20 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
                   },
                   icon: const Icon(
                     Icons.check,
-                    color: Color.fromARGB(255, 247, 143, 15),
+                    color: Color.fromARGB(255, 56, 55, 55),
                   ),
                 ),
               ],
-              backgroundColor: const Color.fromARGB(255, 1, 100, 146),
-              title: Text(
-                'ADD NEW TASKS',
-                style: GoogleFonts.rubikBeastly(
-                  color: const Color.fromARGB(255, 247, 143, 15),
+              gradient:
+                  const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
+              title: Center(
+                child: Text(
+                  'ADD NEW TASKS',
+                  style: GoogleFonts.arimo(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 56, 55, 55),
+                  ),
                 ),
               ),
             ),

@@ -11,6 +11,6 @@ class NotepadState {
     this.notes = const [],
     this.removingErrorOccured = false,
     this.status = Status.initial,
-    this.errorMessage,
+    this.errorMessage = '',
   });
 }

@@ -7,6 +7,7 @@ import 'package:modyfikacja_aplikacja/models/category_model.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 import 'package:modyfikacja_aplikacja/widgets/tasks_widget.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class TasksPage extends StatelessWidget {
   const TasksPage({
@@ -55,21 +56,24 @@ class TasksPage extends StatelessWidget {
 
           return Scaffold(
             backgroundColor: const Color.fromARGB(255, 49, 171, 175),
-            appBar: AppBar(
+            appBar: NewGradientAppBar(
               leading: IconButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 icon: const Icon(
                   Icons.arrow_back,
-                  color: Color.fromARGB(255, 247, 143, 15),
+                  color: Color.fromARGB(255, 56, 55, 55),
                 ),
               ),
-              backgroundColor: const Color.fromARGB(255, 1, 100, 146),
+              gradient:
+                  const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
               title: Text(
                 categoryModel!.title,
-                style: GoogleFonts.rubikBeastly(
-                  color: const Color.fromARGB(255, 247, 143, 15),
+                style: GoogleFonts.arimo(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: const Color.fromARGB(255, 56, 55, 55),
                 ),
               ),
             ),
