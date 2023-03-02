@@ -14,7 +14,15 @@ class TaskModel {
   final String categoryId;
 
   String releaseDateFormatted() {
-    return DateFormat.yMMMMd().format(releaseDate);
+    return DateFormat.d().format(releaseDate);
+  }
+
+  String releaseDateFormatted2() {
+    return DateFormat.MMMM().format(releaseDate);
+  }
+
+  String releaseDateFormatted3() {
+    return DateFormat.EEEE().format(releaseDate);
   }
 
   String releaseTimeFormatted() {

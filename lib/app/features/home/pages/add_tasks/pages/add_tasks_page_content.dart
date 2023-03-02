@@ -264,7 +264,7 @@ class TextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      maxLength: 1000,
+      maxLength: 2000,
       maxLines: 10,
       decoration: const InputDecoration(
         hintText: 'co chcesz zrobić',

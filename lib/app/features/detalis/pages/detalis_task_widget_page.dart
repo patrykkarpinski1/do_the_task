@@ -9,10 +9,12 @@ import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class DetalisTasksWidget extends StatelessWidget {
   const DetalisTasksWidget({
+    this.taskModel,
     required this.id,
     Key? key,
   }) : super(key: key);
   final String id;
+  final TaskModel? taskModel;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -48,7 +50,7 @@ class DetalisTasksWidget extends StatelessWidget {
           final taskModel = state.taskModel;
 
           return Scaffold(
-            backgroundColor: const Color.fromARGB(255, 49, 171, 175),
+            backgroundColor: Colors.white,
             appBar: NewGradientAppBar(
               leading: IconButton(
                 onPressed: () {
@@ -61,19 +63,36 @@ class DetalisTasksWidget extends StatelessWidget {
               ),
               gradient:
                   const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
-              title: Text(
-                'YOUR TASK',
-                style: GoogleFonts.arimo(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: const Color.fromARGB(255, 56, 55, 55),
-                ),
+              title: Row(
+                children: [
+                  Text(
+                    taskModel!.releaseDateFormatted3(),
+                    style: GoogleFonts.gruppo(
+                        color: const Color.fromARGB(255, 56, 55, 55),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 36),
+                  ),
+                ],
               ),
             ),
             body: ListView(
               children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: SizedBox(
+                    child: Text(
+                      taskModel.releaseTimeFormatted(),
+                      style: GoogleFonts.gruppo(
+                          color: const Color.fromARGB(255, 56, 55, 55),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 36),
+                    ),
+                  ),
+                ),
                 WorkTasks(
-                  taskModel: taskModel!,
+                  taskModel: taskModel,
                 ),
               ],
             ),
@@ -97,47 +116,11 @@ class WorkTasks extends StatelessWidget {
       padding: const EdgeInsets.all(15.0),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: const Color.fromARGB(255, 133, 220, 223),
-        ),
+            borderRadius: BorderRadius.circular(12), color: Colors.white),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    width: 180,
-                    height: 180,
-                    color: const Color.fromARGB(255, 49, 171, 175),
-                    child: Text(
-                      taskModel.text,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    width: 120,
-                    color: const Color.fromARGB(255, 49, 171, 175),
-                    child: Text(
-                      taskModel.releaseDate.toString(),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 80,
-                  ),
-                ],
-              ),
-            ],
+          child: Text(
+            taskModel.text,
           ),
         ),
       ),

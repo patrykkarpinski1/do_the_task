@@ -41,7 +41,7 @@ class DetalisNotePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
-        child: ListView(children: [Text('notatka')]),
+        child: ListView(children: const [Text('notatka')]),
       ),
     );
   }

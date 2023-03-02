@@ -113,7 +113,7 @@ class _NoteWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => DetalisNotePage()),
+          MaterialPageRoute(builder: (_) => const DetalisNotePage()),
         );
       },
       child: Card(

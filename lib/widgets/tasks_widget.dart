@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/detalis/pages/detalis_task_widget_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/tasks_pages/cubit/task_cubit.dart';
@@ -53,6 +54,24 @@ class TasksWidget extends StatelessWidget {
               for (final taskModel in taskModels) ...[
                 Dismissible(
                     key: ValueKey(taskModel.id),
+                    background: const DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 248, 33, 18),
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 32.0),
+                          child: Icon(
+                            Icons.delete_sweep,
+                          ),
+                        ),
+                      ),
+                    ),
+                    confirmDismiss: (direction) async {
+                      // only from left to right
+                      return direction == DismissDirection.startToEnd;
+                    },
                     onDismissed: (direction) {
                       context.read<TaskCubit>().remove(
                             documentID: taskModel.id,
@@ -79,78 +98,117 @@ class _TasksWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.only(
+        top: 4,
+      ),
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: const Color.fromARGB(255, 133, 220, 223),
+        decoration: const BoxDecoration(
+          color: Colors.white,
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              DetalisTasksWidget(id: taskmodel!.id),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      width: 180,
-                      height: 180,
-                      color: const Color.fromARGB(255, 49, 171, 175),
+        child: Row(
+          children: [
+            Column(
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(
+                          left: 15, right: 15, top: 5, bottom: 10),
+                      width: 230,
+                      height: 150,
+                      color: Colors.white,
                       child: Text(
                         taskmodel!.text,
+                        style: GoogleFonts.gruppo(
+                            fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(3),
-                    width: 140,
-                    color: const Color.fromARGB(255, 49, 171, 175),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(taskmodel!.releaseDateFormatted()),
-                        const SizedBox(
-                          height: 10,
+                    Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(55),
                         ),
-                        Text(
-                          taskmodel!.releaseTimeFormatted(),
+                        width: 150,
+                        height: 30,
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  const Color.fromARGB(142, 15, 193, 107)),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(55),
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetalisTasksWidget(id: taskmodel!.id),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Read',
+                              style: GoogleFonts.gruppo(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            )))
+                  ],
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      width: 130,
+                      height: 210,
+                      color: const Color.fromARGB(142, 15, 193, 107),
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            Text(
+                              taskmodel!.releaseDateFormatted(),
+                              style: GoogleFonts.gruppo(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 75),
+                            ),
+                            Text(
+                              taskmodel!.releaseDateFormatted2(),
+                              style: GoogleFonts.gruppo(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
+                            const SizedBox(height: 60),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  taskmodel!.releaseTimeFormatted(),
+                                  style: GoogleFonts.gruppo(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 80,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      context.read<TaskCubit>().remove(
-                            documentID: taskmodel!.id,
-                          );
-                    },
-                    icon: const Icon(Icons.delete),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                  ],
+                )
+              ],
+            )
+          ],
         ),
       ),
     );
