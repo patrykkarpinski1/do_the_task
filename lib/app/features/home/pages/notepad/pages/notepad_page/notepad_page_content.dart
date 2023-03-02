@@ -113,49 +113,48 @@ class _NoteWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const DetalisNotePage()),
+          MaterialPageRoute(
+              builder: (_) => DetalisNotePage(
+                    id: noteModel.id,
+                  )),
         );
       },
       child: Card(
         color: Colors.white,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: SizedBox(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Column(
+            children: [
+              SizedBox(
                 width: 160,
                 height: 115,
                 child: Text(
                   noteModel.note,
                 ),
               ),
-            ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      child: Text(
-                        noteModel.releaseDateFormatted(),
-                        style: GoogleFonts.gruppo(
-                            color: const Color.fromARGB(255, 29, 28, 28),
-                            fontWeight: FontWeight.bold),
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      noteModel.releaseDateFormatted(),
+                      style: GoogleFonts.gruppo(
+                          color: const Color.fromARGB(255, 29, 28, 28),
+                          fontWeight: FontWeight.bold),
                     ),
-                    IconButton(
-                        onPressed: () {
-                          context
-                              .read<NotepadCubit>()
-                              .remove(documentID: noteModel.id);
-                        },
-                        icon: const Icon(Icons.delete_sweep_outlined))
-                  ],
-                ),
-              ],
-            )
-          ],
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        context
+                            .read<NotepadCubit>()
+                            .remove(documentID: noteModel.id);
+                      },
+                      icon: const Icon(Icons.delete_sweep_outlined))
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
