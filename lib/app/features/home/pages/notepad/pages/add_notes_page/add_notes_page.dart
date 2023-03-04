@@ -5,17 +5,14 @@ import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/add_
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
-class AddNotes extends StatefulWidget {
-  const AddNotes({
+class AddNotes extends StatelessWidget {
+  AddNotes({
     super.key,
   });
 
-  @override
-  State<AddNotes> createState() => _AddNotesState();
-}
-
-class _AddNotesState extends State<AddNotes> {
   final releaseDate = DateTime.now();
+  final controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -79,6 +76,7 @@ class _AddNotesState extends State<AddNotes> {
               padding: const EdgeInsets.all(20),
               children: [
                 TextField(
+                  controller: controller,
                   decoration: const InputDecoration(
                     hintText: "Your note",
                     border: OutlineInputBorder(),

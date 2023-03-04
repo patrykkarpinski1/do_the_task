@@ -124,37 +124,42 @@ class _TasksWidget extends StatelessWidget {
                       ),
                     ),
                     Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(55),
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Colors.cyan, Colors.indigo],
                         ),
-                        width: 150,
-                        height: 30,
-                        child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color.fromARGB(142, 15, 193, 107)),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(55),
-                                ),
-                              ),
+                        borderRadius: BorderRadius.circular(55),
+                      ),
+                      width: 150,
+                      height: 30,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  DetalisTasksWidget(id: taskmodel!.id),
                             ),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      DetalisTasksWidget(id: taskmodel!.id),
-                                ),
-                              );
-                            },
-                            child: Text(
-                              'Read',
-                              style: GoogleFonts.gruppo(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.white,
-                              ),
-                            )))
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.transparent,
+                          backgroundColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(55),
+                          ),
+                        ),
+                        child: Text(
+                          'Read',
+                          style: GoogleFonts.gruppo(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -164,9 +169,15 @@ class _TasksWidget extends StatelessWidget {
                 Column(
                   children: [
                     Container(
-                      width: 130,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Colors.cyan, Colors.indigo],
+                        ),
+                      ),
+                      width: 125,
                       height: 210,
-                      color: const Color.fromARGB(142, 15, 193, 107),
                       child: Padding(
                         padding: const EdgeInsets.only(right: 10),
                         child: Column(

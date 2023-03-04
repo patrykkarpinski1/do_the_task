@@ -6,6 +6,7 @@ import 'package:modyfikacja_aplikacja/app/features/auth/pages/user_profile.dart'
 import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/category_page/cubit/category_page_cubit.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 import 'package:modyfikacja_aplikacja/widgets/category_widget.dart';
+import 'package:modyfikacja_aplikacja/widgets/drawer_menu_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class CategoryPageContent extends StatelessWidget {
@@ -49,16 +50,28 @@ class CategoryPageContent extends StatelessWidget {
           return Scaffold(
             backgroundColor: const Color.fromARGB(255, 208, 225, 234),
             appBar: NewGradientAppBar(
+              automaticallyImplyLeading: false,
               gradient:
                   const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
-              title: Center(
-                child: Text(
-                  'CHOOSE TASKS CATEGORY',
-                  style: GoogleFonts.arimo(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: const Color.fromARGB(255, 56, 55, 55),
-                  ),
+              title: Builder(
+                builder: (context) => Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.list,
+                        color: Color.fromARGB(255, 56, 55, 55),
+                      ),
+                      onPressed: () => Scaffold.of(context).openDrawer(),
+                    ),
+                    Text(
+                      'CHOOSE TASK CATEGORY',
+                      style: GoogleFonts.arimo(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: const Color.fromARGB(255, 56, 55, 55),
+                      ),
+                    )
+                  ],
                 ),
               ),
               actions: [
@@ -76,6 +89,9 @@ class CategoryPageContent extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            drawer: const Drawer(
+              child: DrawerMenuWidget(),
             ),
             body: Padding(
               padding: const EdgeInsets.all(15.0),
