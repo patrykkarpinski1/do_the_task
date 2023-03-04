@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
 import 'package:modyfikacja_aplikacja/models/note_model.dart';
+import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 
 class ItemsRepository {
@@ -143,6 +144,26 @@ class ItemsRepository {
         'date': DateTime.now(),
       },
     );
+  }
+
+  Stream<List<PhotoNoteModel>> getPhotosStream() {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('photo')
+        .snapshots()
+        .map((querySnapshot) {
+      return querySnapshot.docs.map((doc) {
+        return PhotoNoteModel(
+          photo: doc['photo_note'],
+          id: doc.id,
+        );
+      }).toList();
+    });
   }
 
   Future<TaskModel> getDetalisTask({required String id}) async {

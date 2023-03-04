@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/detalis/pages/detalis_task_widget_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/tasks_pages/cubit/task_cubit.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/cubit/task_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
@@ -199,7 +199,7 @@ class _TasksWidget extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18),
                             ),
-                            const SizedBox(height: 60),
+                            const SizedBox(height: 45),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [

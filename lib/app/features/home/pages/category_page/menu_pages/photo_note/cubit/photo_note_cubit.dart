@@ -1,24 +1,25 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:modyfikacja_aplikacja/models/note_model.dart';
+import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
-part 'notepad_state.dart';
+part 'photo_note_state.dart';
 
-class NotepadCubit extends Cubit<NotepadState> {
-  NotepadCubit(this._itemsRepository) : super(const NotepadState());
+class PhotoNoteCubit extends Cubit<PhotoNoteState> {
+  PhotoNoteCubit(this._itemsRepository) : super(const PhotoNoteState());
   final ItemsRepository _itemsRepository;
-
   StreamSubscription? _streamSubscription;
+
   Future<void> start() async {
-    emit(const NotepadState(status: Status.loading));
-    _streamSubscription = _itemsRepository.getNotesStream().listen(
-      (notes) {
+    emit(const PhotoNoteState(status: Status.loading));
+    _streamSubscription = _itemsRepository.getPhotosStream().listen(
+      (photos) {
         emit(
-          NotepadState(
+          PhotoNoteState(
             status: Status.success,
-            notes: notes,
+            photos: photos,
           ),
         );
       },
@@ -26,7 +27,7 @@ class NotepadCubit extends Cubit<NotepadState> {
         (error) {
           {
             emit(
-              NotepadState(
+              PhotoNoteState(
                 status: Status.error,
                 errorMessage: error.toString(),
               ),
@@ -34,17 +35,6 @@ class NotepadCubit extends Cubit<NotepadState> {
           }
         },
       );
-  }
-
-  Future<void> remove({required String documentID}) async {
-    try {
-      await _itemsRepository.deleteNote(id: documentID);
-    } catch (error) {
-      emit(
-        const NotepadState(removingErrorOccured: true),
-      );
-      start();
-    }
   }
 
   @override

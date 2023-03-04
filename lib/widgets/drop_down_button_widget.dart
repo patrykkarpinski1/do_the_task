@@ -46,7 +46,7 @@ class _DropDownButtonWidget extends State<DropDownButtonWidget> {
           Icons.arrow_drop_down_circle,
           color: Color.fromARGB(255, 56, 55, 55),
         ),
-        value: selectedValue ?? widget.categoriesList.first,
+        value: selectedValue,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(55),

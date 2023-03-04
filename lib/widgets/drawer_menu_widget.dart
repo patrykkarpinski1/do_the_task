@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/category_page/menu_pages/photo_note/photo_note_page.dart';
 
 class DrawerMenuWidget extends StatelessWidget {
   const DrawerMenuWidget({
@@ -38,7 +39,13 @@ class DrawerMenuWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const PhotoNotePage(),
+                ),
+              );
+            },
             leading: const Icon(Icons.photo_camera),
             title: const Text('PHOTO NOTE'),
           ),

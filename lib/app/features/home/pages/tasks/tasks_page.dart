@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/category_page/cubit/category_page_cubit.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/category_page/cubit/category_page_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
@@ -57,17 +57,17 @@ class TasksPage extends StatelessWidget {
           return Scaffold(
             backgroundColor: const Color.fromARGB(237, 255, 255, 255),
             appBar: NewGradientAppBar(
-              gradient:
-                  const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
               leading: IconButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 icon: const Icon(
                   Icons.arrow_back,
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 56, 55, 55),
                 ),
               ),
+              gradient:
+                  const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
               title: Text(
                 categoryModel!.title,
                 style: GoogleFonts.arimo(

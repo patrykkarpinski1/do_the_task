@@ -80,20 +80,28 @@ class NotepadPageContent extends StatelessWidget {
           );
         }),
       ),
-      floatingActionButton: FloatingActionButton(
-        splashColor: const Color.fromARGB(255, 41, 117, 199),
-        backgroundColor: const Color.fromARGB(255, 122, 166, 192),
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => AddNotes(),
-              fullscreenDialog: true,
-            ),
-          );
-        },
-        child: const Icon(
-          Icons.add,
-          color: Color.fromARGB(255, 56, 55, 55),
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Colors.cyan, Colors.indigo],
+          ),
+          borderRadius: BorderRadius.circular(55),
+        ),
+        child: FloatingActionButton(
+          splashColor: const Color.fromARGB(255, 41, 117, 199),
+          backgroundColor: Colors.transparent,
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => AddNotes(),
+                fullscreenDialog: true,
+              ),
+            );
+          },
+          child: const Icon(
+            Icons.add,
+            color: Color.fromARGB(255, 56, 55, 55),
+          ),
         ),
       ),
     );
