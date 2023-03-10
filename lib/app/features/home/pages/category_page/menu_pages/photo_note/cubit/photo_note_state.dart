@@ -5,11 +5,13 @@ class PhotoNoteState {
   final bool removingErrorOccured;
   final Status status;
   final String? errorMessage;
+  final bool saved;
 
-  const PhotoNoteState({
+  PhotoNoteState({
     this.photos = const [],
     this.removingErrorOccured = false,
     this.status = Status.initial,
     this.errorMessage = '',
+    this.saved = false,
   });
 }

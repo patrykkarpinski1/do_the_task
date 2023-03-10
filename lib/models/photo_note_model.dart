@@ -1,8 +1,9 @@
 class PhotoNoteModel {
   PhotoNoteModel({
-    required this.photo,
     required this.id,
+    required this.photo,
   });
-  final String photo;
+
   final String id;
+  final String photo;
 }

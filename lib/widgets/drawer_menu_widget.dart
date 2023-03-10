@@ -21,10 +21,6 @@ class DrawerMenuWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           DrawerHeader(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('images/blue.jpg'), fit: BoxFit.fill),
-            ),
             child: Column(
               children: [
                 Text(
@@ -52,21 +48,6 @@ class DrawerMenuWidget extends StatelessWidget {
           ListTile(
             onTap: () {},
             title: const Text('REST API'),
-          ),
-          ListTile(
-            onTap: () {},
-            leading: const Icon(Icons.restaurant_menu),
-            title: const Text('MEAL FOR DAY'),
-          ),
-          ListTile(
-            onTap: () {},
-            leading: const Icon(Icons.task),
-            title: const Text('TASKS FOR TODAY '),
-          ),
-          ListTile(
-            onTap: () {},
-            leading: const Icon(Icons.today_sharp),
-            title: const Text('TASKS FOR WEEK '),
           ),
           ListTile(
             leading: const Icon(Icons.arrow_back),

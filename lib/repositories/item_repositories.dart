@@ -1,10 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
 import 'package:modyfikacja_aplikacja/models/note_model.dart';
 import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
+import 'package:path/path.dart' as path;
+import 'dart:io';
 
 class ItemsRepository {
   Future<List<CategoryModel>> getCategories() async {
@@ -25,6 +29,45 @@ class ItemsRepository {
       id: doc.id,
       title: doc['title'],
     );
+  }
+
+  Future<void> addPhotos(
+    XFile image,
+  ) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child('photo_note')
+        .child(path.basename(image.path));
+    await ref.putFile(File(image.path));
+    final url = await ref.getDownloadURL();
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('photo_note')
+        .add({'photo': url});
+  }
+
+  Future<List<PhotoNoteModel>> getPhotos() async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('photo_note')
+        .get();
+
+    return doc.docs.map((doc) {
+      return PhotoNoteModel(
+        id: doc.id,
+        photo: doc['photo'],
+      );
+    }).toList();
   }
 
   Future<List<TaskModel>> getTasks({
@@ -144,26 +187,6 @@ class ItemsRepository {
         'date': DateTime.now(),
       },
     );
-  }
-
-  Stream<List<PhotoNoteModel>> getPhotosStream() {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
-    return FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
-        .collection('photo')
-        .snapshots()
-        .map((querySnapshot) {
-      return querySnapshot.docs.map((doc) {
-        return PhotoNoteModel(
-          photo: doc['photo_note'],
-          id: doc.id,
-        );
-      }).toList();
-    });
   }
 
   Future<TaskModel> getDetalisTask({required String id}) async {

@@ -10,10 +10,9 @@ import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 class TasksWidget extends StatelessWidget {
   const TasksWidget({
     required this.categoryId,
-    this.taskmodel,
     Key? key,
   }) : super(key: key);
-  final TaskModel? taskmodel;
+
   final String categoryId;
 
   @override
@@ -53,31 +52,32 @@ class TasksWidget extends StatelessWidget {
             children: [
               for (final taskModel in taskModels) ...[
                 Dismissible(
-                    key: ValueKey(taskModel.id),
-                    background: const DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 248, 33, 18),
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 32.0),
-                          child: Icon(
-                            Icons.delete_sweep,
-                          ),
+                  key: ValueKey(taskModel.id),
+                  background: const DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 248, 33, 18),
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 32.0),
+                        child: Icon(
+                          Icons.delete_sweep,
                         ),
                       ),
                     ),
-                    confirmDismiss: (direction) async {
-                      // only from left to right
-                      return direction == DismissDirection.startToEnd;
-                    },
-                    onDismissed: (direction) {
-                      context.read<TaskCubit>().remove(
-                            documentID: taskModel.id,
-                          );
-                    },
-                    child: _TasksWidget(taskmodel: taskModel)),
+                  ),
+                  confirmDismiss: (direction) async {
+                    // only from left to right
+                    return direction == DismissDirection.startToEnd;
+                  },
+                  onDismissed: (direction) {
+                    context.read<TaskCubit>().remove(
+                          documentID: taskModel.id,
+                        );
+                  },
+                  child: _TasksWidget(taskmodel: taskModel),
+                ),
               ],
             ],
           );
@@ -98,127 +98,121 @@ class _TasksWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        top: 4,
-      ),
+      padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
       child: Container(
-        decoration: const BoxDecoration(
+        padding: const EdgeInsets.only(left: 10),
+        decoration: BoxDecoration(
           color: Colors.white,
+          borderRadius: BorderRadius.circular(25),
         ),
         child: Row(
           children: [
             Column(
               children: [
-                Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(
-                          left: 15, right: 15, top: 5, bottom: 10),
-                      width: 230,
-                      height: 150,
-                      color: Colors.white,
-                      child: Text(
-                        taskmodel!.text,
-                        style: GoogleFonts.gruppo(
-                            fontWeight: FontWeight.bold, fontSize: 14),
-                      ),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  width: 230,
+                  height: 150,
+                  color: Colors.white,
+                  child: Text(
+                    taskmodel!.text,
+                    style: GoogleFonts.gruppo(
+                        fontWeight: FontWeight.bold, fontSize: 14),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [Colors.cyan, Colors.indigo],
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Colors.cyan, Colors.indigo],
+                    borderRadius: BorderRadius.circular(55),
+                  ),
+                  width: 150,
+                  height: 30,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DetalisTasksWidget(id: taskmodel!.id),
                         ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.transparent,
+                      backgroundColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(55),
                       ),
-                      width: 150,
-                      height: 30,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  DetalisTasksWidget(id: taskmodel!.id),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.transparent,
-                          backgroundColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(55),
-                          ),
-                        ),
-                        child: Text(
-                          'Read',
-                          style: GoogleFonts.gruppo(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                        ),
+                    ),
+                    child: Text(
+                      'Read',
+                      style: GoogleFonts.gruppo(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.white,
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
             Column(
               children: [
-                Column(
-                  children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Colors.cyan, Colors.indigo],
+                Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(25),
+                        bottomRight: Radius.circular(25)),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [Colors.cyan, Colors.indigo],
+                    ),
+                  ),
+                  width: 120,
+                  height: 210,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 40,
                         ),
-                      ),
-                      width: 125,
-                      height: 210,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Column(
+                        Text(
+                          taskmodel!.releaseDateFormatted(),
+                          style: GoogleFonts.gruppo(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 75),
+                        ),
+                        Text(
+                          taskmodel!.releaseDateFormatted2(),
+                          style: GoogleFonts.gruppo(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                        const SizedBox(height: 45),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            const SizedBox(
-                              height: 40,
-                            ),
                             Text(
-                              taskmodel!.releaseDateFormatted(),
+                              taskmodel!.releaseTimeFormatted(),
                               style: GoogleFonts.gruppo(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 75),
-                            ),
-                            Text(
-                              taskmodel!.releaseDateFormatted2(),
-                              style: GoogleFonts.gruppo(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            ),
-                            const SizedBox(height: 45),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  taskmodel!.releaseTimeFormatted(),
-                                  style: GoogleFonts.gruppo(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                                  fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 )
               ],
-            )
+            ),
           ],
         ),
       ),
