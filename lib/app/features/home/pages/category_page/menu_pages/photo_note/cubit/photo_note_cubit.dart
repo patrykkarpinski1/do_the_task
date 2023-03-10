@@ -37,14 +37,11 @@ class PhotoNoteCubit extends Cubit<PhotoNoteState> {
         image,
       );
       emit(
-        PhotoNoteState(
-          saved: true,
-        ),
+        PhotoNoteState(saved: true),
       );
     } catch (error) {
       emit(
         PhotoNoteState(
-          status: Status.error,
           errorMessage: error.toString(),
         ),
       );

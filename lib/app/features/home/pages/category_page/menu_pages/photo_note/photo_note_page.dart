@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
+import 'package:modyfikacja_aplikacja/app/features/detalis/pages/detalis_photo_note.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/category_page/menu_pages/photo_note/add_photo_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/category_page/menu_pages/photo_note/cubit/photo_note_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
@@ -97,15 +98,15 @@ class PhotoNotePage extends StatelessWidget {
                 ),
               ),
             ),
-            body: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: ListView(
-                children: [
-                  for (final photoNoteModel in photoNoteModels) ...[
-                    PhotoWidget(photoNoteModel: photoNoteModel),
-                  ]
-                ],
+            body: GridView(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
               ),
+              children: [
+                for (final photoNoteModel in photoNoteModels) ...[
+                  PhotoWidget(photoNoteModel: photoNoteModel),
+                ]
+              ],
             ),
             backgroundColor: const Color.fromARGB(255, 208, 225, 234),
           );
@@ -124,8 +125,26 @@ class PhotoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(top: 50),
-        child: Image(image: NetworkImage(photoNoteModel!.photo)));
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (_) => DetalisPhotoNotePage(id: photoNoteModel!.id)),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10, left: 5, right: 5),
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: NetworkImage(
+                photoNoteModel!.photo,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

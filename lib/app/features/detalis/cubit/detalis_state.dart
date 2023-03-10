@@ -5,8 +5,10 @@ class DetalisState {
   final Status status;
   final String? errorMessage;
   final NoteModel? noteModel;
+  final PhotoNoteModel? photoNoteModel;
 
   DetalisState({
+    this.photoNoteModel,
     this.noteModel,
     this.taskModel,
     this.status = Status.initial,
