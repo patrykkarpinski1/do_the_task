@@ -58,17 +58,27 @@ class DetalisPhotoNotePage extends StatelessWidget {
                 ),
                 gradient:
                     const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
-                title: const Center(
-                  child: Text('Your Photo'),
-                ),
               ),
-              body: Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: Image(
-                  image: NetworkImage(
-                    photoNoteModel!.photo,
+              body: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 50),
+                    child: Image(
+                      image: NetworkImage(
+                        photoNoteModel!.photo,
+                      ),
+                    ),
                   ),
-                ),
+                  ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<DetalisCubit>()
+                            .remove(documentID: photoNoteModel.id);
+
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Delete'))
+                ],
               ));
         },
       ),

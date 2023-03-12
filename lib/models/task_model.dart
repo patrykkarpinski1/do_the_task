@@ -13,15 +13,15 @@ class TaskModel {
   final DateTime releaseDate;
   final String categoryId;
 
-  String releaseDateFormatted() {
+  String day() {
     return DateFormat.d().format(releaseDate);
   }
 
-  String releaseDateFormatted2() {
+  String month() {
     return DateFormat.MMMM().format(releaseDate);
   }
 
-  String releaseDateFormatted3() {
+  String dayFullName() {
     return DateFormat.EEEE().format(releaseDate);
   }
 

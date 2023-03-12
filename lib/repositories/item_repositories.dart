@@ -81,6 +81,7 @@ class ItemsRepository {
         .collection('users')
         .doc(userID)
         .collection('tasks')
+        .orderBy('date')
         .where('category_id', isEqualTo: categoryId)
         .get();
 
@@ -164,6 +165,22 @@ class ItemsRepository {
         .collection('users')
         .doc(userID)
         .collection('notepad')
+        .doc(id)
+        .delete();
+  }
+
+  Future<void> deletePhoto({
+    required String id,
+  }) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('photo_note')
         .doc(id)
         .delete();
   }

@@ -12,7 +12,7 @@ class AddTaskCubit extends Cubit<AddTaskState> {
     this._itemsRepository,
   ) : super(AddTaskState());
   final ItemsRepository _itemsRepository;
-  Future<void> start() async {
+  Future<void> fetch() async {
     emit(
       AddTaskState(
         status: Status.loading,
@@ -51,7 +51,7 @@ class AddTaskCubit extends Cubit<AddTaskState> {
           saved: true,
         ),
       );
-      start();
+      fetch();
     } catch (error) {
       emit(
         AddTaskState(

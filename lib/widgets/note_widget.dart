@@ -42,7 +42,7 @@ class NoteWidget extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(left: 10),
                     child: Text(
-                      noteModel.releaseDateFormatted(),
+                      noteModel.noteDate(),
                       style: GoogleFonts.gruppo(
                           color: const Color.fromARGB(255, 29, 28, 28),
                           fontWeight: FontWeight.bold),

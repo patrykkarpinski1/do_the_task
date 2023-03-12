@@ -13,7 +13,7 @@ class TextFieldWidget extends StatelessWidget {
       maxLength: 2000,
       maxLines: 10,
       decoration: const InputDecoration(
-          hintText: 'co chcesz zrobić',
+          hintText: 'write your tasks',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(35)),
           ),

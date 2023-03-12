@@ -57,19 +57,47 @@ class DetalisNotePage extends StatelessWidget {
                 ),
               ),
               actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.more_vert,
-                    color: Color.fromARGB(255, 56, 55, 55),
-                  ),
-                ),
+                PopupMenuButton(
+                    icon: const Icon(
+                      Icons.more_vert,
+                      color: Color.fromARGB(255, 56, 55, 55),
+                    ),
+                    itemBuilder: (context) {
+                      return [
+                        PopupMenuItem<int>(
+                          value: 0,
+                          child: Text(
+                            "Delete note ",
+                            style: GoogleFonts.arimo(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: const Color.fromARGB(255, 56, 55, 55),
+                            ),
+                          ),
+                        ),
+                        PopupMenuItem<int>(
+                          value: 1,
+                          child: Text(
+                            "Edit note ",
+                            style: GoogleFonts.arimo(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: const Color.fromARGB(255, 56, 55, 55),
+                            ),
+                          ),
+                        ),
+                      ];
+                    },
+                    onSelected: (value) {
+                      if (value == 0) {}
+                      if (value == 1) {}
+                    }),
               ],
               gradient:
                   const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
               title: Center(
                 child: Text(
-                  noteModel!.releaseDateFormatted(),
+                  noteModel!.noteDate(),
                   style: GoogleFonts.arimo(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -86,7 +114,7 @@ class DetalisNotePage extends StatelessWidget {
                   style: GoogleFonts.arimo(
                     fontSize: 16,
                   ),
-                )
+                ),
               ]),
             ),
           );

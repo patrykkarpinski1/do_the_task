@@ -6,8 +6,10 @@ class DetalisState {
   final String? errorMessage;
   final NoteModel? noteModel;
   final PhotoNoteModel? photoNoteModel;
+  final bool removingErrorOccured;
 
   DetalisState({
+    this.removingErrorOccured = false,
     this.photoNoteModel,
     this.noteModel,
     this.taskModel,

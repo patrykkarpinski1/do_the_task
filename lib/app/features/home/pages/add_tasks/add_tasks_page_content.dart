@@ -29,7 +29,7 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddTaskCubit(ItemsRepository())..start(),
+      create: (context) => AddTaskCubit(ItemsRepository())..fetch(),
       child: BlocConsumer<AddTaskCubit, AddTaskState>(
         listener: (context, state) {
           if (state.status == Status.error) {
@@ -144,6 +144,7 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
                                   releaseDate!,
                                   releaseTime!,
                                   selectedCategoryId!);
+                              //setstata release date = null
                             },
                             child: Text(
                               'Add Task',

@@ -66,7 +66,7 @@ class DetalisTasksWidget extends StatelessWidget {
               title: Row(
                 children: [
                   Text(
-                    taskModel!.releaseDateFormatted3(),
+                    taskModel!.dayFullName(),
                     style: GoogleFonts.gruppo(
                         color: const Color.fromARGB(255, 56, 55, 55),
                         fontWeight: FontWeight.bold,

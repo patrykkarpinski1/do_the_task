@@ -5,7 +5,7 @@ class NoteModel {
   final String note;
   final String id;
   final DateTime releaseDate;
-  String releaseDateFormatted() {
-    return DateFormat.yMMMMd().format(releaseDate);
+  String noteDate() {
+    return DateFormat('dd.MM.yyyy').format(releaseDate);
   }
 }

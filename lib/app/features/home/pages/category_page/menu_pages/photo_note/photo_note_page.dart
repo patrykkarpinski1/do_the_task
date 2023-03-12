@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:modyfikacja_aplikacja/app/features/detalis/pages/detalis_photo_note.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/category_page/menu_pages/photo_note/add_photo_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/category_page/menu_pages/photo_note/cubit/photo_note_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
+import 'package:modyfikacja_aplikacja/widgets/photo_widgets.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class PhotoNotePage extends StatelessWidget {
@@ -42,73 +42,12 @@ class PhotoNotePage extends StatelessWidget {
             );
           }
           if (state.status == Status.success) {
-            if (state.photos.isEmpty) {
-              return const SizedBox.shrink();
-            }
+            final photoNoteModels = state.photos;
+            return ViewPage(photoNoteModels: photoNoteModels);
           }
-          final photoNoteModels = state.photos;
-          return Scaffold(
-            appBar: NewGradientAppBar(
-              actions: [
-                PopupMenuButton(
-                    icon: const Icon(
-                      Icons.more_vert,
-                      color: Color.fromARGB(255, 56, 55, 55),
-                    ),
-                    itemBuilder: (context) {
-                      return [
-                        PopupMenuItem<int>(
-                          value: 0,
-                          child: Text(
-                            "Add Photo",
-                            style: GoogleFonts.arimo(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: const Color.fromARGB(255, 56, 55, 55),
-                            ),
-                          ),
-                        ),
-                      ];
-                    },
-                    onSelected: (value) {
-                      if (value == 0) {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => const AddPhotoPage()));
-                      }
-                    }),
-              ],
-              leading: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Color.fromARGB(255, 56, 55, 55),
-                ),
-              ),
-              gradient: const LinearGradient(
-                colors: [Colors.cyan, Colors.indigo],
-              ),
-              title: Text(
-                'PHOTO NOTE',
-                style: GoogleFonts.arimo(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: const Color.fromARGB(255, 56, 55, 55),
-                ),
-              ),
-            ),
-            body: GridView(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-              ),
-              children: [
-                for (final photoNoteModel in photoNoteModels) ...[
-                  PhotoWidget(photoNoteModel: photoNoteModel),
-                ]
-              ],
-            ),
-            backgroundColor: const Color.fromARGB(255, 208, 225, 234),
+
+          return const ViewPage(
+            photoNoteModels: [],
           );
         },
       ),
@@ -116,35 +55,81 @@ class PhotoNotePage extends StatelessWidget {
   }
 }
 
-class PhotoWidget extends StatelessWidget {
-  const PhotoWidget({
-    required this.photoNoteModel,
+class ViewPage extends StatelessWidget {
+  const ViewPage({
     Key? key,
+    required this.photoNoteModels,
   }) : super(key: key);
-  final PhotoNoteModel? photoNoteModel;
+
+  final List<PhotoNoteModel> photoNoteModels;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-              builder: (_) => DetalisPhotoNotePage(id: photoNoteModel!.id)),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 5, right: 5),
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(
-                photoNoteModel!.photo,
+    return Scaffold(
+      appBar: NewGradientAppBar(
+        actions: [
+          PopupMenuButton(
+              icon: const Icon(
+                Icons.more_vert,
+                color: Color.fromARGB(255, 56, 55, 55),
               ),
-            ),
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem<int>(
+                    value: 0,
+                    child: Text(
+                      "Add Photo",
+                      style: GoogleFonts.arimo(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: const Color.fromARGB(255, 56, 55, 55),
+                      ),
+                    ),
+                  ),
+                ];
+              },
+              onSelected: (value) {
+                if (value == 0) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => BlocProvider.value(
+                            value: context.read<PhotoNoteCubit>(),
+                            child: const AddPhotoPage(),
+                          )));
+                }
+              }),
+        ],
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Color.fromARGB(255, 56, 55, 55),
+          ),
+        ),
+        gradient: const LinearGradient(
+          colors: [Colors.cyan, Colors.indigo],
+        ),
+        title: Text(
+          'PHOTO NOTE',
+          style: GoogleFonts.arimo(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: const Color.fromARGB(255, 56, 55, 55),
           ),
         ),
       ),
+      body: GridView(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+        ),
+        children: [
+          for (final photoNoteModel in photoNoteModels) ...[
+            PhotoWidget(photoNoteModel: photoNoteModel),
+          ]
+        ],
+      ),
+      backgroundColor: const Color.fromARGB(255, 208, 225, 234),
     );
   }
 }

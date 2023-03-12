@@ -107,57 +107,58 @@ class _TasksWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  width: 230,
-                  height: 150,
-                  color: Colors.white,
-                  child: Text(
-                    taskmodel!.text,
-                    style: GoogleFonts.gruppo(
-                        fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Colors.cyan, Colors.indigo],
-                    ),
-                    borderRadius: BorderRadius.circular(55),
-                  ),
-                  width: 150,
-                  height: 30,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              DetalisTasksWidget(id: taskmodel!.id),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.transparent,
-                      backgroundColor: Colors.transparent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(55),
-                      ),
-                    ),
+            Expanded(
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    height: 150,
+                    color: Colors.white,
                     child: Text(
-                      'Read',
+                      taskmodel!.text,
                       style: GoogleFonts.gruppo(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white,
+                          fontWeight: FontWeight.bold, fontSize: 14),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Colors.cyan, Colors.indigo],
+                      ),
+                      borderRadius: BorderRadius.circular(55),
+                    ),
+                    width: 150,
+                    height: 30,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                DetalisTasksWidget(id: taskmodel!.id),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.transparent,
+                        backgroundColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(55),
+                        ),
+                      ),
+                      child: Text(
+                        'Read',
+                        style: GoogleFonts.gruppo(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Column(
               children: [
@@ -182,14 +183,14 @@ class _TasksWidget extends StatelessWidget {
                           height: 40,
                         ),
                         Text(
-                          taskmodel!.releaseDateFormatted(),
+                          taskmodel!.day(),
                           style: GoogleFonts.gruppo(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 75),
                         ),
                         Text(
-                          taskmodel!.releaseDateFormatted2(),
+                          taskmodel!.month(),
                           style: GoogleFonts.gruppo(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
