@@ -93,7 +93,7 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
                   },
                   selectedDateFormatted: releaseDate == null
                       ? null
-                      : DateFormat.yMMMMEEEEd().format(releaseDate!),
+                      : DateFormat('dd MMMM yyyy').format(releaseDate!),
                 ),
                 const SizedBox(
                   height: 10,
@@ -144,7 +144,10 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
                                   releaseDate!,
                                   releaseTime!,
                                   selectedCategoryId!);
-                              //setstata release date = null
+                              setState(() {
+                                releaseDate = null;
+                                releaseTime = null;
+                              });
                             },
                             child: Text(
                               'Add Task',

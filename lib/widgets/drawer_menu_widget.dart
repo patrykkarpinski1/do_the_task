@@ -17,8 +17,7 @@ class DrawerMenuWidget extends StatelessWidget {
           colors: [Colors.cyan, Colors.indigo],
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: ListView(
         children: [
           DrawerHeader(
             child: Column(

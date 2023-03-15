@@ -28,12 +28,14 @@ class NoteWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(top: 10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                width: 160,
-                height: 115,
-                child: Text(
-                  noteModel.note,
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(left: 5, right: 5),
+                  child: Text(
+                    noteModel.note,
+                  ),
                 ),
               ),
               Row(

@@ -6,7 +6,7 @@ import 'package:modyfikacja_aplikacja/app/features/home/pages/category_page/menu
 import 'package:modyfikacja_aplikacja/app/features/home/pages/category_page/menu_pages/photo_note/cubit/photo_note_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
-import 'package:modyfikacja_aplikacja/widgets/photo_widgets.dart';
+import 'package:modyfikacja_aplikacja/widgets/photo_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class PhotoNotePage extends StatelessWidget {

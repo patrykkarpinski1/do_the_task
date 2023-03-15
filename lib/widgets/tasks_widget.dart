@@ -196,7 +196,7 @@ class _TasksWidget extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               fontSize: 18),
                         ),
-                        const SizedBox(height: 45),
+                        const SizedBox(height: 25),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
