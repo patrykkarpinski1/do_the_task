@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:modyfikacja_aplikacja/app/features/home/pages/category_page/menu_pages/chack_norris/chack_norris_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/category_page/menu_pages/photo_note/photo_note_page.dart';
 
 class DrawerMenuWidget extends StatelessWidget {
@@ -45,8 +46,14 @@ class DrawerMenuWidget extends StatelessWidget {
             title: const Text('PHOTO NOTE'),
           ),
           ListTile(
-            onTap: () {},
-            title: const Text('REST API'),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const ChackNorrisPage(),
+                ),
+              );
+            },
+            title: const Text('CHACK NORRIS JOKES'),
           ),
           ListTile(
             leading: const Icon(Icons.arrow_back),

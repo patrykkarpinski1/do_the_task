@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/add_notes_page/add_notes_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/notepad_page/cubit/notepad_cubit.dart';
+import 'package:modyfikacja_aplikacja/data/remote_data_sources/items_remote_data_source.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 import 'package:modyfikacja_aplikacja/widgets/note_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
@@ -33,7 +34,8 @@ class NotepadPageContent extends StatelessWidget {
         ),
       ),
       body: BlocProvider(
-        create: (context) => NotepadCubit(ItemsRepository())..start(),
+        create: (context) =>
+            NotepadCubit(ItemsRepository(ItemsRemoteDataSources()))..start(),
         child: BlocConsumer<NotepadCubit, NotepadState>(
             listener: (context, state) {
           if (state.status == Status.error) {

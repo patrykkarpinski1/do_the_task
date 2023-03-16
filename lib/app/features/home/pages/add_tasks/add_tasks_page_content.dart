@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/add_tasks/cubit/add_task_cubit.dart';
+import 'package:modyfikacja_aplikacja/data/remote_data_sources/items_remote_data_source.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 import 'package:modyfikacja_aplikacja/widgets/date_button_widget.dart';
 import 'package:modyfikacja_aplikacja/widgets/drop_down_button_widget.dart';
@@ -29,7 +30,8 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddTaskCubit(ItemsRepository())..fetch(),
+      create: (context) =>
+          AddTaskCubit(ItemsRepository(ItemsRemoteDataSources()))..fetch(),
       child: BlocConsumer<AddTaskCubit, AddTaskState>(
         listener: (context, state) {
           if (state.status == Status.error) {

@@ -52,6 +52,7 @@ dependencies:
   firebase_storage: ^11.0.14
   path: ^1.8.2
   google_sign_in: ^5.4.4
+  dio: ^5.0.2
 
 dev_dependencies:
   flutter_test:

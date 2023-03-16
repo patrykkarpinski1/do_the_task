@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/auth/pages/user_profile.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/category_page/cubit/category_page_cubit.dart';
+import 'package:modyfikacja_aplikacja/data/remote_data_sources/items_remote_data_source.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 import 'package:modyfikacja_aplikacja/widgets/category_widget.dart';
 import 'package:modyfikacja_aplikacja/widgets/drawer_menu_widget.dart';
@@ -17,7 +18,8 @@ class CategoryPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CategoryPageCubit(ItemsRepository())..start(),
+      create: (context) =>
+          CategoryPageCubit(ItemsRepository(ItemsRemoteDataSources()))..start(),
       child: BlocConsumer<CategoryPageCubit, CategoryPageState>(
         listener: (context, state) {
           if (state.status == Status.error) {

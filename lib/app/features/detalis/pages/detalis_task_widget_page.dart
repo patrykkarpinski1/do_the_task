@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/detalis/cubit/detalis_cubit.dart';
+import 'package:modyfikacja_aplikacja/data/remote_data_sources/items_remote_data_source.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
@@ -18,7 +19,9 @@ class DetalisTasksWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => DetalisCubit(ItemsRepository())..getTaskWithID(id),
+      create: (context) =>
+          DetalisCubit(ItemsRepository(ItemsRemoteDataSources()))
+            ..getTaskWithID(id),
       child: BlocConsumer<DetalisCubit, DetalisState>(
         listener: (context, state) {
           if (state.status == Status.error) {

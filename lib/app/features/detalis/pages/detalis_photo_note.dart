@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/detalis/cubit/detalis_cubit.dart';
+import 'package:modyfikacja_aplikacja/data/remote_data_sources/items_remote_data_source.dart';
 import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
@@ -15,7 +16,9 @@ class DetalisPhotoNotePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => DetalisCubit(ItemsRepository())..getPhotoWithID(id),
+      create: (context) =>
+          DetalisCubit(ItemsRepository(ItemsRemoteDataSources()))
+            ..getPhotoWithID(id),
       child: BlocConsumer<DetalisCubit, DetalisState>(
         listener: (context, state) {
           if (state.status == Status.error) {
@@ -59,26 +62,28 @@ class DetalisPhotoNotePage extends StatelessWidget {
                 gradient:
                     const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
               ),
-              body: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 50),
-                    child: Image(
-                      image: NetworkImage(
-                        photoNoteModel!.photo,
+              body: Center(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 50),
+                      child: Image(
+                        image: NetworkImage(
+                          photoNoteModel!.photo,
+                        ),
                       ),
                     ),
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        context
-                            .read<DetalisCubit>()
-                            .remove(documentID: photoNoteModel.id);
+                    ElevatedButton(
+                        onPressed: () {
+                          context
+                              .read<DetalisCubit>()
+                              .remove(documentID: photoNoteModel.id);
 
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Delete'))
-                ],
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Delete'))
+                  ],
+                ),
               ));
         },
       ),

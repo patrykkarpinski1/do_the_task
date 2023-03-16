@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/detalis/pages/detalis_task_widget_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/cubit/task_cubit.dart';
+import 'package:modyfikacja_aplikacja/data/remote_data_sources/items_remote_data_source.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
@@ -18,7 +19,8 @@ class TasksWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TaskCubit(ItemsRepository())..getTasks(categoryId),
+      create: (context) => TaskCubit(ItemsRepository(ItemsRemoteDataSources()))
+        ..getTasks(categoryId),
       child: BlocConsumer<TaskCubit, TaskState>(
         listener: (context, state) {
           if (state.status == Status.error) {

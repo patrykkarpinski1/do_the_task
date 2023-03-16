@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/category_page/menu_pages/photo_note/add_photo_page.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/category_page/menu_pages/photo_note/cubit/photo_note_cubit.dart';
+import 'package:modyfikacja_aplikacja/data/remote_data_sources/items_remote_data_source.dart';
 import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 import 'package:modyfikacja_aplikacja/widgets/photo_widget.dart';
@@ -17,7 +18,8 @@ class PhotoNotePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PhotoNoteCubit(ItemsRepository())..start(),
+      create: (context) =>
+          PhotoNoteCubit(ItemsRepository(ItemsRemoteDataSources()))..start(),
       child: BlocConsumer<PhotoNoteCubit, PhotoNoteState>(
         listener: (context, state) {
           if (state.status == Status.error) {
