@@ -4,8 +4,13 @@ class ChackNorrisDataSource {
   Future<Map<String, dynamic>?> getChackNorrisData({
     required String joke,
   }) async {
-    final response = await Dio()
-        .get<Map<String, dynamic>>('https://api.chucknorris.io/jokes/random');
-    return response.data;
+    try {
+      final response = await Dio()
+          .get<Map<String, dynamic>>('https://api.chucknorris.io/jokes/random');
+      return response.data;
+    } on DioError catch (error) {
+      throw Exception(
+          error.response?.data['error']['message'] ?? 'Unkown error');
+    }
   }
 }

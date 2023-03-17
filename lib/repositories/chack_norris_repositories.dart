@@ -8,14 +8,10 @@ class ChackNorrisRepository {
   Future<ChackNorrisModel?> getChackNorrisModel({
     required String joke,
   }) async {
-    final responseData =
-        await chackNorrisDataSource.getChackNorrisData(joke: joke);
-    if (responseData == null) {
+    final json = await chackNorrisDataSource.getChackNorrisData(joke: joke);
+    if (json == null) {
       return null;
     }
-    final random = responseData['value'];
-    return ChackNorrisModel(
-      joke: random,
-    );
+    return ChackNorrisModel.fromJson(json);
   }
 }

@@ -81,12 +81,7 @@ class _DropDownButtonWidget extends State<DropDownButtonWidget> {
           );
         }).toList(),
         onChanged: (value) {
-          if (value != null) {
-            widget.onValueChanged(value.id);
-          }
-          setState(() {
-            selectedValue = value;
-          });
+          widget.onValueChanged(value!.id);
         },
       ),
     );

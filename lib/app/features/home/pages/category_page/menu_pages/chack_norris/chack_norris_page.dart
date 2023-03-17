@@ -33,6 +33,15 @@ class ChackNorrisPage extends StatelessWidget {
           return Scaffold(
             backgroundColor: const Color.fromARGB(255, 208, 225, 234),
             appBar: NewGradientAppBar(
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Color.fromARGB(255, 56, 55, 55),
+                ),
+              ),
               gradient: const LinearGradient(
                 colors: [Colors.cyan, Colors.indigo],
               ),

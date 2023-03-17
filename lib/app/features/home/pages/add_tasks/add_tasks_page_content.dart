@@ -6,6 +6,7 @@ import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/features/home/pages/add_tasks/cubit/add_task_cubit.dart';
 import 'package:modyfikacja_aplikacja/data/remote_data_sources/items_remote_data_source.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
+import 'package:modyfikacja_aplikacja/widgets/add_task_button_widget.dart';
 import 'package:modyfikacja_aplikacja/widgets/date_button_widget.dart';
 import 'package:modyfikacja_aplikacja/widgets/drop_down_button_widget.dart';
 import 'package:modyfikacja_aplikacja/widgets/text_field_widget.dart';
@@ -115,53 +116,24 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
                 const SizedBox(
                   height: 10,
                 ),
-                Container(
-                  child: text == null ||
-                          releaseTime == null ||
-                          releaseDate == null ||
-                          selectedCategoryId == null
-                      ? null
-                      : Container(
-                          width: 150,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [Colors.cyan, Colors.indigo],
-                            ),
-                            borderRadius: BorderRadius.circular(55),
-                          ),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.transparent,
-                              backgroundColor: Colors.transparent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(55),
-                              ),
-                            ),
-                            onPressed: () {
-                              context.read<AddTaskCubit>().add(
-                                  text!,
-                                  releaseDate!,
-                                  releaseTime!,
-                                  selectedCategoryId!);
-                              setState(() {
-                                releaseDate = null;
-                                releaseTime = null;
-                              });
-                            },
-                            child: Text(
-                              'Add Task',
-                              style: GoogleFonts.arimo(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: const Color.fromARGB(255, 56, 55, 55),
-                              ),
-                            ),
-                          ),
-                        ),
-                ),
+                Builder(builder: (context) {
+                  if (text == null ||
+                      selectedCategoryId == null ||
+                      releaseDate == null ||
+                      releaseTime == null) {
+                    return const SizedBox.shrink();
+                  }
+                  return AddTaskButton(
+                    onPressed: () {
+                      context.read<AddTaskCubit>().add(text!, releaseDate!,
+                          releaseTime!, selectedCategoryId!);
+                      setState(() {
+                        releaseDate = null;
+                        releaseTime = null;
+                      });
+                    },
+                  );
+                }),
               ],
             ),
           );
