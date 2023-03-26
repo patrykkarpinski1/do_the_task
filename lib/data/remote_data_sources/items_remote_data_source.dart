@@ -1,35 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:modyfikacja_aplikacja/models/category_model.dart';
-import 'package:modyfikacja_aplikacja/models/note_model.dart';
-import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
-import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:path/path.dart' as path;
 import 'dart:io';
 
 class ItemsRemoteDataSources {
-  Future<List<CategoryModel>> getCategories() async {
+  Future<List<Map<String, dynamic>>> getCategories() async {
     final doc = await FirebaseFirestore.instance.collection('categories').get();
-
-    return doc.docs.map((doc) {
-      return (CategoryModel(
-        id: doc.id,
-        title: doc['title'],
-        images: doc['images'],
-      ));
+    final listDynamic = doc.docs;
+    return listDynamic.map((doc) {
+      final json = doc.data();
+      json['id'] = doc.id;
+      return json;
     }).toList();
   }
 
-  Future<CategoryModel> getCategory({required String id}) async {
+  Future<Map<String, dynamic>> getCategory({required String id}) async {
     final doc =
         await FirebaseFirestore.instance.collection('categories').doc(id).get();
-    return CategoryModel(
-      id: doc.id,
-      title: doc['title'],
-    );
+    final json = doc.data();
+    json!['id'] = doc.id;
+    return json;
   }
 
   Future<void> addPhotos(
@@ -39,7 +32,7 @@ class ItemsRemoteDataSources {
     if (userID == null) {
       throw Exception('User is not logged in');
     }
-    final ref = FirebaseStorage.instance
+    final ref = firebase_storage.FirebaseStorage.instance
         .ref()
         .child('photo_note')
         .child(path.basename(image.path));
@@ -52,26 +45,26 @@ class ItemsRemoteDataSources {
         .add({'photo': url});
   }
 
-  Future<List<PhotoNoteModel>> getPhotos() async {
+  Stream<List<Map<String, dynamic>>> getPhotosStream() {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
     }
-    final doc = await FirebaseFirestore.instance
+    return FirebaseFirestore.instance
         .collection('users')
         .doc(userID)
         .collection('photo_note')
-        .get();
-
-    return doc.docs.map((doc) {
-      return PhotoNoteModel(
-        id: doc.id,
-        photo: doc['photo'],
-      );
-    }).toList();
+        .snapshots()
+        .map((querySnapshot) {
+      return querySnapshot.docs.map((doc) {
+        final json = doc.data();
+        json['id'] = doc.id;
+        return json;
+      }).toList();
+    });
   }
 
-  Future<List<TaskModel>> getTasks({
+  Future<List<Map<String, dynamic>>> getTasks({
     required String categoryId,
   }) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
@@ -85,15 +78,31 @@ class ItemsRemoteDataSources {
         .orderBy('date')
         .where('category_id', isEqualTo: categoryId)
         .get();
-
-    return doc.docs.map((doc) {
-      return (TaskModel(
-        id: doc.id,
-        text: doc['text'],
-        releaseDate: (doc['date'] as Timestamp).toDate(),
-        categoryId: doc['category_id'],
-      ));
+    final listDynamic = doc.docs;
+    return listDynamic.map((doc) {
+      final json = doc.data();
+      json['id'] = doc.id;
+      return json;
     }).toList();
+  }
+
+  Stream<List<Map<String, dynamic>>> getNotesStream() {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('notepad')
+        .snapshots()
+        .map((querySnapshot) {
+      return querySnapshot.docs.map((doc) {
+        final json = doc.data();
+        json['id'] = doc.id;
+        return json;
+      }).toList();
+    });
   }
 
   Future<void> deleteTask({required String id}) async {
@@ -136,27 +145,6 @@ class ItemsRemoteDataSources {
     });
   }
 
-  Stream<List<NoteModel>> getNotesStream() {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
-    return FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
-        .collection('notepad')
-        .snapshots()
-        .map((querySnapshot) {
-      return querySnapshot.docs.map((doc) {
-        return NoteModel(
-          note: doc['note'],
-          id: doc.id,
-          releaseDate: (doc['date'] as Timestamp).toDate(),
-        );
-      }).toList();
-    });
-  }
-
   Future<void> deleteNote({required String id}) {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
@@ -172,12 +160,18 @@ class ItemsRemoteDataSources {
 
   Future<void> deletePhoto({
     required String id,
+    required String photo,
   }) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
     }
-
+    firebase_storage.Reference photoRef = firebase_storage
+        .FirebaseStorage.instance
+        .ref()
+        .storage
+        .refFromURL(photo);
+    await photoRef.delete();
     return FirebaseFirestore.instance
         .collection('users')
         .doc(userID)
@@ -207,7 +201,7 @@ class ItemsRemoteDataSources {
     );
   }
 
-  Future<TaskModel> getDetalisTask({required String id}) async {
+  Future<Map<String, dynamic>> getDetalisTask({required String id}) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
@@ -218,15 +212,12 @@ class ItemsRemoteDataSources {
         .collection('tasks')
         .doc(id)
         .get();
-    return TaskModel(
-      id: doc.id,
-      text: doc['text'],
-      releaseDate: (doc['date'] as Timestamp).toDate(),
-      categoryId: doc['category_id'],
-    );
+    final json = doc.data();
+    json!['id'] = doc.id;
+    return json;
   }
 
-  Future<NoteModel> getDetalisNote({required String id}) async {
+  Future<Map<String, dynamic>> getDetalisNote({required String id}) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
@@ -237,14 +228,12 @@ class ItemsRemoteDataSources {
         .collection('notepad')
         .doc(id)
         .get();
-    return NoteModel(
-      id: doc.id,
-      note: doc['note'],
-      releaseDate: (doc['date'] as Timestamp).toDate(),
-    );
+    final json = doc.data();
+    json!['id'] = doc.id;
+    return json;
   }
 
-  Future<PhotoNoteModel> getDetalisPhotoNote({required String id}) async {
+  Future<Map<String, dynamic>> getDetalisPhotoNote({required String id}) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
@@ -255,9 +244,28 @@ class ItemsRemoteDataSources {
         .collection('photo_note')
         .doc(id)
         .get();
-    return PhotoNoteModel(
-      id: doc.id,
-      photo: doc['photo'],
+    final json = doc.data();
+    json!['id'] = doc.id;
+    return json;
+  }
+
+  Future<void> editNote({
+    required String id,
+    required String note,
+  }) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('notepad')
+        .doc(id)
+        .update(
+      {
+        'note': note,
+      },
     );
   }
 }

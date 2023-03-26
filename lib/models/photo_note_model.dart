@@ -6,4 +6,7 @@ class PhotoNoteModel {
 
   final String id;
   final String photo;
+  PhotoNoteModel.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        photo = json['photo'];
 }

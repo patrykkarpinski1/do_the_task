@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/app/features/detalis/pages/detalis_note.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/notepad/pages/notepad_page/cubit/notepad_cubit.dart';
+import 'package:modyfikacja_aplikacja/features/detalis/pages/detalis_note.dart';
+import 'package:modyfikacja_aplikacja/features/home/pages/notepad/cubit/notepad_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/note_model.dart';
+import 'package:modyfikacja_aplikacja/widgets/icon_show_alert_dialog_widget.dart';
 
 class NoteWidget extends StatelessWidget {
   const NoteWidget({
@@ -50,11 +51,12 @@ class NoteWidget extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  IconButton(
+                  AlertWidget(
                       onPressed: () {
                         context
                             .read<NotepadCubit>()
                             .remove(documentID: noteModel.id);
+                        Navigator.of(context).pop();
                       },
                       icon: const Icon(Icons.delete_sweep_outlined))
                 ],

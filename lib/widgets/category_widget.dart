@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/tasks_page.dart';
+import 'package:modyfikacja_aplikacja/features/home/pages/tasks/tasks_page.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
 
 class CategoryWidget extends StatelessWidget {
@@ -34,8 +34,10 @@ class CategoryWidget extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(5),
-                child: Image(
+                child: FadeInImage(
+                  placeholder: const AssetImage('images/hourglass.png'),
                   image: NetworkImage(categoryModel.images!),
+                  fit: BoxFit.cover,
                 ),
               ),
               const SizedBox(

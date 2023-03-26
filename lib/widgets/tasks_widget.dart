@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:modyfikacja_aplikacja/app/features/detalis/pages/detalis_task_widget_page.dart';
-import 'package:modyfikacja_aplikacja/app/features/home/pages/tasks/cubit/task_cubit.dart';
+import 'package:modyfikacja_aplikacja/features/detalis/pages/detalis_task_widget_page.dart';
+import 'package:modyfikacja_aplikacja/features/home/pages/tasks/cubit/task_cubit.dart';
 import 'package:modyfikacja_aplikacja/data/remote_data_sources/items_remote_data_source.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
@@ -23,12 +23,11 @@ class TasksWidget extends StatelessWidget {
         ..getTasks(categoryId),
       child: BlocConsumer<TaskCubit, TaskState>(
         listener: (context, state) {
-          if (state.status == Status.error) {
-            final errorMessage = state.errorMessage ?? 'Unkown error';
+          if (state.errorMessage.isNotEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(errorMessage),
                 backgroundColor: Colors.red,
+                content: Text(state.errorMessage),
               ),
             );
           }
