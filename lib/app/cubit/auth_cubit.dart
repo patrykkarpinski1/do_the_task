@@ -1,14 +1,32 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:path/path.dart' as path;
+import 'dart:io';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(const AuthState());
+
+  Future<void> passwordReset({
+    required String email,
+  }) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email.trim());
+      emit(const AuthState(
+          status: Status.success,
+          message: 'Password reset link sent! Please check your email '));
+    } on FirebaseAuthException catch (error) {
+      emit(AuthState(
+          status: Status.error, errorMessage: error.message.toString()));
+    }
+  }
 
   Future<UserCredential> signInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -20,21 +38,35 @@ class AuthCubit extends Cubit<AuthState> {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    return await FirebaseAuth.instance
+        .signInWithCredential(credential)
+        .whenComplete(() {
+      users.doc(FirebaseAuth.instance.currentUser!.uid).set({
+        'name': googleUser!.displayName,
+        'profile_image': googleUser.photoUrl,
+      });
+    });
   }
 
   Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
-    emit(
-      const AuthState(status: Status.success),
-    );
+    try {
+      await FirebaseAuth.instance.signOut();
+      emit(
+        const AuthState(status: Status.success),
+      );
+    } on FirebaseAuthException catch (error) {
+      emit(AuthState(
+          status: Status.error, errorMessage: error.message.toString()));
+    }
   }
 
   Future<void> register({
     required String email,
     required String password,
     required String confirmPassword,
+    String? name,
+    XFile? image,
   }) async {
     if (password.trim() != confirmPassword.trim()) {
       emit(
@@ -46,46 +78,29 @@ class AuthCubit extends Cubit<AuthState> {
       );
     } else {
       try {
+        CollectionReference users =
+            FirebaseFirestore.instance.collection('users');
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
+        users.doc(FirebaseAuth.instance.currentUser!.uid).set({
+          'name': name,
+          'profile_image': image,
+        });
+        emit(const AuthState(isCreatingAccount: false));
         try {
           await FirebaseAuth.instance.currentUser!.sendEmailVerification();
-        } catch (error) {
-          emit(
-            AuthState(
-              status: Status.error,
-              errorMessage: error.toString(),
-            ),
-          );
+        } on FirebaseAuthException catch (error) {
+          emit(AuthState(
+              status: Status.error, errorMessage: error.message.toString()));
         }
       } on FirebaseAuthException catch (error) {
-        if (error.code == 'weak-password') {
-          emit(
-            const AuthState(
-              status: Status.error,
-              errorMessage: 'The password provided is too weak.',
-              isCreatingAccount: false,
-            ),
-          );
-        } else if (error.code == 'email-already-in-use') {
-          emit(
-            const AuthState(
-              status: Status.error,
-              errorMessage: 'The account already exists for that email.',
-              isCreatingAccount: false,
-            ),
-          );
-        }
-      } catch (error) {
-        emit(
-          AuthState(
-            user: null,
-            status: Status.error,
-            errorMessage: error.toString(),
-          ),
-        );
+        emit(AuthState(
+          status: Status.error,
+          errorMessage: error.message.toString(),
+          isCreatingAccount: true,
+        ));
       }
     }
   }
@@ -95,16 +110,17 @@ class AuthCubit extends Cubit<AuthState> {
     required String password,
   }) async {
     try {
-      await FirebaseAuth.instance
+      final userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      emit(
-        const AuthState(status: Status.success),
-      );
-    } catch (error) {
+      if (userCredential.user?.emailVerified == false) {
+        emit(const AuthState(
+          status: Status.success,
+          message: 'please check your inbox and verify your email',
+        ));
+      }
+    } on FirebaseAuthException catch (error) {
       emit(AuthState(
-        status: Status.error,
-        errorMessage: error.toString(),
-      ));
+          status: Status.error, errorMessage: error.message.toString()));
     }
   }
 
@@ -126,37 +142,93 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
+  Future<void> addUserName({required String name}) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(userID).update({
+        'name': name,
+      });
+      await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
+    } catch (error) {
+      emit(AuthState(status: Status.error, errorMessage: error.toString()));
+    }
+  }
+
+  Future<void> addUserPhoto({
+    required XFile image,
+  }) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref()
+          .child('profil_images')
+          .child(path.basename(image.path));
+      await ref.putFile(File(image.path));
+      final url = await ref.getDownloadURL();
+
+      await FirebaseFirestore.instance.collection('users').doc(userID).update({
+        'profile_image': url,
+      });
+      await FirebaseAuth.instance.currentUser?.updatePhotoURL(url);
+    } catch (error) {
+      emit(AuthState(status: Status.error, errorMessage: error.toString()));
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    try {
+      await FirebaseAuth.instance.currentUser?.delete();
+    } on FirebaseAuthException catch (error) {
+      emit(AuthState(
+          status: Status.error, errorMessage: error.message.toString()));
+    }
+  }
+
+  Future<void> resendEmailVerification() async {
+    try {
+      await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+    } on FirebaseAuthException catch (error) {
+      emit(AuthState(
+          status: Status.error, errorMessage: error.message.toString()));
+    }
+  }
+
   StreamSubscription? _streamSubscription;
 
   Future<void> start() async {
-    emit(
-      const AuthState(
-        user: null,
-        status: Status.loading,
-        errorMessage: '',
-        isCreatingAccount: false,
-      ),
-    );
+    try {
+      emit(
+        const AuthState(
+          user: null,
+          status: Status.loading,
+          errorMessage: '',
+          isCreatingAccount: false,
+        ),
+      );
 
-    _streamSubscription = FirebaseAuth.instance.authStateChanges().listen(
-      (user) {
+      _streamSubscription =
+          FirebaseAuth.instance.authStateChanges().listen((user) {
         emit(
           AuthState(
             status: Status.success,
             user: user,
           ),
         );
-      },
-    )..onError(
-        (error) {
-          emit(
-            AuthState(
-              user: null,
-              errorMessage: error.toString(),
-            ),
-          );
-        },
-      );
+      });
+    } on FirebaseAuthException catch (error) {
+      emit(AuthState(
+          status: Status.error, errorMessage: error.message.toString()));
+    }
   }
 
   @override

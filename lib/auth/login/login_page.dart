@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/cubit/auth_cubit.dart';
 import 'package:modyfikacja_aplikacja/widgets/login_widget.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatelessWidget {
@@ -34,11 +33,28 @@ class LoginPage extends StatelessWidget {
               );
             }
           }
+          if (state.status == Status.success) {
+            if (state.message.isNotEmpty) {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                        content: Text(
+                      state.message,
+                      style: GoogleFonts.arimo(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: const Color.fromARGB(255, 32, 31, 31),
+                      ),
+                    ));
+                  });
+            }
+          }
         },
         builder: (context, state) {
           if (state.status == Status.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return const Scaffold(
+              body: CircularProgressIndicator(),
             );
           }
           return Container(

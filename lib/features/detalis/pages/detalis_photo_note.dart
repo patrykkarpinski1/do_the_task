@@ -62,9 +62,12 @@ class DetalisPhotoNotePage extends StatelessWidget {
                 actions: [
                   AlertWidget(
                     onPressed: () {
-                      context.read<DetalisCubit>().removePhoto(
-                          documentID: photoNoteModel!.id,
-                          photo: photoNoteModel.photo);
+                      context
+                          .read<DetalisCubit>()
+                          .removePhotoStorage(photo: photoNoteModel!.photo);
+                      context
+                          .read<DetalisCubit>()
+                          .removePhotoDocument(documentID: photoNoteModel.id);
 
                       Navigator.pop(context, true);
                       Navigator.pop(context, true);
@@ -87,7 +90,9 @@ class DetalisPhotoNotePage extends StatelessWidget {
                         tag: photoNoteModel!.id,
                         child: FadeInImage(
                           placeholder: const AssetImage('images/reload.png'),
-                          image: NetworkImage(photoNoteModel.photo),
+                          image: NetworkImage(
+                            photoNoteModel.photo,
+                          ),
                           fit: BoxFit.cover,
                         ),
                       ),

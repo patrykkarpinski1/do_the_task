@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/cubit/auth_cubit.dart';
+import 'package:modyfikacja_aplikacja/auth/login/forget_password_page.dart';
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({
@@ -35,7 +36,14 @@ class LoginWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => BlocProvider.value(
+                                  value: context.read<AuthCubit>(),
+                                  child: ForgetPasswordPage(
+                                      emailController: emailController),
+                                )));
+                      },
                       child: Text(
                         'forget password ?',
                         style: GoogleFonts.arimo(

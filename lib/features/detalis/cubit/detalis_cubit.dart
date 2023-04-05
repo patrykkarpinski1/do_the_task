@@ -49,12 +49,25 @@ class DetalisCubit extends Cubit<DetalisState> {
     }
   }
 
-  Future<void> removePhoto({
-    required String documentID,
+  Future<void> removePhotoStorage({
     required String photo,
   }) async {
     try {
-      await _itemsRepository.deletePhoto(id: documentID, photo: photo);
+      await _itemsRepository.deletePhotoStorage(photo: photo);
+    } catch (error) {
+      emit(
+        DetalisState(removingErrorOccured: true),
+      );
+    }
+  }
+
+  Future<void> removePhotoDocument({
+    required String documentID,
+  }) async {
+    try {
+      await _itemsRepository.deletePhoto2(
+        id: documentID,
+      );
     } catch (error) {
       emit(
         DetalisState(removingErrorOccured: true),

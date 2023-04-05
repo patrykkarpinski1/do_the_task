@@ -62,11 +62,18 @@ class ItemsRepository {
     return itemsRemoteDataSources.deleteNote(id: id);
   }
 
-  Future<void> deletePhoto({
-    required String id,
+  Future<void> deletePhotoStorage({
     required String photo,
   }) async {
-    return itemsRemoteDataSources.deletePhoto(id: id, photo: photo);
+    return itemsRemoteDataSources.deletePhotoStorage(photo: photo);
+  }
+
+  Future<void> deletePhoto2({
+    required String id,
+  }) async {
+    return itemsRemoteDataSources.deletePhotoDocument(
+      id: id,
+    );
   }
 
   Future<void> addNote(

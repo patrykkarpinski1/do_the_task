@@ -63,6 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1016212216569',
     projectId: 'modyfikacja-aplikacja',
     storageBucket: 'modyfikacja-aplikacja.appspot.com',
+    androidClientId: '1016212216569-e07ktpfrq8hmk8rj8nq4trss76d36onj.apps.googleusercontent.com',
     iosClientId: '1016212216569-ht3pomhpl0dscoj0m17p8mj8cf2mc7om.apps.googleusercontent.com',
     iosBundleId: 'com.patrykkarpinski.modyfikacjaAplikacja',
   );

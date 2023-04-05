@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:modyfikacja_aplikacja/app/cubit/auth_cubit.dart';
 import 'package:modyfikacja_aplikacja/features/home/my_account_page/my_account_page.dart';
 import 'package:modyfikacja_aplikacja/features/home/pages/category_page/cubit/category_page_cubit.dart';
 import 'package:modyfikacja_aplikacja/data/remote_data_sources/items_remote_data_source.dart';
@@ -82,13 +81,13 @@ class CategoryPageContent extends StatelessWidget {
               actions: [
                 IconButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => BlocProvider.value(
-                              value: context.read<AuthCubit>(),
-                              child: MyAccountPage(
-                                email: user!.email,
-                              ),
-                            )));
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => MyAccountPage(
+                          user: user!,
+                        ),
+                      ),
+                    );
                   },
                   icon: const Icon(
                     Icons.person,

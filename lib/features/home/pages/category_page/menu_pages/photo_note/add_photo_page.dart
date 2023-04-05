@@ -116,9 +116,13 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                 ),
               ],
             ),
-            body: Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: image == null ? null : Image.file(File(image!.path)),
+            body: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: image == null ? null : Image.file(File(image!.path)),
+                ),
+              ],
             ));
       },
     );
