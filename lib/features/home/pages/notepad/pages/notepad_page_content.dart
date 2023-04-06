@@ -40,8 +40,8 @@ class NotepadPageContent extends StatelessWidget {
             );
           }
           if (state.status == Status.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
             );
           }
           if (state.status == Status.success) {

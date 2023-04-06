@@ -23,11 +23,12 @@ class TasksWidget extends StatelessWidget {
         ..getTasks(categoryId),
       child: BlocConsumer<TaskCubit, TaskState>(
         listener: (context, state) {
-          if (state.errorMessage.isNotEmpty) {
+          if (state.status == Status.error) {
+            final errorMessage = state.errorMessage ?? 'Unkown error';
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
+                content: Text(errorMessage),
                 backgroundColor: Colors.red,
-                content: Text(state.errorMessage),
               ),
             );
           }
@@ -39,8 +40,8 @@ class TasksWidget extends StatelessWidget {
             );
           }
           if (state.status == Status.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
             );
           }
           if (state.status == Status.success) {
@@ -184,14 +185,14 @@ class _TasksWidget extends StatelessWidget {
                           height: 40,
                         ),
                         Text(
-                          taskmodel!.day(),
+                          taskmodel!.releaseDate.day.toString(),
                           style: GoogleFonts.gruppo(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 75),
                         ),
                         Text(
-                          taskmodel!.month(),
+                          taskmodel!.releaseDate.day.toString(),
                           style: GoogleFonts.gruppo(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -202,7 +203,7 @@ class _TasksWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              taskmodel!.releaseTimeFormatted(),
+                              taskmodel!.releaseDate.day.toString(),
                               style: GoogleFonts.gruppo(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),

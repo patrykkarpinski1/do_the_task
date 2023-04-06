@@ -24,11 +24,12 @@ class DetalisTasksWidget extends StatelessWidget {
             ..getTaskWithID(id),
       child: BlocConsumer<DetalisCubit, DetalisState>(
         listener: (context, state) {
-          if (state.errorMessage.isNotEmpty) {
+          if (state.status == Status.error) {
+            final errorMessage = state.errorMessage ?? 'Unkown error';
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
+                content: Text(errorMessage),
                 backgroundColor: Colors.red,
-                content: Text(state.errorMessage),
               ),
             );
           }
@@ -40,8 +41,8 @@ class DetalisTasksWidget extends StatelessWidget {
             );
           }
           if (state.status == Status.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
             );
           }
           if (state.status == Status.success) {
@@ -68,7 +69,7 @@ class DetalisTasksWidget extends StatelessWidget {
               title: Row(
                 children: [
                   Text(
-                    taskModel!.dayFullName(),
+                    taskModel!.releaseDate.day.toString(),
                     style: GoogleFonts.gruppo(
                         color: const Color.fromARGB(255, 56, 55, 55),
                         fontWeight: FontWeight.bold,
@@ -85,7 +86,7 @@ class DetalisTasksWidget extends StatelessWidget {
                 Center(
                   child: SizedBox(
                     child: Text(
-                      taskModel.releaseTimeFormatted(),
+                      taskModel.releaseDate.day.toString(),
                       style: GoogleFonts.gruppo(
                           color: const Color.fromARGB(255, 56, 55, 55),
                           fontWeight: FontWeight.bold,

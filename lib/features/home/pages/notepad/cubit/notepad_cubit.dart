@@ -1,17 +1,19 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/models/note_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
 part 'notepad_state.dart';
+part 'notepad_cubit.freezed.dart';
 
 class NotepadCubit extends Cubit<NotepadState> {
-  NotepadCubit(this._itemsRepository) : super(const NotepadState());
+  NotepadCubit(this._itemsRepository) : super(NotepadState());
   final ItemsRepository _itemsRepository;
   StreamSubscription? _streamSubscription;
   Future<void> start() async {
-    emit(const NotepadState(status: Status.loading));
+    emit(NotepadState(status: Status.loading));
     _streamSubscription = _itemsRepository.getNotesStream().listen(
       (notes) {
         emit(
@@ -40,7 +42,10 @@ class NotepadCubit extends Cubit<NotepadState> {
       await _itemsRepository.deleteNote(id: documentID);
     } catch (error) {
       emit(
-        const NotepadState(removingErrorOccured: true),
+        NotepadState(
+          status: Status.error,
+          errorMessage: error.toString(),
+        ),
       );
       start();
     }
@@ -67,11 +72,12 @@ class NotepadCubit extends Cubit<NotepadState> {
     try {
       await _itemsRepository.addNote(note, releaseDate);
       emit(
-        const NotepadState(saved: true),
+        NotepadState(saved: true),
       );
     } catch (error) {
       emit(
         NotepadState(
+          status: Status.error,
           errorMessage: error.toString(),
         ),
       );

@@ -1,16 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class NoteModel {
-  NoteModel({required this.note, required this.id, required this.releaseDate});
-  final String note;
-  final String id;
-  final DateTime releaseDate;
-  NoteModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        note = json['note'],
-        releaseDate = (json['date'] as Timestamp).toDate();
-  String noteDate() {
-    return DateFormat('dd.MM.yyyy').format(releaseDate);
-  }
+import 'package:modyfikacja_aplikacja/models/times_tamp_converter.dart';
+part 'note_model.g.dart';
+part 'note_model.freezed.dart';
+
+@freezed
+class NoteModel with _$NoteModel {
+  factory NoteModel({
+    @JsonKey(name: 'note') required String note,
+    @JsonKey(name: 'id') required String id,
+    @TimestampConverter() @JsonKey(name: 'date') required DateTime releaseDate,
+  }) = _NoteModel;
+
+  factory NoteModel.fromJson(Map<String, dynamic> json) =>
+      _$NoteModelFromJson(json);
 }

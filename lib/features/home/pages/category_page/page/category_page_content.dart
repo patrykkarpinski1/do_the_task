@@ -25,11 +25,12 @@ class CategoryPageContent extends StatelessWidget {
           CategoryPageCubit(ItemsRepository(ItemsRemoteDataSources()))..start(),
       child: BlocConsumer<CategoryPageCubit, CategoryPageState>(
         listener: (context, state) {
-          if (state.errorMessage.isNotEmpty) {
+          if (state.status == Status.error) {
+            final errorMessage = state.errorMessage ?? 'Unkown error';
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
+                content: Text(errorMessage),
                 backgroundColor: Colors.red,
-                content: Text(state.errorMessage),
               ),
             );
           }
@@ -41,8 +42,8 @@ class CategoryPageContent extends StatelessWidget {
             );
           }
           if (state.status == Status.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
             );
           }
           if (state.status == Status.success) {

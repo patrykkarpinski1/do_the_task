@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../../../app/core/enums.dart';
+
 class AddPhotoPage extends StatefulWidget {
   const AddPhotoPage({super.key});
 
@@ -22,11 +24,12 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
           context.read<PhotoNoteCubit>().start();
           Navigator.of(context).pop();
         }
-        if (state.errorMessage.isNotEmpty) {
+        if (state.status == Status.error) {
+          final errorMessage = state.errorMessage ?? 'Unkown error';
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
+              content: Text(errorMessage),
               backgroundColor: Colors.red,
-              content: Text(state.errorMessage),
             ),
           );
         }

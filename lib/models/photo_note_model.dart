@@ -1,12 +1,14 @@
-class PhotoNoteModel {
-  PhotoNoteModel({
-    required this.id,
-    required this.photo,
-  });
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'photo_note_model.freezed.dart';
+part 'photo_note_model.g.dart';
 
-  final String id;
-  final String photo;
-  PhotoNoteModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        photo = json['photo'];
+@freezed
+class PhotoNoteModel with _$PhotoNoteModel {
+  factory PhotoNoteModel(
+    @JsonKey(name: 'id') String id,
+    @JsonKey(name: 'photo') String photo,
+  ) = _PhotoNoteModel;
+
+  factory PhotoNoteModel.fromJson(Map<String, dynamic> json) =>
+      _$PhotoNoteModelFromJson(json);
 }

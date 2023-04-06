@@ -28,11 +28,12 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
             ..getNoteWithID(widget.id),
       child: BlocConsumer<DetalisCubit, DetalisState>(
         listener: (context, state) {
-          if (state.errorMessage.isNotEmpty) {
+          if (state.status == Status.error) {
+            final errorMessage = state.errorMessage ?? 'Unkown error';
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
+                content: Text(errorMessage),
                 backgroundColor: Colors.red,
-                content: Text(state.errorMessage),
               ),
             );
           }
@@ -45,7 +46,7 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
           }
           if (state.status == Status.loading) {
             return const Scaffold(
-              body: CircularProgressIndicator(),
+              body: Center(child: CircularProgressIndicator()),
             );
           }
           if (state.status == Status.success) {
@@ -122,7 +123,7 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
                   const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
               title: Center(
                 child: Text(
-                  noteModel!.noteDate(),
+                  (noteModel!.releaseDate).toString(),
                   style: GoogleFonts.arimo(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

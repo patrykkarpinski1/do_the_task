@@ -1,21 +1,23 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
 part 'task_state.dart';
+part 'task_cubit.freezed.dart';
 
 class TaskCubit extends Cubit<TaskState> {
-  TaskCubit(this._itemsRepository) : super(const TaskState());
+  TaskCubit(this._itemsRepository) : super(TaskState());
   final ItemsRepository _itemsRepository;
 
   Future<void> getTasks(
     String categoryId,
   ) async {
     emit(
-      const TaskState(
+      TaskState(
         status: Status.loading,
         tasks: [],
       ),
@@ -48,7 +50,10 @@ class TaskCubit extends Cubit<TaskState> {
       await _itemsRepository.deleteTask(id: documentID);
     } catch (error) {
       emit(
-        const TaskState(removingErrorOccured: true),
+        TaskState(
+          status: Status.error,
+          errorMessage: error.toString(),
+        ),
       );
       getTasks(categoryId!);
     }

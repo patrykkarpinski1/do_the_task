@@ -1,11 +1,15 @@
-class CategoryModel {
-  final String title;
-  final String id;
-  final String? images;
-  CategoryModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        title = json['title'],
-        images = json['images'];
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'category_model.freezed.dart';
+part 'category_model.g.dart';
 
-  CategoryModel({this.images, required this.id, required this.title});
+@freezed
+class CategoryModel with _$CategoryModel {
+  factory CategoryModel(
+    @JsonKey(name: 'title') String title,
+    @JsonKey(name: 'id') String id,
+    @JsonKey(name: 'images') String? images,
+  ) = _CategoryModel;
+
+  factory CategoryModel.fromJson(Map<String, dynamic> json) =>
+      _$CategoryModelFromJson(json);
 }

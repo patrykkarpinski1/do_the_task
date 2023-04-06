@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/features/home/pages/notepad/cubit/notepad_cubit.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
+import '../../../../../app/core/enums.dart';
+
 class AddNotes extends StatelessWidget {
   AddNotes({
     super.key,
@@ -20,11 +22,12 @@ class AddNotes extends StatelessWidget {
           context.read<NotepadCubit>().start();
           Navigator.of(context).pop();
         }
-        if (state.errorMessage!.isNotEmpty) {
+        if (state.status == Status.error) {
+          final errorMessage = state.errorMessage ?? 'Unkown error';
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
+              content: Text(errorMessage),
               backgroundColor: Colors.red,
-              content: Text(state.errorMessage!),
             ),
           );
         }

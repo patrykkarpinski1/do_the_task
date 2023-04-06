@@ -1,37 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
+import 'package:modyfikacja_aplikacja/models/times_tamp_converter.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'task_model.g.dart';
+part 'task_model.freezed.dart';
 
-class TaskModel {
-  TaskModel({
-    required this.id,
-    required this.text,
-    required this.releaseDate,
-    required this.categoryId,
-  });
+@freezed
+class TaskModel with _$TaskModel {
+  factory TaskModel({
+    @JsonKey(name: 'text') required String text,
+    @JsonKey(name: 'id') required String id,
+    @JsonKey(name: 'category_id') required String categoryId,
+    @TimestampConverter() @JsonKey(name: 'date') required DateTime releaseDate,
+  }) = _TaskModel;
 
-  final String text;
-  final String id;
-  final DateTime releaseDate;
-  final String categoryId;
-  TaskModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        text = json['text'],
-        categoryId = json['category_id'],
-        releaseDate = (json['date'] as Timestamp).toDate();
-
-  String day() {
-    return DateFormat.d().format(releaseDate);
-  }
-
-  String month() {
-    return DateFormat.MMMM().format(releaseDate);
-  }
-
-  String dayFullName() {
-    return DateFormat.EEEE().format(releaseDate);
-  }
-
-  String releaseTimeFormatted() {
-    return DateFormat.Hm().format(releaseDate);
-  }
+  factory TaskModel.fromJson(Map<String, dynamic> json) =>
+      _$TaskModelFromJson(json);
 }

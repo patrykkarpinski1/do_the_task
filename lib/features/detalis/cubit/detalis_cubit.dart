@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/models/note_model.dart';
 import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
@@ -6,6 +7,7 @@ import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
 part 'detalis_state.dart';
+part 'detalis_cubit.freezed.dart';
 
 class DetalisCubit extends Cubit<DetalisState> {
   DetalisCubit(this._itemsRepository) : super(DetalisState());
@@ -56,7 +58,10 @@ class DetalisCubit extends Cubit<DetalisState> {
       await _itemsRepository.deletePhotoStorage(photo: photo);
     } catch (error) {
       emit(
-        DetalisState(removingErrorOccured: true),
+        DetalisState(
+          status: Status.error,
+          errorMessage: error.toString(),
+        ),
       );
     }
   }
@@ -65,12 +70,15 @@ class DetalisCubit extends Cubit<DetalisState> {
     required String documentID,
   }) async {
     try {
-      await _itemsRepository.deletePhoto2(
+      await _itemsRepository.deletePhotoDocument(
         id: documentID,
       );
     } catch (error) {
       emit(
-        DetalisState(removingErrorOccured: true),
+        DetalisState(
+          status: Status.error,
+          errorMessage: error.toString(),
+        ),
       );
     }
   }
