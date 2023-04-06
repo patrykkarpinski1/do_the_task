@@ -4,6 +4,7 @@ import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/cubit/auth_cubit.dart';
 import 'package:modyfikacja_aplikacja/auth/login/login_page.dart';
 import 'package:modyfikacja_aplikacja/features/home/home_page.dart';
+import 'package:modyfikacja_aplikacja/repositories/login_repositories.dart';
 
 class StartPage extends StatelessWidget {
   const StartPage({
@@ -13,7 +14,7 @@ class StartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => AuthCubit()..start(),
+        create: (context) => AuthCubit(LoginRepository())..start(),
         child: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state.errorMessage.isNotEmpty) {

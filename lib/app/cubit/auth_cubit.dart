@@ -6,19 +6,18 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:path/path.dart' as path;
-import 'dart:io';
+import 'package:modyfikacja_aplikacja/repositories/login_repositories.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(const AuthState());
+  AuthCubit(this._loginRepository) : super(const AuthState());
+  final LoginRepository _loginRepository;
 
   Future<void> passwordReset({
     required String email,
   }) async {
     try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email.trim());
+      await _loginRepository.passwordReset(email: email);
       emit(const AuthState(
           status: Status.success,
           message: 'Password reset link sent! Please check your email '));
@@ -51,7 +50,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> signOut() async {
     try {
-      await FirebaseAuth.instance.signOut();
+      await _loginRepository.signOut();
       emit(
         const AuthState(status: Status.success),
       );
@@ -65,8 +64,6 @@ class AuthCubit extends Cubit<AuthState> {
     required String email,
     required String password,
     required String confirmPassword,
-    String? name,
-    XFile? image,
   }) async {
     if (password.trim() != confirmPassword.trim()) {
       emit(
@@ -78,19 +75,10 @@ class AuthCubit extends Cubit<AuthState> {
       );
     } else {
       try {
-        CollectionReference users =
-            FirebaseFirestore.instance.collection('users');
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        users.doc(FirebaseAuth.instance.currentUser!.uid).set({
-          'name': name,
-          'profile_image': image,
-        });
+        await _loginRepository.register(email: email, password: password);
         emit(const AuthState(isCreatingAccount: false));
         try {
-          await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+          await _loginRepository.sendEmailVerification();
         } on FirebaseAuthException catch (error) {
           emit(AuthState(
               status: Status.error, errorMessage: error.message.toString()));
@@ -143,15 +131,8 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> addUserName({required String name}) async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
     try {
-      await FirebaseFirestore.instance.collection('users').doc(userID).update({
-        'name': name,
-      });
-      await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
+      await _loginRepository.addUserName(name: name);
     } catch (error) {
       emit(AuthState(status: Status.error, errorMessage: error.toString()));
     }
@@ -160,34 +141,16 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> addUserPhoto({
     required XFile image,
   }) async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
     try {
-      final ref = firebase_storage.FirebaseStorage.instance
-          .ref()
-          .child('profil_images')
-          .child(path.basename(image.path));
-      await ref.putFile(File(image.path));
-      final url = await ref.getDownloadURL();
-
-      await FirebaseFirestore.instance.collection('users').doc(userID).update({
-        'profile_image': url,
-      });
-      await FirebaseAuth.instance.currentUser?.updatePhotoURL(url);
+      await _loginRepository.addUserPhoto(image: image);
     } catch (error) {
       emit(AuthState(status: Status.error, errorMessage: error.toString()));
     }
   }
 
   Future<void> deleteAccount() async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
     try {
-      await FirebaseAuth.instance.currentUser?.delete();
+      await _loginRepository.deleteAccount();
     } on FirebaseAuthException catch (error) {
       emit(AuthState(
           status: Status.error, errorMessage: error.message.toString()));
@@ -196,7 +159,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> resendEmailVerification() async {
     try {
-      await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+      await _loginRepository.sendEmailVerification();
     } on FirebaseAuthException catch (error) {
       emit(AuthState(
           status: Status.error, errorMessage: error.message.toString()));
