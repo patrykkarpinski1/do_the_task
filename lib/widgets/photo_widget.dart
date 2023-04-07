@@ -18,10 +18,10 @@ class PhotoWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(top: 10, left: 5, right: 5),
         child: Hero(
-          tag: photoNoteModel!.id,
+          tag: photoNoteModel?.id ?? 'Unkown',
           child: FadeInImage(
             placeholder: const AssetImage('images/loadnig.png'),
-            image: NetworkImage(photoNoteModel!.photo),
+            image: NetworkImage(photoNoteModel?.photo ?? 'Unkown'),
             fit: BoxFit.cover,
           ),
         ),

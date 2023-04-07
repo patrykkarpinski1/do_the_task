@@ -68,7 +68,7 @@ class TasksPage extends StatelessWidget {
               gradient:
                   const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
               title: Text(
-                categoryModel!.title,
+                categoryModel?.title ?? 'Unkown',
                 style: GoogleFonts.arimo(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -77,7 +77,7 @@ class TasksPage extends StatelessWidget {
               ),
             ),
             body: TasksWidget(
-              categoryId: categoryModel.id,
+              categoryId: categoryModel?.id ?? 'Unkown',
             ),
           );
         },

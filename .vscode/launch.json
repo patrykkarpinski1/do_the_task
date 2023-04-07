@@ -1,25 +1,15 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
     "configurations": [
         {
-            "name": "modyfikacja_aplikacja",
+            "name": "Launch development",
             "request": "launch",
             "type": "dart"
-        },
-        {
-            "name": "modyfikacja_aplikacja (profile mode)",
+        },{
+            "name": "Launch production",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "program":"lib/main _production.dart",
         },
-        {
-            "name": "modyfikacja_aplikacja (release mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        }
+      
     ]
 }

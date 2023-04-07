@@ -115,7 +115,7 @@ class _TasksWidget extends StatelessWidget {
                     height: 150,
                     color: Colors.white,
                     child: Text(
-                      taskmodel!.text,
+                      taskmodel?.text ?? 'Unkown',
                       style: GoogleFonts.gruppo(
                           fontWeight: FontWeight.bold, fontSize: 14),
                     ),
@@ -183,14 +183,14 @@ class _TasksWidget extends StatelessWidget {
                           height: 40,
                         ),
                         Text(
-                          taskmodel!.releaseDate.day.toString(),
+                          taskmodel?.releaseDate.day.toString() ?? 'Unkown',
                           style: GoogleFonts.gruppo(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 75),
                         ),
                         Text(
-                          taskmodel!.releaseDate.day.toString(),
+                          taskmodel?.releaseDate.day.toString() ?? 'Unkown',
                           style: GoogleFonts.gruppo(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -201,7 +201,7 @@ class _TasksWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              taskmodel!.releaseDate.day.toString(),
+                              taskmodel?.releaseDate.day.toString() ?? 'Unkown',
                               style: GoogleFonts.gruppo(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),

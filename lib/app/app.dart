@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modyfikacja_aplikacja/app/core/config.dart';
 import 'package:modyfikacja_aplikacja/auth/start_page/start_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -10,6 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: getThemeData(),
       home: const StartPage(),
+      debugShowCheckedModeBanner: Config.debugShowCheckedModeBanner,
     );
   }
 
