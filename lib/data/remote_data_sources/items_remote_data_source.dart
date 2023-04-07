@@ -3,9 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:injectable/injectable.dart';
 import 'package:path/path.dart' as path;
 import 'dart:io';
 
+@injectable
 class ItemsRemoteDataSources {
   Future<List<Map<String, dynamic>>> getCategories() async {
     final doc = await FirebaseFirestore.instance.collection('categories').get();

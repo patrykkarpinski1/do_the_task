@@ -3,9 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:injectable/injectable.dart';
 import 'package:path/path.dart' as path;
 import 'dart:io';
 
+@injectable
 class LoginRepository {
   LoginRepository();
   Future<void> passwordReset({

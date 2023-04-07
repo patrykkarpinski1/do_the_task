@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/models/note_model.dart';
 import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
@@ -9,15 +10,16 @@ import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 part 'detalis_state.dart';
 part 'detalis_cubit.freezed.dart';
 
+@injectable
 class DetalisCubit extends Cubit<DetalisState> {
-  DetalisCubit(this._itemsRepository) : super(DetalisState());
-  final ItemsRepository _itemsRepository;
+  DetalisCubit({required this.itemsRepository}) : super(DetalisState());
+  final ItemsRepository itemsRepository;
   Future<void> getTaskWithID(String id) async {
     emit(
       DetalisState(status: Status.loading, taskModel: null),
     );
     try {
-      final taskModel = await _itemsRepository.getDetalisTask(id: id);
+      final taskModel = await itemsRepository.getDetalisTask(id: id);
       emit(DetalisState(status: Status.success, taskModel: taskModel));
     } catch (error) {
       emit(
@@ -35,7 +37,7 @@ class DetalisCubit extends Cubit<DetalisState> {
       DetalisState(status: Status.loading, photoNoteModel: null),
     );
     try {
-      final photoNoteModel = await _itemsRepository.getDetalisPhotoNote(
+      final photoNoteModel = await itemsRepository.getDetalisPhotoNote(
         id: id,
       );
       emit(
@@ -55,7 +57,7 @@ class DetalisCubit extends Cubit<DetalisState> {
     required String photo,
   }) async {
     try {
-      await _itemsRepository.deletePhotoStorage(photo: photo);
+      await itemsRepository.deletePhotoStorage(photo: photo);
     } catch (error) {
       emit(
         DetalisState(
@@ -70,7 +72,7 @@ class DetalisCubit extends Cubit<DetalisState> {
     required String documentID,
   }) async {
     try {
-      await _itemsRepository.deletePhotoDocument(
+      await itemsRepository.deletePhotoDocument(
         id: documentID,
       );
     } catch (error) {
@@ -88,7 +90,7 @@ class DetalisCubit extends Cubit<DetalisState> {
       DetalisState(status: Status.loading, noteModel: null),
     );
     try {
-      final noteModel = await _itemsRepository.getDetalisNote(id: id);
+      final noteModel = await itemsRepository.getDetalisNote(id: id);
       emit(DetalisState(status: Status.success, noteModel: noteModel));
     } catch (error) {
       emit(
@@ -104,7 +106,7 @@ class DetalisCubit extends Cubit<DetalisState> {
   Future<void> editNote(
       {required String documentID, required String note}) async {
     try {
-      await _itemsRepository.editNote(id: documentID, note: note);
+      await itemsRepository.editNote(id: documentID, note: note);
     } catch (error) {
       emit(
         DetalisState(

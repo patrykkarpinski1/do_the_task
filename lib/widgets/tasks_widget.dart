@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
+import 'package:modyfikacja_aplikacja/app/injection_container.dart';
 import 'package:modyfikacja_aplikacja/features/detalis/pages/detalis_task_widget_page.dart';
 import 'package:modyfikacja_aplikacja/features/home/pages/tasks/cubit/task_cubit.dart';
-import 'package:modyfikacja_aplikacja/data/remote_data_sources/items_remote_data_source.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
-import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 
 class TasksWidget extends StatelessWidget {
   const TasksWidget({
@@ -18,9 +17,8 @@ class TasksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TaskCubit(ItemsRepository(ItemsRemoteDataSources()))
-        ..getTasks(categoryId),
+    return BlocProvider<TaskCubit>(
+      create: (context) => getIt()..getTasks(categoryId),
       child: BlocConsumer<TaskCubit, TaskState>(
         listener: (context, state) {
           if (state.status == Status.error) {

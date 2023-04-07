@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/cubit/auth_cubit.dart';
+import 'package:modyfikacja_aplikacja/app/injection_container.dart';
 import 'package:modyfikacja_aplikacja/features/home/pages/add_tasks/add_tasks_page_content.dart';
 import 'package:modyfikacja_aplikacja/features/home/pages/notepad/pages/notepad_page_content.dart';
-import 'package:modyfikacja_aplikacja/repositories/login_repositories.dart';
 import 'pages/category_page/page/category_page_content.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,8 +24,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthCubit(LoginRepository())..start(),
+    return BlocProvider<AuthCubit>(
+      create: (context) => getIt()..start(),
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state.status == Status.error) {

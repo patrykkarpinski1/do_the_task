@@ -527,6 +527,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.6.3"
+  injectable:
+    dependency: "direct main"
+    description:
+      name: injectable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1"
+  injectable_generator:
+    dependency: "direct dev"
+    description:
+      name: injectable_generator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.5"
   intl:
     dependency: "direct main"
     description:
@@ -744,6 +758,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.1"
+  recase:
+    dependency: transitive
+    description:
+      name: recase
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.1.0"
   shelf:
     dependency: transitive
     description:

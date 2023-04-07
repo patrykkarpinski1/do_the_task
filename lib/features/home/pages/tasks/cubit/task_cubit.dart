@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
@@ -9,9 +10,10 @@ import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 part 'task_state.dart';
 part 'task_cubit.freezed.dart';
 
+@injectable
 class TaskCubit extends Cubit<TaskState> {
-  TaskCubit(this._itemsRepository) : super(TaskState());
-  final ItemsRepository _itemsRepository;
+  TaskCubit({required this.itemsRepository}) : super(TaskState());
+  final ItemsRepository itemsRepository;
 
   Future<void> getTasks(
     String categoryId,
@@ -23,7 +25,7 @@ class TaskCubit extends Cubit<TaskState> {
       ),
     );
     try {
-      final results = await _itemsRepository.getTasks(
+      final results = await itemsRepository.getTasks(
         categoryId: categoryId,
       );
       emit(
@@ -47,7 +49,7 @@ class TaskCubit extends Cubit<TaskState> {
     String? categoryId,
   }) async {
     try {
-      await _itemsRepository.deleteTask(id: documentID);
+      await itemsRepository.deleteTask(id: documentID);
     } catch (error) {
       emit(
         TaskState(

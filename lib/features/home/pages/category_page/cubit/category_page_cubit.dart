@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
 import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
@@ -8,9 +9,11 @@ import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
 part 'category_page_state.dart';
 part 'category_page_cubit.freezed.dart';
 
+@injectable
 class CategoryPageCubit extends Cubit<CategoryPageState> {
-  CategoryPageCubit(this._itemsRepository) : super(CategoryPageState());
-  final ItemsRepository _itemsRepository;
+  CategoryPageCubit({required this.itemsRepository})
+      : super(CategoryPageState());
+  final ItemsRepository itemsRepository;
 
   Future<void> start() async {
     emit(
@@ -20,7 +23,7 @@ class CategoryPageCubit extends Cubit<CategoryPageState> {
       ),
     );
     try {
-      final categories = await _itemsRepository.getCategories();
+      final categories = await itemsRepository.getCategories();
       emit(CategoryPageState(status: Status.success, categories: categories));
     } catch (error) {
       emit(CategoryPageState(
@@ -38,7 +41,7 @@ class CategoryPageCubit extends Cubit<CategoryPageState> {
       ),
     );
     try {
-      final categoryModel = await _itemsRepository.getCategory(id: id);
+      final categoryModel = await itemsRepository.getCategory(id: id);
       emit(CategoryPageState(
           status: Status.success, categoryModel: categoryModel));
     } catch (error) {

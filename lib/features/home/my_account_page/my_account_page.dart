@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/cubit/auth_cubit.dart';
-import 'package:modyfikacja_aplikacja/repositories/login_repositories.dart';
+import 'package:modyfikacja_aplikacja/app/injection_container.dart';
 import 'package:modyfikacja_aplikacja/widgets/account_widget.dart';
 import 'package:modyfikacja_aplikacja/widgets/user_info_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
@@ -26,8 +26,8 @@ class _MyAccountPageState extends State<MyAccountPage> {
   XFile? image;
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthCubit(LoginRepository()),
+    return BlocProvider<AuthCubit>(
+      create: (context) => getIt(),
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state.status == Status.error) {

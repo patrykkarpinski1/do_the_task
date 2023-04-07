@@ -5,20 +5,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:injectable/injectable.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/repositories/login_repositories.dart';
 part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';
 
+@injectable
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit(this._loginRepository) : super(const AuthState());
-  final LoginRepository _loginRepository;
+  AuthCubit({required this.loginRepository}) : super(const AuthState());
+  final LoginRepository loginRepository;
 
   Future<void> passwordReset({
     required String email,
   }) async {
     try {
-      await _loginRepository.passwordReset(email: email);
+      await loginRepository.passwordReset(email: email);
       emit(const AuthState(
           status: Status.success,
           message: 'Password reset link sent! Please check your email '));
@@ -51,7 +53,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> signOut() async {
     try {
-      await _loginRepository.signOut();
+      await loginRepository.signOut();
       emit(
         const AuthState(status: Status.success),
       );
@@ -76,10 +78,10 @@ class AuthCubit extends Cubit<AuthState> {
       );
     } else {
       try {
-        await _loginRepository.register(email: email, password: password);
+        await loginRepository.register(email: email, password: password);
         emit(const AuthState(isCreatingAccount: false));
         try {
-          await _loginRepository.sendEmailVerification();
+          await loginRepository.sendEmailVerification();
         } on FirebaseAuthException catch (error) {
           emit(AuthState(
               status: Status.error, errorMessage: error.message.toString()));
@@ -133,7 +135,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> addUserName({required String name}) async {
     try {
-      await _loginRepository.addUserName(name: name);
+      await loginRepository.addUserName(name: name);
     } catch (error) {
       emit(AuthState(status: Status.error, errorMessage: error.toString()));
     }
@@ -143,7 +145,7 @@ class AuthCubit extends Cubit<AuthState> {
     required XFile image,
   }) async {
     try {
-      await _loginRepository.addUserPhoto(image: image);
+      await loginRepository.addUserPhoto(image: image);
     } catch (error) {
       emit(AuthState(status: Status.error, errorMessage: error.toString()));
     }
@@ -151,7 +153,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> deleteAccount() async {
     try {
-      await _loginRepository.deleteAccount();
+      await loginRepository.deleteAccount();
     } on FirebaseAuthException catch (error) {
       emit(AuthState(
           status: Status.error, errorMessage: error.message.toString()));
@@ -160,7 +162,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> resendEmailVerification() async {
     try {
-      await _loginRepository.sendEmailVerification();
+      await loginRepository.sendEmailVerification();
     } on FirebaseAuthException catch (error) {
       emit(AuthState(
           status: Status.error, errorMessage: error.message.toString()));

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/cubit/auth_cubit.dart';
-import 'package:modyfikacja_aplikacja/repositories/login_repositories.dart';
+import 'package:modyfikacja_aplikacja/app/injection_container.dart';
 import 'package:modyfikacja_aplikacja/widgets/login_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -20,8 +20,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthCubit(LoginRepository())..start(),
+    return BlocProvider<AuthCubit>(
+      create: (context) => getIt()..start(),
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state.status == Status.error) {

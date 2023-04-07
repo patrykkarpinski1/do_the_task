@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:injectable/injectable.dart';
 import 'package:modyfikacja_aplikacja/data/remote_data_sources/items_remote_data_source.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
 import 'package:modyfikacja_aplikacja/models/note_model.dart';
 import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 
+@injectable
 class ItemsRepository {
-  ItemsRepository(this.itemsRemoteDataSources);
+  ItemsRepository({required this.itemsRemoteDataSources});
   final ItemsRemoteDataSources itemsRemoteDataSources;
 
   Future<List<CategoryModel>> getCategories() async {
