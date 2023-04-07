@@ -1,15 +1,13 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/models/note_model.dart';
-import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
+import 'package:modyfikacja_aplikacja/repositories/item_repository.dart';
 
 part 'notepad_state.dart';
 part 'notepad_cubit.freezed.dart';
 
-@injectable
 class NotepadCubit extends Cubit<NotepadState> {
   NotepadCubit({required this.itemsRepository}) : super(NotepadState());
   final ItemsRepository itemsRepository;

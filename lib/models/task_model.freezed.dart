@@ -20,11 +20,8 @@ TaskModel _$TaskModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TaskModel {
-  @JsonKey(name: 'text')
   String get text => throw _privateConstructorUsedError;
-  @JsonKey(name: 'id')
   String get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'category_id')
   String get categoryId => throw _privateConstructorUsedError;
   @TimestampConverter()
   @JsonKey(name: 'date')
@@ -42,9 +39,9 @@ abstract class $TaskModelCopyWith<$Res> {
       _$TaskModelCopyWithImpl<$Res, TaskModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'text') String text,
-      @JsonKey(name: 'id') String id,
-      @JsonKey(name: 'category_id') String categoryId,
+      {String text,
+      String id,
+      String categoryId,
       @TimestampConverter() @JsonKey(name: 'date') DateTime releaseDate});
 }
 
@@ -95,9 +92,9 @@ abstract class _$$_TaskModelCopyWith<$Res> implements $TaskModelCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'text') String text,
-      @JsonKey(name: 'id') String id,
-      @JsonKey(name: 'category_id') String categoryId,
+      {String text,
+      String id,
+      String categoryId,
       @TimestampConverter() @JsonKey(name: 'date') DateTime releaseDate});
 }
 
@@ -139,25 +136,23 @@ class __$$_TaskModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$_TaskModel implements _TaskModel {
   _$_TaskModel(
-      {@JsonKey(name: 'text') required this.text,
-      @JsonKey(name: 'id') required this.id,
-      @JsonKey(name: 'category_id') required this.categoryId,
+      {required this.text,
+      required this.id,
+      required this.categoryId,
       @TimestampConverter() @JsonKey(name: 'date') required this.releaseDate});
 
   factory _$_TaskModel.fromJson(Map<String, dynamic> json) =>
       _$$_TaskModelFromJson(json);
 
   @override
-  @JsonKey(name: 'text')
   final String text;
   @override
-  @JsonKey(name: 'id')
   final String id;
   @override
-  @JsonKey(name: 'category_id')
   final String categoryId;
   @override
   @TimestampConverter()
@@ -203,12 +198,9 @@ class _$_TaskModel implements _TaskModel {
 
 abstract class _TaskModel implements TaskModel {
   factory _TaskModel(
-      {@JsonKey(name: 'text')
-          required final String text,
-      @JsonKey(name: 'id')
-          required final String id,
-      @JsonKey(name: 'category_id')
-          required final String categoryId,
+      {required final String text,
+      required final String id,
+      required final String categoryId,
       @TimestampConverter()
       @JsonKey(name: 'date')
           required final DateTime releaseDate}) = _$_TaskModel;
@@ -217,13 +209,10 @@ abstract class _TaskModel implements TaskModel {
       _$_TaskModel.fromJson;
 
   @override
-  @JsonKey(name: 'text')
   String get text;
   @override
-  @JsonKey(name: 'id')
   String get id;
   @override
-  @JsonKey(name: 'category_id')
   String get categoryId;
   @override
   @TimestampConverter()

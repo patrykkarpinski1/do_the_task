@@ -1,15 +1,13 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/models/category_model.dart';
-import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
+import 'package:modyfikacja_aplikacja/repositories/item_repository.dart';
 
 part 'category_page_state.dart';
 part 'category_page_cubit.freezed.dart';
 
-@injectable
 class CategoryPageCubit extends Cubit<CategoryPageState> {
   CategoryPageCubit({required this.itemsRepository})
       : super(CategoryPageState());

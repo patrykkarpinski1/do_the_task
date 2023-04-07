@@ -20,9 +20,7 @@ PhotoNoteModel _$PhotoNoteModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PhotoNoteModel {
-  @JsonKey(name: 'id')
   String get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'photo')
   String get photo => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,8 +35,7 @@ abstract class $PhotoNoteModelCopyWith<$Res> {
           PhotoNoteModel value, $Res Function(PhotoNoteModel) then) =
       _$PhotoNoteModelCopyWithImpl<$Res, PhotoNoteModel>;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'id') String id, @JsonKey(name: 'photo') String photo});
+  $Res call({String id, String photo});
 }
 
 /// @nodoc
@@ -78,8 +75,7 @@ abstract class _$$_PhotoNoteModelCopyWith<$Res>
       __$$_PhotoNoteModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'id') String id, @JsonKey(name: 'photo') String photo});
+  $Res call({String id, String photo});
 }
 
 /// @nodoc
@@ -112,17 +108,14 @@ class __$$_PhotoNoteModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_PhotoNoteModel implements _PhotoNoteModel {
-  _$_PhotoNoteModel(
-      @JsonKey(name: 'id') this.id, @JsonKey(name: 'photo') this.photo);
+  _$_PhotoNoteModel(this.id, this.photo);
 
   factory _$_PhotoNoteModel.fromJson(Map<String, dynamic> json) =>
       _$$_PhotoNoteModelFromJson(json);
 
   @override
-  @JsonKey(name: 'id')
   final String id;
   @override
-  @JsonKey(name: 'photo')
   final String photo;
 
   @override
@@ -158,17 +151,15 @@ class _$_PhotoNoteModel implements _PhotoNoteModel {
 }
 
 abstract class _PhotoNoteModel implements PhotoNoteModel {
-  factory _PhotoNoteModel(@JsonKey(name: 'id') final String id,
-      @JsonKey(name: 'photo') final String photo) = _$_PhotoNoteModel;
+  factory _PhotoNoteModel(final String id, final String photo) =
+      _$_PhotoNoteModel;
 
   factory _PhotoNoteModel.fromJson(Map<String, dynamic> json) =
       _$_PhotoNoteModel.fromJson;
 
   @override
-  @JsonKey(name: 'id')
   String get id;
   @override
-  @JsonKey(name: 'photo')
   String get photo;
   @override
   @JsonKey(ignore: true)

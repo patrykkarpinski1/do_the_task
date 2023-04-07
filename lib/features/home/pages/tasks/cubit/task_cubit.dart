@@ -2,15 +2,13 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
-import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart';
+import 'package:modyfikacja_aplikacja/repositories/item_repository.dart';
 
 part 'task_state.dart';
 part 'task_cubit.freezed.dart';
 
-@injectable
 class TaskCubit extends Cubit<TaskState> {
   TaskCubit({required this.itemsRepository}) : super(TaskState());
   final ItemsRepository itemsRepository;

@@ -6,10 +6,11 @@ part 'task_model.freezed.dart';
 
 @freezed
 class TaskModel with _$TaskModel {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   factory TaskModel({
-    @JsonKey(name: 'text') required String text,
-    @JsonKey(name: 'id') required String id,
-    @JsonKey(name: 'category_id') required String categoryId,
+    required String text,
+    required String id,
+    required String categoryId,
     @TimestampConverter() @JsonKey(name: 'date') required DateTime releaseDate,
   }) = _TaskModel;
 

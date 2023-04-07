@@ -20,9 +20,7 @@ NoteModel _$NoteModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$NoteModel {
-  @JsonKey(name: 'note')
   String get note => throw _privateConstructorUsedError;
-  @JsonKey(name: 'id')
   String get id => throw _privateConstructorUsedError;
   @TimestampConverter()
   @JsonKey(name: 'date')
@@ -40,8 +38,8 @@ abstract class $NoteModelCopyWith<$Res> {
       _$NoteModelCopyWithImpl<$Res, NoteModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'note') String note,
-      @JsonKey(name: 'id') String id,
+      {String note,
+      String id,
       @TimestampConverter() @JsonKey(name: 'date') DateTime releaseDate});
 }
 
@@ -87,8 +85,8 @@ abstract class _$$_NoteModelCopyWith<$Res> implements $NoteModelCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'note') String note,
-      @JsonKey(name: 'id') String id,
+      {String note,
+      String id,
       @TimestampConverter() @JsonKey(name: 'date') DateTime releaseDate});
 }
 
@@ -128,18 +126,16 @@ class __$$_NoteModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_NoteModel implements _NoteModel {
   _$_NoteModel(
-      {@JsonKey(name: 'note') required this.note,
-      @JsonKey(name: 'id') required this.id,
+      {required this.note,
+      required this.id,
       @TimestampConverter() @JsonKey(name: 'date') required this.releaseDate});
 
   factory _$_NoteModel.fromJson(Map<String, dynamic> json) =>
       _$$_NoteModelFromJson(json);
 
   @override
-  @JsonKey(name: 'note')
   final String note;
   @override
-  @JsonKey(name: 'id')
   final String id;
   @override
   @TimestampConverter()
@@ -182,10 +178,8 @@ class _$_NoteModel implements _NoteModel {
 
 abstract class _NoteModel implements NoteModel {
   factory _NoteModel(
-      {@JsonKey(name: 'note')
-          required final String note,
-      @JsonKey(name: 'id')
-          required final String id,
+      {required final String note,
+      required final String id,
       @TimestampConverter()
       @JsonKey(name: 'date')
           required final DateTime releaseDate}) = _$_NoteModel;
@@ -194,10 +188,8 @@ abstract class _NoteModel implements NoteModel {
       _$_NoteModel.fromJson;
 
   @override
-  @JsonKey(name: 'note')
   String get note;
   @override
-  @JsonKey(name: 'id')
   String get id;
   @override
   @TimestampConverter()

@@ -5,13 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:injectable/injectable.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:modyfikacja_aplikacja/repositories/login_repositories.dart';
+import 'package:modyfikacja_aplikacja/repositories/login_repository.dart';
 part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';
 
-@injectable
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit({required this.loginRepository}) : super(const AuthState());
   final LoginRepository loginRepository;

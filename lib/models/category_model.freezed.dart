@@ -20,11 +20,8 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CategoryModel {
-  @JsonKey(name: 'title')
   String get title => throw _privateConstructorUsedError;
-  @JsonKey(name: 'id')
   String get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'images')
   String? get images => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,10 +36,7 @@ abstract class $CategoryModelCopyWith<$Res> {
           CategoryModel value, $Res Function(CategoryModel) then) =
       _$CategoryModelCopyWithImpl<$Res, CategoryModel>;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'title') String title,
-      @JsonKey(name: 'id') String id,
-      @JsonKey(name: 'images') String? images});
+  $Res call({String title, String id, String? images});
 }
 
 /// @nodoc
@@ -87,10 +81,7 @@ abstract class _$$_CategoryModelCopyWith<$Res>
       __$$_CategoryModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'title') String title,
-      @JsonKey(name: 'id') String id,
-      @JsonKey(name: 'images') String? images});
+  $Res call({String title, String id, String? images});
 }
 
 /// @nodoc
@@ -128,20 +119,16 @@ class __$$_CategoryModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_CategoryModel implements _CategoryModel {
-  _$_CategoryModel(@JsonKey(name: 'title') this.title,
-      @JsonKey(name: 'id') this.id, @JsonKey(name: 'images') this.images);
+  _$_CategoryModel(this.title, this.id, this.images);
 
   factory _$_CategoryModel.fromJson(Map<String, dynamic> json) =>
       _$$_CategoryModelFromJson(json);
 
   @override
-  @JsonKey(name: 'title')
   final String title;
   @override
-  @JsonKey(name: 'id')
   final String id;
   @override
-  @JsonKey(name: 'images')
   final String? images;
 
   @override
@@ -179,21 +166,17 @@ class _$_CategoryModel implements _CategoryModel {
 
 abstract class _CategoryModel implements CategoryModel {
   factory _CategoryModel(
-      @JsonKey(name: 'title') final String title,
-      @JsonKey(name: 'id') final String id,
-      @JsonKey(name: 'images') final String? images) = _$_CategoryModel;
+          final String title, final String id, final String? images) =
+      _$_CategoryModel;
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
       _$_CategoryModel.fromJson;
 
   @override
-  @JsonKey(name: 'title')
   String get title;
   @override
-  @JsonKey(name: 'id')
   String get id;
   @override
-  @JsonKey(name: 'images')
   String? get images;
   @override
   @JsonKey(ignore: true)

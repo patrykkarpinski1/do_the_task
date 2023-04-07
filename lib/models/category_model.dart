@@ -5,9 +5,9 @@ part 'category_model.g.dart';
 @freezed
 class CategoryModel with _$CategoryModel {
   factory CategoryModel(
-    @JsonKey(name: 'title') String title,
-    @JsonKey(name: 'id') String id,
-    @JsonKey(name: 'images') String? images,
+    String title,
+    String id,
+    String? images,
   ) = _CategoryModel;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>

@@ -26,9 +26,8 @@ import 'package:modyfikacja_aplikacja/features/home/pages/notepad/cubit/notepad_
     as _i6;
 import 'package:modyfikacja_aplikacja/features/home/pages/tasks/cubit/task_cubit.dart'
     as _i8;
-import 'package:modyfikacja_aplikacja/repositories/item_repositories.dart'
-    as _i4;
-import 'package:modyfikacja_aplikacja/repositories/login_repositories.dart'
+import 'package:modyfikacja_aplikacja/repositories/item_repository.dart' as _i4;
+import 'package:modyfikacja_aplikacja/repositories/login_repository.dart'
     as _i5;
 
 extension GetItInjectableX on _i1.GetIt {

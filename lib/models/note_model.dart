@@ -8,8 +8,8 @@ part 'note_model.freezed.dart';
 @freezed
 class NoteModel with _$NoteModel {
   factory NoteModel({
-    @JsonKey(name: 'note') required String note,
-    @JsonKey(name: 'id') required String id,
+    required String note,
+    required String id,
     @TimestampConverter() @JsonKey(name: 'date') required DateTime releaseDate,
   }) = _NoteModel;
 
