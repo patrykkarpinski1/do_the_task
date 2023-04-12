@@ -130,6 +130,8 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
                       setState(() {
                         releaseDate = null;
                         releaseTime = null;
+                        selectedCategoryId == null;
+                        text == null;
                       });
                     },
                   );

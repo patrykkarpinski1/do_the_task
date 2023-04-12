@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/core/enums.dart';
 import 'package:modyfikacja_aplikacja/app/injection_container.dart';
 import 'package:modyfikacja_aplikacja/features/home/pages/category_page/cubit/category_page_cubit.dart';
-import 'package:modyfikacja_aplikacja/models/category_model.dart';
 import 'package:modyfikacja_aplikacja/models/task_model.dart';
 import 'package:modyfikacja_aplikacja/widgets/tasks_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
@@ -12,11 +11,9 @@ import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 class TasksPage extends StatelessWidget {
   const TasksPage({
     required this.id,
-    this.categoryModel,
     this.taskmodel,
     Key? key,
   }) : super(key: key);
-  final CategoryModel? categoryModel;
   final String id;
   final TaskModel? taskmodel;
   @override
@@ -47,11 +44,11 @@ class TasksPage extends StatelessWidget {
             );
           }
           if (state.status == Status.success) {
-            if (state.categoryModel == null) {
+            if (state.selectCategories == null) {
               return const SizedBox.shrink();
             }
           }
-          final categoryModel = state.categoryModel;
+          final categoryModel = state.selectCategories;
 
           return Scaffold(
             backgroundColor: const Color.fromARGB(237, 255, 255, 255),

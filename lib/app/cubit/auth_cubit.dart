@@ -158,9 +158,19 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> userReloded() async {
+    await FirebaseAuth.instance.currentUser?.reload();
+    emit(AuthState(
+        user: FirebaseAuth.instance.currentUser, status: state.status));
+  }
+
   Future<void> resendEmailVerification() async {
     try {
       await loginRepository.sendEmailVerification();
+      const AuthState(
+        status: Status.success,
+        user: null,
+      );
     } on FirebaseAuthException catch (error) {
       emit(AuthState(
           status: Status.error, errorMessage: error.message.toString()));
@@ -180,8 +190,7 @@ class AuthCubit extends Cubit<AuthState> {
         ),
       );
 
-      _streamSubscription =
-          FirebaseAuth.instance.authStateChanges().listen((user) {
+      _streamSubscription = FirebaseAuth.instance.userChanges().listen((user) {
         emit(
           AuthState(
             status: Status.success,

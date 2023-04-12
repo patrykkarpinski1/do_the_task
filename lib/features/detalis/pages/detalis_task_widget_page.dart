@@ -66,7 +66,7 @@ class DetalisTasksWidget extends StatelessWidget {
               title: Row(
                 children: [
                   Text(
-                    taskModel!.releaseDate.day.toString(),
+                    taskModel?.dayFullName() ?? 'Unkown',
                     style: GoogleFonts.gruppo(
                         color: const Color.fromARGB(255, 56, 55, 55),
                         fontWeight: FontWeight.bold,
@@ -83,7 +83,7 @@ class DetalisTasksWidget extends StatelessWidget {
                 Center(
                   child: SizedBox(
                     child: Text(
-                      taskModel.releaseDate.day.toString(),
+                      taskModel?.releaseTimeFormatted() ?? 'Unkown',
                       style: GoogleFonts.gruppo(
                           color: const Color.fromARGB(255, 56, 55, 55),
                           fontWeight: FontWeight.bold,
@@ -92,7 +92,7 @@ class DetalisTasksWidget extends StatelessWidget {
                   ),
                 ),
                 WorkTasks(
-                  taskModel: taskModel,
+                  taskModel: taskModel!,
                 ),
               ],
             ),

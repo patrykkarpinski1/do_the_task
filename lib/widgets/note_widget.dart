@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/features/detalis/pages/detalis_note.dart';
 import 'package:modyfikacja_aplikacja/features/home/pages/notepad/cubit/notepad_cubit.dart';
 import 'package:modyfikacja_aplikacja/models/note_model.dart';
-import 'package:modyfikacja_aplikacja/widgets/icon_show_alert_dialog_widget.dart';
+import 'package:modyfikacja_aplikacja/widgets/show_alert_dialog_widget.dart';
 
 class NoteWidget extends StatelessWidget {
   const NoteWidget({
@@ -45,7 +45,7 @@ class NoteWidget extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(left: 10),
                     child: Text(
-                      noteModel.releaseDate.day.toString(),
+                      noteModel.releaseDateFormatted(),
                       style: GoogleFonts.gruppo(
                           color: const Color.fromARGB(255, 29, 28, 28),
                           fontWeight: FontWeight.bold),

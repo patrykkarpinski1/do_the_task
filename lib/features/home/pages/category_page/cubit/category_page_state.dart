@@ -6,6 +6,6 @@ class CategoryPageState with _$CategoryPageState {
     @Default([]) List<CategoryModel> categories,
     @Default(Status.initial) Status status,
     String? errorMessage,
-    CategoryModel? categoryModel,
+    CategoryModel? selectCategories,
   }) = _CategoryPageState;
 }

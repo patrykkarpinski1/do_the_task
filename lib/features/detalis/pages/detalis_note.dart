@@ -120,7 +120,7 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
                   const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
               title: Center(
                 child: Text(
-                  (noteModel!.releaseDate).toString(),
+                  noteModel?.releaseDateFormatted() ?? 'Unkown',
                   style: GoogleFonts.arimo(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
                 children: [
                   if (editing == false) ...[
                     Text(
-                      noteModel.note,
+                      noteModel?.note ?? 'Unkown',
                       style: GoogleFonts.arimo(
                         fontSize: 16,
                       ),
@@ -143,7 +143,7 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
                   ],
                   if (editing == true) ...[
                     TextFormField(
-                      initialValue: noteModel.note,
+                      initialValue: noteModel?.note,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         filled: true,

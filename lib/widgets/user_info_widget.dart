@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/cubit/auth_cubit.dart';
-import 'package:modyfikacja_aplikacja/features/home/my_account_page/add_user_name_page.dart';
 
-class UserInfoWidget extends StatelessWidget {
+class UserInfoWidget extends StatefulWidget {
   const UserInfoWidget({
     Key? key,
     required this.user,
@@ -12,6 +12,12 @@ class UserInfoWidget extends StatelessWidget {
 
   final User user;
 
+  @override
+  State<UserInfoWidget> createState() => _UserInfoWidgetState();
+}
+
+class _UserInfoWidgetState extends State<UserInfoWidget> {
+  String? name;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +29,7 @@ class UserInfoWidget extends StatelessWidget {
         children: [
           ListTile(
             title: const Text('Email Adress '),
-            subtitle: Text(user.email!),
+            subtitle: Text(widget.user.email!),
             leading: const Icon(Icons.email_outlined),
           ),
           const Padding(
@@ -33,29 +39,151 @@ class UserInfoWidget extends StatelessWidget {
               thickness: 0.8,
             ),
           ),
-          Builder(builder: (context) {
-            if (user.displayName == null) {
-              return InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => BlocProvider.value(
-                            value: context.read<AuthCubit>(),
-                            child: const AddUserNamePage(),
-                          )));
-                },
-                child: const ListTile(
-                  title: Text('User Name'),
-                  subtitle: Text('Add Your Name'),
-                  leading: Icon(Icons.person),
-                ),
-              );
-            }
-            return ListTile(
+          if (widget.user.displayName == null) ...[
+            InkWell(
+              onTap: () async {
+                await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Center(
+                            child: Text(
+                          'Add your name',
+                          style: GoogleFonts.arimo(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(255, 56, 55, 55),
+                          ),
+                        )),
+                        content: TextField(
+                          onChanged: (newValue) {
+                            setState(() {
+                              name = newValue;
+                            });
+                          },
+                        ),
+                        actions: [
+                          TextButton(
+                              onPressed: () async {
+                                context
+                                    .read<AuthCubit>()
+                                    .addUserName(name: name!);
+
+                                context.read<AuthCubit>().userReloded();
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(
+                                'Save',
+                                style: GoogleFonts.arimo(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color.fromARGB(255, 56, 55, 55),
+                                ),
+                              )),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(
+                                'Exit',
+                                style: GoogleFonts.arimo(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color.fromARGB(255, 56, 55, 55),
+                                ),
+                              ))
+                        ],
+                      );
+                    });
+              },
+              child: const ListTile(
+                title: Text('User Name'),
+                subtitle: Text('Add Your Name'),
+                leading: Icon(Icons.person),
+              ),
+            )
+          ],
+          if (widget.user.displayName != null) ...[
+            ListTile(
               title: const Text('User Name'),
-              subtitle: Text(user.displayName!),
+              subtitle: Text(widget.user.displayName!),
               leading: const Icon(Icons.person),
-            );
-          }),
+            )
+          ],
+
+          // Builder(builder: (context) {
+          //   if (widget.user.displayName == null) {
+          //     return InkWell(
+          //       onTap: () async {
+          //         await showDialog(
+          //             context: context,
+          //             builder: (context) {
+          //               return AlertDialog(
+          //                 title: Center(
+          //                     child: Text(
+          //                   'Add your name',
+          //                   style: GoogleFonts.arimo(
+          //                     fontSize: 20,
+          //                     fontWeight: FontWeight.bold,
+          //                     color: const Color.fromARGB(255, 56, 55, 55),
+          //                   ),
+          //                 )),
+          //                 content: TextField(
+          //                   onChanged: (newValue) {
+          //                     setState(() {
+          //                       name = newValue;
+          //                     });
+          //                   },
+          //                 ),
+          //                 actions: [
+          //                   TextButton(
+          //                       onPressed: () async {
+          //                         context
+          //                             .read<AuthCubit>()
+          //                             .addUserName(name: name!);
+
+          //                         context.read<AuthCubit>().userReloded();
+          //                         Navigator.of(context).pop();
+          //                       },
+          //                       child: Text(
+          //                         'Save',
+          //                         style: GoogleFonts.arimo(
+          //                           fontSize: 16,
+          //                           fontWeight: FontWeight.bold,
+          //                           color:
+          //                               const Color.fromARGB(255, 56, 55, 55),
+          //                         ),
+          //                       )),
+          //                   TextButton(
+          //                       onPressed: () {
+          //                         Navigator.of(context).pop();
+          //                       },
+          //                       child: Text(
+          //                         'Exit',
+          //                         style: GoogleFonts.arimo(
+          //                           fontSize: 16,
+          //                           fontWeight: FontWeight.bold,
+          //                           color:
+          //                               const Color.fromARGB(255, 56, 55, 55),
+          //                         ),
+          //                       ))
+          //                 ],
+          //               );
+          //             });
+          //       },
+          //       child: const ListTile(
+          //         title: Text('User Name'),
+          //         subtitle: Text('Add Your Name'),
+          //         leading: Icon(Icons.person),
+          //       ),
+          //     );
+          //   }
+          //   return ListTile(
+          //     title: const Text('User Name'),
+          //     subtitle: Text(widget.user.displayName!),
+          //     leading: const Icon(Icons.person),
+          //   );
+          // }),
         ],
       ),
     );

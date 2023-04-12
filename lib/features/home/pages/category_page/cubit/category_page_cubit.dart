@@ -35,13 +35,13 @@ class CategoryPageCubit extends Cubit<CategoryPageState> {
     emit(
       CategoryPageState(
         status: Status.loading,
-        categoryModel: null,
+        selectCategories: null,
       ),
     );
     try {
       final categoryModel = await itemsRepository.getCategory(id: id);
       emit(CategoryPageState(
-          status: Status.success, categoryModel: categoryModel));
+          status: Status.success, selectCategories: categoryModel));
     } catch (error) {
       emit(CategoryPageState(
         status: Status.error,

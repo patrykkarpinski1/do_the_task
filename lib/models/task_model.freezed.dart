@@ -138,12 +138,13 @@ class __$$_TaskModelCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_TaskModel implements _TaskModel {
+class _$_TaskModel extends _TaskModel {
   _$_TaskModel(
       {required this.text,
       required this.id,
       required this.categoryId,
-      @TimestampConverter() @JsonKey(name: 'date') required this.releaseDate});
+      @TimestampConverter() @JsonKey(name: 'date') required this.releaseDate})
+      : super._();
 
   factory _$_TaskModel.fromJson(Map<String, dynamic> json) =>
       _$$_TaskModelFromJson(json);
@@ -196,7 +197,7 @@ class _$_TaskModel implements _TaskModel {
   }
 }
 
-abstract class _TaskModel implements TaskModel {
+abstract class _TaskModel extends TaskModel {
   factory _TaskModel(
       {required final String text,
       required final String id,
@@ -204,6 +205,7 @@ abstract class _TaskModel implements TaskModel {
       @TimestampConverter()
       @JsonKey(name: 'date')
           required final DateTime releaseDate}) = _$_TaskModel;
+  _TaskModel._() : super._();
 
   factory _TaskModel.fromJson(Map<String, dynamic> json) =
       _$_TaskModel.fromJson;

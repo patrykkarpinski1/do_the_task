@@ -124,11 +124,12 @@ class __$$_NoteModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_NoteModel implements _NoteModel {
+class _$_NoteModel extends _NoteModel {
   _$_NoteModel(
       {required this.note,
       required this.id,
-      @TimestampConverter() @JsonKey(name: 'date') required this.releaseDate});
+      @TimestampConverter() @JsonKey(name: 'date') required this.releaseDate})
+      : super._();
 
   factory _$_NoteModel.fromJson(Map<String, dynamic> json) =>
       _$$_NoteModelFromJson(json);
@@ -176,13 +177,14 @@ class _$_NoteModel implements _NoteModel {
   }
 }
 
-abstract class _NoteModel implements NoteModel {
+abstract class _NoteModel extends NoteModel {
   factory _NoteModel(
       {required final String note,
       required final String id,
       @TimestampConverter()
       @JsonKey(name: 'date')
           required final DateTime releaseDate}) = _$_NoteModel;
+  _NoteModel._() : super._();
 
   factory _NoteModel.fromJson(Map<String, dynamic> json) =
       _$_NoteModel.fromJson;

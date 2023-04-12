@@ -19,7 +19,7 @@ mixin _$CategoryPageState {
   List<CategoryModel> get categories => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
-  CategoryModel? get categoryModel => throw _privateConstructorUsedError;
+  CategoryModel? get selectCategories => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CategoryPageStateCopyWith<CategoryPageState> get copyWith =>
@@ -36,9 +36,9 @@ abstract class $CategoryPageStateCopyWith<$Res> {
       {List<CategoryModel> categories,
       Status status,
       String? errorMessage,
-      CategoryModel? categoryModel});
+      CategoryModel? selectCategories});
 
-  $CategoryModelCopyWith<$Res>? get categoryModel;
+  $CategoryModelCopyWith<$Res>? get selectCategories;
 }
 
 /// @nodoc
@@ -57,7 +57,7 @@ class _$CategoryPageStateCopyWithImpl<$Res, $Val extends CategoryPageState>
     Object? categories = null,
     Object? status = null,
     Object? errorMessage = freezed,
-    Object? categoryModel = freezed,
+    Object? selectCategories = freezed,
   }) {
     return _then(_value.copyWith(
       categories: null == categories
@@ -72,22 +72,22 @@ class _$CategoryPageStateCopyWithImpl<$Res, $Val extends CategoryPageState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      categoryModel: freezed == categoryModel
-          ? _value.categoryModel
-          : categoryModel // ignore: cast_nullable_to_non_nullable
+      selectCategories: freezed == selectCategories
+          ? _value.selectCategories
+          : selectCategories // ignore: cast_nullable_to_non_nullable
               as CategoryModel?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $CategoryModelCopyWith<$Res>? get categoryModel {
-    if (_value.categoryModel == null) {
+  $CategoryModelCopyWith<$Res>? get selectCategories {
+    if (_value.selectCategories == null) {
       return null;
     }
 
-    return $CategoryModelCopyWith<$Res>(_value.categoryModel!, (value) {
-      return _then(_value.copyWith(categoryModel: value) as $Val);
+    return $CategoryModelCopyWith<$Res>(_value.selectCategories!, (value) {
+      return _then(_value.copyWith(selectCategories: value) as $Val);
     });
   }
 }
@@ -104,10 +104,10 @@ abstract class _$$_CategoryPageStateCopyWith<$Res>
       {List<CategoryModel> categories,
       Status status,
       String? errorMessage,
-      CategoryModel? categoryModel});
+      CategoryModel? selectCategories});
 
   @override
-  $CategoryModelCopyWith<$Res>? get categoryModel;
+  $CategoryModelCopyWith<$Res>? get selectCategories;
 }
 
 /// @nodoc
@@ -124,7 +124,7 @@ class __$$_CategoryPageStateCopyWithImpl<$Res>
     Object? categories = null,
     Object? status = null,
     Object? errorMessage = freezed,
-    Object? categoryModel = freezed,
+    Object? selectCategories = freezed,
   }) {
     return _then(_$_CategoryPageState(
       categories: null == categories
@@ -139,9 +139,9 @@ class __$$_CategoryPageStateCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      categoryModel: freezed == categoryModel
-          ? _value.categoryModel
-          : categoryModel // ignore: cast_nullable_to_non_nullable
+      selectCategories: freezed == selectCategories
+          ? _value.selectCategories
+          : selectCategories // ignore: cast_nullable_to_non_nullable
               as CategoryModel?,
     ));
   }
@@ -154,7 +154,7 @@ class _$_CategoryPageState implements _CategoryPageState {
       {final List<CategoryModel> categories = const [],
       this.status = Status.initial,
       this.errorMessage,
-      this.categoryModel})
+      this.selectCategories})
       : _categories = categories;
 
   final List<CategoryModel> _categories;
@@ -172,11 +172,11 @@ class _$_CategoryPageState implements _CategoryPageState {
   @override
   final String? errorMessage;
   @override
-  final CategoryModel? categoryModel;
+  final CategoryModel? selectCategories;
 
   @override
   String toString() {
-    return 'CategoryPageState(categories: $categories, status: $status, errorMessage: $errorMessage, categoryModel: $categoryModel)';
+    return 'CategoryPageState(categories: $categories, status: $status, errorMessage: $errorMessage, selectCategories: $selectCategories)';
   }
 
   @override
@@ -189,8 +189,8 @@ class _$_CategoryPageState implements _CategoryPageState {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
-            (identical(other.categoryModel, categoryModel) ||
-                other.categoryModel == categoryModel));
+            (identical(other.selectCategories, selectCategories) ||
+                other.selectCategories == selectCategories));
   }
 
   @override
@@ -199,7 +199,7 @@ class _$_CategoryPageState implements _CategoryPageState {
       const DeepCollectionEquality().hash(_categories),
       status,
       errorMessage,
-      categoryModel);
+      selectCategories);
 
   @JsonKey(ignore: true)
   @override
@@ -214,7 +214,7 @@ abstract class _CategoryPageState implements CategoryPageState {
       {final List<CategoryModel> categories,
       final Status status,
       final String? errorMessage,
-      final CategoryModel? categoryModel}) = _$_CategoryPageState;
+      final CategoryModel? selectCategories}) = _$_CategoryPageState;
 
   @override
   List<CategoryModel> get categories;
@@ -223,7 +223,7 @@ abstract class _CategoryPageState implements CategoryPageState {
   @override
   String? get errorMessage;
   @override
-  CategoryModel? get categoryModel;
+  CategoryModel? get selectCategories;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryPageStateCopyWith<_$_CategoryPageState> get copyWith =>

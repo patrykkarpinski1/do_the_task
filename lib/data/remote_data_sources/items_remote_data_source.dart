@@ -34,6 +34,8 @@ class ItemsRemoteDataSources {
     }
     final ref = firebase_storage.FirebaseStorage.instance
         .ref()
+        .child('users')
+        .child(userID)
         .child('photo_note')
         .child(path.basename(image.path));
     await ref.putFile(File(image.path));
@@ -168,6 +170,8 @@ class ItemsRemoteDataSources {
     firebase_storage.Reference photoRef = firebase_storage
         .FirebaseStorage.instance
         .ref()
+        .child('users')
+        .child(userID)
         .storage
         .refFromURL(photo);
     await photoRef.delete();
