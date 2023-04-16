@@ -21,8 +21,6 @@ class LoginRepository {
   Future<void> register({
     required String email,
     required String password,
-    XFile? image,
-    String? name,
   }) async {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -30,8 +28,8 @@ class LoginRepository {
       password: password,
     );
     users.doc(FirebaseAuth.instance.currentUser!.uid).set({
-      'name': name,
-      'profile_image': image,
+      'name': '',
+      'profile_image': '',
     });
   }
 
@@ -41,10 +39,10 @@ class LoginRepository {
       throw Exception('User is not logged in');
     }
 
-    await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
     await FirebaseFirestore.instance.collection('users').doc(userID).update({
       'name': name,
     });
+    await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
   }
 
   Future<void> addUserPhoto({
@@ -74,7 +72,7 @@ class LoginRepository {
     await FirebaseAuth.instance.currentUser!.sendEmailVerification();
   }
 
-  Future<void> deleteAccount() async {
+  Future<void> deleteUserDocuments() async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
@@ -120,6 +118,14 @@ class LoginRepository {
     final userInfo = FirebaseFirestore.instance;
     final collectionRef = userInfo.collection('users').doc(userID);
     await collectionRef.delete();
+  }
+
+  Future<void> deleteAccount() async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+
     await FirebaseAuth.instance.currentUser?.delete();
   }
 }
