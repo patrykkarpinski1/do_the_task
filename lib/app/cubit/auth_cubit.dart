@@ -77,7 +77,6 @@ class AuthCubit extends Cubit<AuthState> {
     } else {
       try {
         await loginRepository.register(email: email, password: password);
-        emit(const AuthState(isCreatingAccount: false));
         try {
           await loginRepository.sendEmailVerification();
         } on FirebaseAuthException catch (error) {
@@ -99,14 +98,8 @@ class AuthCubit extends Cubit<AuthState> {
     required String password,
   }) async {
     try {
-      final userCredential = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      if (userCredential.user?.emailVerified == false) {
-        emit(const AuthState(
-          status: Status.success,
-          message: 'please check your inbox and verify your email',
-        ));
-      }
     } on FirebaseAuthException catch (error) {
       emit(AuthState(
           status: Status.error, errorMessage: error.message.toString()));
@@ -149,9 +142,18 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> deleteUserDocuments() async {
+    try {
+      await loginRepository.deleteUserDocuments();
+    } catch (error) {
+      emit(AuthState(status: Status.error, errorMessage: error.toString()));
+    }
+  }
+
   Future<void> deleteAccount() async {
     try {
       await loginRepository.deleteAccount();
+      start();
     } on FirebaseAuthException catch (error) {
       emit(AuthState(
           status: Status.error, errorMessage: error.message.toString()));
@@ -167,10 +169,6 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> resendEmailVerification() async {
     try {
       await loginRepository.sendEmailVerification();
-      const AuthState(
-        status: Status.success,
-        user: null,
-      );
     } on FirebaseAuthException catch (error) {
       emit(AuthState(
           status: Status.error, errorMessage: error.message.toString()));

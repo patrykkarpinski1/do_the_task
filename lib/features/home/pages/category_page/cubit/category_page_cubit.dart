@@ -39,9 +39,9 @@ class CategoryPageCubit extends Cubit<CategoryPageState> {
       ),
     );
     try {
-      final categoryModel = await itemsRepository.getCategory(id: id);
+      final category = await itemsRepository.getCategory(id: id);
       emit(CategoryPageState(
-          status: Status.success, selectCategories: categoryModel));
+          status: Status.success, selectCategories: category));
     } catch (error) {
       emit(CategoryPageState(
         status: Status.error,

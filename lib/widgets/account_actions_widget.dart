@@ -3,16 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modyfikacja_aplikacja/app/cubit/auth_cubit.dart';
 
-class AccountWidget extends StatefulWidget {
-  const AccountWidget({
+class AccountActionsWidget extends StatefulWidget {
+  const AccountActionsWidget({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<AccountWidget> createState() => _AccountWidgetState();
+  State<AccountActionsWidget> createState() => _AccountActionsWidgetState();
 }
 
-class _AccountWidgetState extends State<AccountWidget> {
+class _AccountActionsWidgetState extends State<AccountActionsWidget> {
   bool fav = true;
   @override
   Widget build(BuildContext context) {
@@ -65,8 +65,10 @@ class _AccountWidgetState extends State<AccountWidget> {
                             actions: [
                               TextButton(
                                   onPressed: () async {
+                                    context
+                                        .read<AuthCubit>()
+                                        .deleteUserDocuments();
                                     context.read<AuthCubit>().deleteAccount();
-                                    context.read<AuthCubit>().userReloded();
                                     Navigator.of(context).pop();
                                     Navigator.of(context).pop();
                                   },
@@ -111,6 +113,31 @@ class _AccountWidgetState extends State<AccountWidget> {
                   ),
                 ),
               ),
+              if (state.user?.emailVerified == true) ...[
+                Container(
+                  height: 65,
+                  decoration: const BoxDecoration(
+                    color: Colors.green,
+                  ),
+                  child: SizedBox(
+                    height: 40,
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Center(
+                        child: Text(
+                          'Verified account',
+                          style: GoogleFonts.arimo(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(255, 56, 55, 55),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
               if (state.user?.emailVerified == false) ...[
                 Container(
                   height: 65,
@@ -135,31 +162,6 @@ class _AccountWidgetState extends State<AccountWidget> {
                           fav
                               ? 'Unverified account'
                               : 'Resend Email Verification',
-                          style: GoogleFonts.arimo(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: const Color.fromARGB(255, 56, 55, 55),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-              if (state.user?.emailVerified == true) ...[
-                Container(
-                  height: 65,
-                  decoration: const BoxDecoration(
-                    color: Colors.green,
-                  ),
-                  child: SizedBox(
-                    height: 40,
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Center(
-                        child: Text(
-                          'Verified account',
                           style: GoogleFonts.arimo(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
