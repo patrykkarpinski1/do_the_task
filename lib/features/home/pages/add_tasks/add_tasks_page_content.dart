@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:modyfikacja_aplikacja/app/injection_container.dart';
-import 'package:modyfikacja_aplikacja/features/home/pages/add_tasks/cubit/add_task_cubit.dart';
-import 'package:modyfikacja_aplikacja/widgets/add_task_button_widget.dart';
-import 'package:modyfikacja_aplikacja/widgets/date_button_widget.dart';
-import 'package:modyfikacja_aplikacja/widgets/drop_down_button_widget.dart';
-import 'package:modyfikacja_aplikacja/widgets/text_field_widget.dart';
-import 'package:modyfikacja_aplikacja/widgets/time_button_widget.dart';
+import '/app/core/enums.dart';
+import '/app/injection_container.dart';
+import '/features/home/pages/add_tasks/cubit/add_task_cubit.dart';
+import '/widgets/add_task_button_widget.dart';
+import '/widgets/date_button_widget.dart';
+import '/widgets/drop_down_button_widget.dart';
+import '/widgets/text_field_widget.dart';
+import '/widgets/time_button_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class AddTasksPageContent extends StatefulWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/app/cubit/auth_cubit.dart';
-import 'package:modyfikacja_aplikacja/auth/login/forget_password_page.dart';
+import '/app/cubit/auth_cubit.dart';
+import '/auth/login/forget_password_page.dart';
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({

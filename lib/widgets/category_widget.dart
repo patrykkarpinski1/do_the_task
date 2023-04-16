@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/features/home/pages/tasks/tasks_page.dart';
-import 'package:modyfikacja_aplikacja/models/category_model.dart';
+import '/features/home/pages/tasks/tasks_page.dart';
+import '/models/category_model.dart';
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({

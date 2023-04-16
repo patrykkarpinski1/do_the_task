@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:modyfikacja_aplikacja/models/times_tamp_converter.dart';
+import '/models/times_tamp_converter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'task_model.g.dart';
 part 'task_model.freezed.dart';

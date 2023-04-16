@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/features/home/pages/category_page/menu_pages/photo_note/photo_note_page.dart';
+import '/features/home/pages/category_page/menu_pages/photo_note/photo_note_page.dart';
 
 class DrawerMenuWidget extends StatelessWidget {
   const DrawerMenuWidget({

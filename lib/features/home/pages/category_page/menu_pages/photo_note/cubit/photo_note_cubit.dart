@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
-import 'package:modyfikacja_aplikacja/repositories/item_repository.dart';
+import '/app/core/enums.dart';
+import '/models/photo_note_model.dart';
+import '/repositories/item_repository.dart';
 part 'photo_note_state.dart';
 part 'photo_note_cubit.freezed.dart';
 

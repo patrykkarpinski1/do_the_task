@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:modyfikacja_aplikacja/app/injection_container.dart';
-import 'package:modyfikacja_aplikacja/features/home/my_account_page/my_account_page.dart';
-import 'package:modyfikacja_aplikacja/features/home/pages/category_page/cubit/category_page_cubit.dart';
-import 'package:modyfikacja_aplikacja/widgets/category_widget.dart';
-import 'package:modyfikacja_aplikacja/widgets/drawer_menu_widget.dart';
+import '/app/core/enums.dart';
+import '/app/injection_container.dart';
+import '/features/home/my_account_page/my_account_page.dart';
+import '/features/home/pages/category_page/cubit/category_page_cubit.dart';
+import '/widgets/category_widget.dart';
+import '/widgets/drawer_menu_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class CategoryPageContent extends StatelessWidget {

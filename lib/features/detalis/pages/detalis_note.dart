@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:modyfikacja_aplikacja/app/injection_container.dart';
-import 'package:modyfikacja_aplikacja/features/detalis/cubit/detalis_cubit.dart';
-import 'package:modyfikacja_aplikacja/models/note_model.dart';
+import '/app/core/enums.dart';
+import '/app/injection_container.dart';
+import '/features/detalis/cubit/detalis_cubit.dart';
+import '/models/note_model.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class DetalisNotePage extends StatefulWidget {

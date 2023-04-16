@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:modyfikacja_aplikacja/app/cubit/auth_cubit.dart';
+import '/app/cubit/auth_cubit.dart';
 
 class UserPhotoWidget extends StatefulWidget {
   const UserPhotoWidget({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modyfikacja_aplikacja/app/core/config.dart';
-import 'package:modyfikacja_aplikacja/app/injection_container.dart';
-import 'package:modyfikacja_aplikacja/auth/start_page/start_page.dart';
+import '/app/core/config.dart';
+import '/app/injection_container.dart';
+import '/auth/start_page/start_page.dart';
 
 import 'cubit/auth_cubit.dart';
 

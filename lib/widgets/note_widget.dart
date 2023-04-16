@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/features/detalis/pages/detalis_note.dart';
-import 'package:modyfikacja_aplikacja/features/home/pages/notepad/cubit/notepad_cubit.dart';
-import 'package:modyfikacja_aplikacja/models/note_model.dart';
-import 'package:modyfikacja_aplikacja/widgets/show_alert_dialog_widget.dart';
+import '/features/detalis/pages/detalis_note.dart';
+import '/features/home/pages/notepad/cubit/notepad_cubit.dart';
+import '/models/note_model.dart';
+import '/widgets/show_alert_dialog_widget.dart';
 
 class NoteWidget extends StatelessWidget {
   const NoteWidget({

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:modyfikacja_aplikacja/app/injection_container.dart';
-import 'package:modyfikacja_aplikacja/features/detalis/cubit/detalis_cubit.dart';
-import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
-import 'package:modyfikacja_aplikacja/widgets/show_alert_dialog_widget.dart';
+import '/app/core/enums.dart';
+import '/app/injection_container.dart';
+import '/features/detalis/cubit/detalis_cubit.dart';
+import '/models/photo_note_model.dart';
+import '/widgets/show_alert_dialog_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class DetalisPhotoNotePage extends StatelessWidget {

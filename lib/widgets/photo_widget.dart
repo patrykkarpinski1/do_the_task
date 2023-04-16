@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
+import '/models/photo_note_model.dart';
 
 class PhotoWidget extends StatelessWidget {
   const PhotoWidget({

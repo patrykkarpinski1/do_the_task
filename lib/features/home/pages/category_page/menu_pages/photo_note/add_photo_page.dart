@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modyfikacja_aplikacja/features/home/pages/category_page/menu_pages/photo_note/cubit/photo_note_cubit.dart';
+import '/features/home/pages/category_page/menu_pages/photo_note/cubit/photo_note_cubit.dart';
 import 'dart:io';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:image_picker/image_picker.dart';

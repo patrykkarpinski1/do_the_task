@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/app/cubit/auth_cubit.dart';
+import '/app/cubit/auth_cubit.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class ForgetPasswordPage extends StatelessWidget {

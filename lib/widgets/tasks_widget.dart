@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:modyfikacja_aplikacja/app/injection_container.dart';
-import 'package:modyfikacja_aplikacja/features/detalis/pages/detalis_task_widget_page.dart';
-import 'package:modyfikacja_aplikacja/features/home/pages/tasks/cubit/task_cubit.dart';
-import 'package:modyfikacja_aplikacja/models/task_model.dart';
+import '/app/core/enums.dart';
+import '/app/injection_container.dart';
+import '/features/detalis/pages/detalis_task_widget_page.dart';
+import '/features/home/pages/tasks/cubit/task_cubit.dart';
+import '/models/task_model.dart';
 
 class TasksWidget extends StatelessWidget {
   const TasksWidget({

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modyfikacja_aplikacja/app/core/enums.dart';
-import 'package:modyfikacja_aplikacja/app/cubit/auth_cubit.dart';
-import 'package:modyfikacja_aplikacja/app/injection_container.dart';
-import 'package:modyfikacja_aplikacja/auth/login/login_page.dart';
-import 'package:modyfikacja_aplikacja/features/home/home_page.dart';
+import '/app/core/enums.dart';
+import '/app/cubit/auth_cubit.dart';
+import '/app/injection_container.dart';
+import '/auth/login/login_page.dart';
+import '/features/home/home_page.dart';
 
 class StartPage extends StatelessWidget {
   const StartPage({

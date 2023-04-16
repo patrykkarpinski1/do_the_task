@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:modyfikacja_aplikacja/data/remote_data_sources/items_remote_data_source.dart';
-import 'package:modyfikacja_aplikacja/models/category_model.dart';
-import 'package:modyfikacja_aplikacja/models/note_model.dart';
-import 'package:modyfikacja_aplikacja/models/photo_note_model.dart';
-import 'package:modyfikacja_aplikacja/models/task_model.dart';
+import '/data/remote_data_sources/items_remote_data_source.dart';
+import '/models/category_model.dart';
+import '/models/note_model.dart';
+import '/models/photo_note_model.dart';
+import '/models/task_model.dart';
 
 class ItemsRepository {
   ItemsRepository({required this.itemsRemoteDataSources});

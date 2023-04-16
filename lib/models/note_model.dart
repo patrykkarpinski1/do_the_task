@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 
-import 'package:modyfikacja_aplikacja/models/times_tamp_converter.dart';
+import '/models/times_tamp_converter.dart';
 part 'note_model.g.dart';
 part 'note_model.freezed.dart';
 
