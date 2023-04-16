@@ -72,53 +72,53 @@ class LoginRepository {
     await FirebaseAuth.instance.currentUser!.sendEmailVerification();
   }
 
-  Future<void> deleteUserDocuments() async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
+  // Future<void> deleteUserDocuments() async {
+  //   final userID = FirebaseAuth.instance.currentUser?.uid;
+  //   if (userID == null) {
+  //     throw Exception('User is not logged in');
+  //   }
 
-    final storageRefs = [
-      firebase_storage.FirebaseStorage.instance
-          .ref()
-          .child('users')
-          .child(userID)
-          .child('photo_note'),
-      firebase_storage.FirebaseStorage.instance
-          .ref()
-          .child('users')
-          .child(userID)
-          .child('profil_images'),
-    ];
+  //   final storageRefs = [
+  //     firebase_storage.FirebaseStorage.instance
+  //         .ref()
+  //         .child('users')
+  //         .child(userID)
+  //         .child('photo_note'),
+  //     firebase_storage.FirebaseStorage.instance
+  //         .ref()
+  //         .child('users')
+  //         .child(userID)
+  //         .child('profil_images'),
+  //   ];
 
-    for (final storageRef in storageRefs) {
-      final firebase_storage.ListResult result = await storageRef.listAll();
-      final List<Future<void>> futures = [];
-      for (final firebase_storage.Reference ref in result.items) {
-        futures.add(ref.delete());
-      }
-      await Future.wait(futures);
-    }
-    final db = FirebaseFirestore.instance;
-    final collectionRefs = [
-      db.collection('users').doc(userID).collection('tasks'),
-      db.collection('users').doc(userID).collection('notepad'),
-      db.collection('users').doc(userID).collection('photo_note'),
-    ];
+  //   for (final storageRef in storageRefs) {
+  //     final firebase_storage.ListResult result = await storageRef.listAll();
+  //     final List<Future<void>> futures = [];
+  //     for (final firebase_storage.Reference ref in result.items) {
+  //       futures.add(ref.delete());
+  //     }
+  //     await Future.wait(futures);
+  //   }
+  //   final db = FirebaseFirestore.instance;
+  //   final collectionRefs = [
+  //     db.collection('users').doc(userID).collection('tasks'),
+  //     db.collection('users').doc(userID).collection('notepad'),
+  //     db.collection('users').doc(userID).collection('photo_note'),
+  //   ];
 
-    for (final collectionRef in collectionRefs) {
-      final querySnapshot = await collectionRef.get();
-      final docs = querySnapshot.docs;
-      final batch = db.batch();
-      for (final doc in docs) {
-        batch.delete(doc.reference);
-      }
-      await batch.commit();
-    }
-    final userInfo = FirebaseFirestore.instance;
-    final collectionRef = userInfo.collection('users').doc(userID);
-    await collectionRef.delete();
-  }
+  //   for (final collectionRef in collectionRefs) {
+  //     final querySnapshot = await collectionRef.get();
+  //     final docs = querySnapshot.docs;
+  //     final batch = db.batch();
+  //     for (final doc in docs) {
+  //       batch.delete(doc.reference);
+  //     }
+  //     await batch.commit();
+  //   }
+  //   final userInfo = FirebaseFirestore.instance;
+  //   final collectionRef = userInfo.collection('users').doc(userID);
+  //   await collectionRef.delete();
+  // }
 
   Future<void> deleteAccount() async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
