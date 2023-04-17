@@ -65,9 +65,6 @@ class _AccountActionsWidgetState extends State<AccountActionsWidget> {
                             actions: [
                               TextButton(
                                   onPressed: () async {
-                                    // context
-                                    //     .read<AuthCubit>()
-                                    // .deleteUserDocuments();
                                     context.read<AuthCubit>().deleteAccount();
                                     Navigator.of(context).pop();
                                     Navigator.of(context).pop();
