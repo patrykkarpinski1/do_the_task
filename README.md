@@ -1,16 +1,20 @@
-# modyfikacja_aplikacja
+## do_the_task
 
 A new Flutter project.
 
-## Getting Started
+# Introduction & main goals
 
-This project is a starting point for a Flutter application.
+The app allows tasks to be added to their assigned categories, as well as storing photos and creating notes. In future, it will be possible to set reminders for tasks.
+# Technologies used:
+Dart
+Flutter
+Firebase
+Bloc & Cubit
+Firebase
+Injectable
+Freezed
+Get_it
+during Units tests
 
-A few resources to get you started if this is your first Flutter project:
+# App preview
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
