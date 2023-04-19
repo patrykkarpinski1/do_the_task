@@ -14,14 +14,14 @@ class DetalisCubit extends Cubit<DetalisState> {
   final ItemsRepository itemsRepository;
   Future<void> getTaskWithID(String id) async {
     emit(
-      DetalisState(status: Status.loading, taskModel: null),
+      state.copyWith(status: Status.loading, taskModel: null),
     );
     try {
       final taskModel = await itemsRepository.getDetalisTask(id: id);
-      emit(DetalisState(status: Status.success, taskModel: taskModel));
+      emit(state.copyWith(status: Status.success, taskModel: taskModel));
     } catch (error) {
       emit(
-        DetalisState(
+        state.copyWith(
           status: Status.error,
           errorMessage: error.toString(),
           taskModel: null,
@@ -32,17 +32,17 @@ class DetalisCubit extends Cubit<DetalisState> {
 
   Future<void> getPhotoWithID(String id) async {
     emit(
-      DetalisState(status: Status.loading, photoNoteModel: null),
+      state.copyWith(status: Status.loading, photoNoteModel: null),
     );
     try {
       final photoNoteModel = await itemsRepository.getDetalisPhotoNote(
         id: id,
       );
-      emit(
-          DetalisState(status: Status.success, photoNoteModel: photoNoteModel));
+      emit(state.copyWith(
+          status: Status.success, photoNoteModel: photoNoteModel));
     } catch (error) {
       emit(
-        DetalisState(
+        state.copyWith(
           status: Status.error,
           errorMessage: error.toString(),
           photoNoteModel: null,
@@ -58,7 +58,7 @@ class DetalisCubit extends Cubit<DetalisState> {
       await itemsRepository.deletePhotoStorage(photo: photo);
     } catch (error) {
       emit(
-        DetalisState(
+        state.copyWith(
           status: Status.error,
           errorMessage: error.toString(),
         ),
@@ -75,7 +75,7 @@ class DetalisCubit extends Cubit<DetalisState> {
       );
     } catch (error) {
       emit(
-        DetalisState(
+        state.copyWith(
           status: Status.error,
           errorMessage: error.toString(),
         ),
@@ -85,14 +85,14 @@ class DetalisCubit extends Cubit<DetalisState> {
 
   Future<void> getNoteWithID(String id) async {
     emit(
-      DetalisState(status: Status.loading, noteModel: null),
+      state.copyWith(status: Status.loading, noteModel: null),
     );
     try {
       final noteModel = await itemsRepository.getDetalisNote(id: id);
-      emit(DetalisState(status: Status.success, noteModel: noteModel));
+      emit(state.copyWith(status: Status.success, noteModel: noteModel));
     } catch (error) {
       emit(
-        DetalisState(
+        state.copyWith(
           status: Status.error,
           errorMessage: error.toString(),
           noteModel: null,
@@ -107,7 +107,7 @@ class DetalisCubit extends Cubit<DetalisState> {
       await itemsRepository.editNote(id: documentID, note: note);
     } catch (error) {
       emit(
-        DetalisState(
+        state.copyWith(
           status: Status.error,
           errorMessage: error.toString(),
         ),

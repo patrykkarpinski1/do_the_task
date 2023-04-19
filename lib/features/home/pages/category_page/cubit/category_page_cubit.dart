@@ -15,16 +15,16 @@ class CategoryPageCubit extends Cubit<CategoryPageState> {
 
   Future<void> start() async {
     emit(
-      CategoryPageState(
+      state.copyWith(
         status: Status.loading,
         categories: [],
       ),
     );
     try {
       final categories = await itemsRepository.getCategories();
-      emit(CategoryPageState(status: Status.success, categories: categories));
+      emit(state.copyWith(status: Status.success, categories: categories));
     } catch (error) {
-      emit(CategoryPageState(
+      emit(state.copyWith(
         status: Status.error,
         errorMessage: error.toString(),
       ));
@@ -33,17 +33,16 @@ class CategoryPageCubit extends Cubit<CategoryPageState> {
 
   Future<void> getCategoryWithID(String id) async {
     emit(
-      CategoryPageState(
+      state.copyWith(
         status: Status.loading,
         selectCategories: null,
       ),
     );
     try {
       final category = await itemsRepository.getCategory(id: id);
-      emit(CategoryPageState(
-          status: Status.success, selectCategories: category));
+      emit(state.copyWith(status: Status.success, selectCategories: category));
     } catch (error) {
-      emit(CategoryPageState(
+      emit(state.copyWith(
         status: Status.error,
         errorMessage: error.toString(),
       ));

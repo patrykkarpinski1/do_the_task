@@ -19,11 +19,11 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     try {
       await loginRepository.passwordReset(email: email);
-      emit(const AuthState(
+      emit(state.copyWith(
           status: Status.success,
           message: 'Password reset link sent! Please check your email '));
     } on FirebaseAuthException catch (error) {
-      emit(AuthState(
+      emit(state.copyWith(
           status: Status.error, errorMessage: error.message.toString()));
     }
   }
@@ -53,10 +53,10 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       await loginRepository.signOut();
       emit(
-        const AuthState(status: Status.success),
+        state.copyWith(status: Status.success),
       );
     } on FirebaseAuthException catch (error) {
-      emit(AuthState(
+      emit(state.copyWith(
           status: Status.error, errorMessage: error.message.toString()));
     }
   }
@@ -68,7 +68,7 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     if (password.trim() != confirmPassword.trim()) {
       emit(
-        const AuthState(
+        state.copyWith(
           status: Status.error,
           errorMessage: 'Passwords don\'t match',
           isCreatingAccount: true,
@@ -80,11 +80,11 @@ class AuthCubit extends Cubit<AuthState> {
         try {
           await loginRepository.sendEmailVerification();
         } on FirebaseAuthException catch (error) {
-          emit(AuthState(
+          emit(state.copyWith(
               status: Status.error, errorMessage: error.message.toString()));
         }
       } on FirebaseAuthException catch (error) {
-        emit(AuthState(
+        emit(state.copyWith(
           status: Status.error,
           errorMessage: error.message.toString(),
           isCreatingAccount: true,
@@ -101,14 +101,14 @@ class AuthCubit extends Cubit<AuthState> {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (error) {
-      emit(AuthState(
+      emit(state.copyWith(
           status: Status.error, errorMessage: error.message.toString()));
     }
   }
 
   Future<void> creatingAccount() async {
     emit(
-      const AuthState(
+      state.copyWith(
         user: null,
         isCreatingAccount: true,
       ),
@@ -117,7 +117,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> notCreatingAccount() async {
     emit(
-      const AuthState(
+      state.copyWith(
         user: null,
         isCreatingAccount: false,
       ),
@@ -128,7 +128,8 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       await loginRepository.addUserName(name: name);
     } catch (error) {
-      emit(AuthState(status: Status.error, errorMessage: error.toString()));
+      emit(
+          state.copyWith(status: Status.error, errorMessage: error.toString()));
     }
   }
 
@@ -138,7 +139,8 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       await loginRepository.addUserPhoto(image: image);
     } catch (error) {
-      emit(AuthState(status: Status.error, errorMessage: error.toString()));
+      emit(
+          state.copyWith(status: Status.error, errorMessage: error.toString()));
     }
   }
 
@@ -147,14 +149,14 @@ class AuthCubit extends Cubit<AuthState> {
       await loginRepository.deleteAccount();
       start();
     } on FirebaseAuthException catch (error) {
-      emit(AuthState(
+      emit(state.copyWith(
           status: Status.error, errorMessage: error.message.toString()));
     }
   }
 
   Future<void> userReloded() async {
     await FirebaseAuth.instance.currentUser?.reload();
-    emit(AuthState(
+    emit(state.copyWith(
         user: FirebaseAuth.instance.currentUser, status: state.status));
   }
 
@@ -162,7 +164,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       await loginRepository.sendEmailVerification();
     } on FirebaseAuthException catch (error) {
-      emit(AuthState(
+      emit(state.copyWith(
           status: Status.error, errorMessage: error.message.toString()));
     }
   }
@@ -172,7 +174,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> start() async {
     try {
       emit(
-        const AuthState(
+        state.copyWith(
           user: null,
           status: Status.loading,
           errorMessage: '',
@@ -182,14 +184,14 @@ class AuthCubit extends Cubit<AuthState> {
 
       _streamSubscription = FirebaseAuth.instance.userChanges().listen((user) {
         emit(
-          AuthState(
+          state.copyWith(
             status: Status.success,
             user: user,
           ),
         );
       });
     } on FirebaseAuthException catch (error) {
-      emit(AuthState(
+      emit(state.copyWith(
           status: Status.error, errorMessage: error.message.toString()));
     }
   }

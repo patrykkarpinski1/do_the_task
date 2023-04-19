@@ -17,7 +17,7 @@ class PhotoNoteCubit extends Cubit<PhotoNoteState> {
     _streamSubscription = itemsRepository.getPhotosStream().listen(
       (photos) {
         emit(
-          PhotoNoteState(
+          state.copyWith(
             status: Status.success,
             photos: photos,
           ),
@@ -27,7 +27,7 @@ class PhotoNoteCubit extends Cubit<PhotoNoteState> {
         (error) {
           {
             emit(
-              PhotoNoteState(
+              state.copyWith(
                 status: Status.error,
                 errorMessage: error.toString(),
               ),
@@ -51,11 +51,11 @@ class PhotoNoteCubit extends Cubit<PhotoNoteState> {
         image,
       );
       emit(
-        PhotoNoteState(saved: true),
+        state.copyWith(saved: true),
       );
     } catch (error) {
       emit(
-        PhotoNoteState(
+        state.copyWith(
           status: Status.error,
           errorMessage: error.toString(),
         ),

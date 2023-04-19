@@ -17,7 +17,7 @@ class NotepadCubit extends Cubit<NotepadState> {
     _streamSubscription = itemsRepository.getNotesStream().listen(
       (notes) {
         emit(
-          NotepadState(
+          state.copyWith(
             status: Status.success,
             notes: notes,
           ),
@@ -27,7 +27,7 @@ class NotepadCubit extends Cubit<NotepadState> {
         (error) {
           {
             emit(
-              NotepadState(
+              state.copyWith(
                 status: Status.error,
                 errorMessage: error.toString(),
               ),
@@ -42,7 +42,7 @@ class NotepadCubit extends Cubit<NotepadState> {
       await itemsRepository.deleteNote(id: documentID);
     } catch (error) {
       emit(
-        NotepadState(
+        state.copyWith(
           status: Status.error,
           errorMessage: error.toString(),
         ),
@@ -61,7 +61,7 @@ class NotepadCubit extends Cubit<NotepadState> {
     String newTextNote,
   ) async {
     emit(
-      NotepadState(textNote: newTextNote),
+      state.copyWith(textNote: newTextNote),
     );
   }
 
@@ -72,11 +72,11 @@ class NotepadCubit extends Cubit<NotepadState> {
     try {
       await itemsRepository.addNote(note, releaseDate);
       emit(
-        NotepadState(saved: true),
+        state.copyWith(saved: true),
       );
     } catch (error) {
       emit(
-        NotepadState(
+        state.copyWith(
           status: Status.error,
           errorMessage: error.toString(),
         ),

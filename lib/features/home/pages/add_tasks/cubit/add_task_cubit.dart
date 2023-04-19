@@ -16,7 +16,7 @@ class AddTaskCubit extends Cubit<AddTaskState> {
   final ItemsRepository itemsRepository;
   Future<void> fetch() async {
     emit(
-      AddTaskState(
+      state.copyWith(
         status: Status.loading,
         categories: [],
       ),
@@ -24,10 +24,10 @@ class AddTaskCubit extends Cubit<AddTaskState> {
     try {
       final categories = await itemsRepository.getCategories();
       emit(
-        AddTaskState(status: Status.success, categories: categories),
+        state.copyWith(status: Status.success, categories: categories),
       );
     } catch (error) {
-      emit(AddTaskState(
+      emit(state.copyWith(
         status: Status.error,
         errorMessage: error.toString(),
       ));
@@ -44,14 +44,14 @@ class AddTaskCubit extends Cubit<AddTaskState> {
       await itemsRepository.addTasks(
           text, releaseDate, releaseTime, categoryId);
       emit(
-        AddTaskState(
+        state.copyWith(
           saved: true,
         ),
       );
       fetch();
     } catch (error) {
       emit(
-        AddTaskState(
+        state.copyWith(
           status: Status.error,
           errorMessage: error.toString(),
         ),
