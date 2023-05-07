@@ -33,6 +33,14 @@ class LoginRepository {
     });
   }
 
+  Future<void> signIn({
+    required String email,
+    required String password,
+  }) async {
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+  }
+
   Future<void> addUserName({required String name}) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {

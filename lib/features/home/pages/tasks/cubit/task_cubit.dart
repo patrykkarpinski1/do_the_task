@@ -55,7 +55,9 @@ class TaskCubit extends Cubit<TaskState> {
           errorMessage: error.toString(),
         ),
       );
-      getTasks(categoryId!);
+      if (categoryId != null) {
+        getTasks(categoryId);
+      }
     }
   }
 }

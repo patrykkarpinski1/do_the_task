@@ -98,8 +98,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String password,
   }) async {
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      await loginRepository.signIn(email: email, password: password);
     } on FirebaseAuthException catch (error) {
       emit(state.copyWith(
           status: Status.error, errorMessage: error.message.toString()));
@@ -147,7 +146,6 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> deleteAccount() async {
     try {
       await loginRepository.deleteAccount();
-      start();
     } on FirebaseAuthException catch (error) {
       emit(state.copyWith(
           status: Status.error, errorMessage: error.message.toString()));

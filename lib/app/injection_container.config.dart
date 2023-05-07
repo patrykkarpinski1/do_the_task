@@ -9,26 +9,24 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:do_the_task/app/cubit/auth_cubit.dart' as _i10;
+import 'package:do_the_task/data/remote_data_sources/items_remote_data_source.dart'
+    as _i3;
+import 'package:do_the_task/features/detalis/cubit/detalis_cubit.dart' as _i12;
+import 'package:do_the_task/features/home/pages/add_tasks/cubit/add_task_cubit.dart'
+    as _i9;
+import 'package:do_the_task/features/home/pages/category_page/cubit/category_page_cubit.dart'
+    as _i11;
+import 'package:do_the_task/features/home/pages/category_page/menu_pages/photo_note/cubit/photo_note_cubit.dart'
+    as _i7;
+import 'package:do_the_task/features/home/pages/notepad/cubit/notepad_cubit.dart'
+    as _i6;
+import 'package:do_the_task/features/home/pages/tasks/cubit/task_cubit.dart'
+    as _i8;
+import 'package:do_the_task/repositories/item_repository.dart' as _i4;
+import 'package:do_the_task/repositories/login_repository.dart' as _i5;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:modyfikacja_aplikacja/app/cubit/auth_cubit.dart' as _i10;
-import 'package:modyfikacja_aplikacja/data/remote_data_sources/items_remote_data_source.dart'
-    as _i3;
-import 'package:modyfikacja_aplikacja/features/detalis/cubit/detalis_cubit.dart'
-    as _i12;
-import 'package:modyfikacja_aplikacja/features/home/pages/add_tasks/cubit/add_task_cubit.dart'
-    as _i9;
-import 'package:modyfikacja_aplikacja/features/home/pages/category_page/cubit/category_page_cubit.dart'
-    as _i11;
-import 'package:modyfikacja_aplikacja/features/home/pages/category_page/menu_pages/photo_note/cubit/photo_note_cubit.dart'
-    as _i7;
-import 'package:modyfikacja_aplikacja/features/home/pages/notepad/cubit/notepad_cubit.dart'
-    as _i6;
-import 'package:modyfikacja_aplikacja/features/home/pages/tasks/cubit/task_cubit.dart'
-    as _i8;
-import 'package:modyfikacja_aplikacja/repositories/item_repository.dart' as _i4;
-import 'package:modyfikacja_aplikacja/repositories/login_repository.dart'
-    as _i5;
 
 extension GetItInjectableX on _i1.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
