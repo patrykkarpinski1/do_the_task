@@ -1,3 +1,4 @@
+import 'package:do_the_task/app/encryption.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -112,6 +113,9 @@ class WorkTasks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String encryptedText = MyEncryptionDecription.decryptWithAESKey(
+      taskModel.text,
+    );
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Container(
@@ -119,9 +123,7 @@ class WorkTasks extends StatelessWidget {
             borderRadius: BorderRadius.circular(12), color: Colors.white),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: Text(
-            taskModel.text,
-          ),
+          child: Text(encryptedText),
         ),
       ),
     );

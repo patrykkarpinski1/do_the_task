@@ -1,3 +1,4 @@
+import 'package:do_the_task/app/encryption.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +16,8 @@ class NoteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String decryptedNote =
+        MyEncryptionDecription.decryptWithAESKey(noteModel.note);
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
@@ -35,7 +38,7 @@ class NoteWidget extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.only(left: 5, right: 5),
                   child: Text(
-                    noteModel.note,
+                    decryptedNote,
                   ),
                 ),
               ),

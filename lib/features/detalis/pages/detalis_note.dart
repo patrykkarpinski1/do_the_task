@@ -1,3 +1,4 @@
+import 'package:do_the_task/app/encryption.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -52,6 +53,8 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
             }
           }
           final noteModel = state.noteModel;
+          String decryptedNote = MyEncryptionDecription.decryptWithAESKey(
+              noteModel?.note ?? 'Unkown');
           return Scaffold(
             appBar: NewGradientAppBar(
               leading: IconButton(
@@ -135,7 +138,7 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
                 children: [
                   if (editing == false) ...[
                     Text(
-                      noteModel?.note ?? 'Unkown',
+                      decryptedNote,
                       style: GoogleFonts.arimo(
                         fontSize: 16,
                       ),
@@ -143,7 +146,7 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
                   ],
                   if (editing == true) ...[
                     TextFormField(
-                      initialValue: noteModel?.note,
+                      initialValue: decryptedNote,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         filled: true,
@@ -153,7 +156,8 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
                       maxLines: 30,
                       onChanged: (newValue) {
                         setState(() {
-                          note = newValue;
+                          note = MyEncryptionDecription.encryptWithAESKey(
+                              newValue);
                         });
                       },
                     ),

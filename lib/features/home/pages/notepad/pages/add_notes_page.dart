@@ -1,3 +1,4 @@
+import 'package:do_the_task/app/encryption.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,9 +7,7 @@ import '/features/home/pages/notepad/cubit/notepad_cubit.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class AddNotes extends StatelessWidget {
-  AddNotes({
-    super.key,
-  });
+  AddNotes({Key? key}) : super(key: key);
 
   final releaseDate = DateTime.now();
   final controller = TextEditingController();
@@ -50,9 +49,12 @@ class AddNotes extends StatelessWidget {
                 onPressed: state.textNote.isEmpty
                     ? null
                     : () {
+                        final encryptedNote =
+                            MyEncryptionDecription.encryptWithAESKey(
+                                state.textNote);
                         context
                             .read<NotepadCubit>()
-                            .add(state.textNote, releaseDate);
+                            .add(encryptedNote, releaseDate);
                       },
                 icon: const Icon(
                   Icons.check,

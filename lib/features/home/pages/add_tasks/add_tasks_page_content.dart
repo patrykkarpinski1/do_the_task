@@ -1,3 +1,4 @@
+import 'package:do_the_task/app/encryption.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -125,8 +126,10 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
                   }
                   return AddTaskButton(
                     onPressed: () {
-                      context.read<AddTaskCubit>().add(text!, releaseDate!,
-                          releaseTime!, selectedCategoryId!);
+                      final encryptedText =
+                          MyEncryptionDecription.encryptWithAESKey(text!);
+                      context.read<AddTaskCubit>().add(encryptedText,
+                          releaseDate!, releaseTime!, selectedCategoryId!);
                       setState(() {
                         releaseDate = null;
                         releaseTime = null;
