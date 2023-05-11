@@ -13,6 +13,7 @@ The app allows tasks to be added to their assigned categories, as well as storin
 - Injectable
 - Freezed
 - Get_it
+- Encrypt 
 - Units tests
 
 ### App preview
