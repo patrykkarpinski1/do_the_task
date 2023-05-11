@@ -56,19 +56,21 @@ class DetalisTasksWidget extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back,
-                  color: Color.fromARGB(255, 56, 55, 55),
+                  color: Theme.of(context).iconTheme.color,
                 ),
               ),
-              gradient:
-                  const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
+              gradient: LinearGradient(colors: [
+                Theme.of(context).focusColor,
+                Theme.of(context).bottomAppBarColor,
+              ]),
               title: Row(
                 children: [
                   Text(
                     taskModel?.dayFullName() ?? 'Unkown',
                     style: GoogleFonts.gruppo(
-                        color: const Color.fromARGB(255, 56, 55, 55),
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                         fontWeight: FontWeight.bold,
                         fontSize: 36),
                   ),
