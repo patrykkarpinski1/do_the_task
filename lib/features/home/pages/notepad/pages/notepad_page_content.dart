@@ -65,10 +65,12 @@ class NotepadPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 208, 225, 234),
       appBar: NewGradientAppBar(
-        gradient: const LinearGradient(
-          colors: [Colors.cyan, Colors.indigo],
+        gradient: LinearGradient(
+          colors: [
+            Theme.of(context).focusColor,
+            Theme.of(context).bottomAppBarColor,
+          ],
         ),
         title: Center(
           child: Text(
@@ -76,7 +78,7 @@ class NotepadPage extends StatelessWidget {
             style: GoogleFonts.arimo(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: const Color.fromARGB(255, 56, 55, 55),
+              color: Theme.of(context).textTheme.bodyText1!.color,
             ),
           ),
         ),
@@ -98,13 +100,16 @@ class NotepadPage extends StatelessWidget {
       ),
       floatingActionButton: Container(
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Colors.cyan, Colors.indigo],
+          gradient: LinearGradient(
+            colors: [
+              Theme.of(context).focusColor,
+              Theme.of(context).bottomAppBarColor,
+            ],
           ),
           borderRadius: BorderRadius.circular(55),
         ),
         child: FloatingActionButton(
-          splashColor: const Color.fromARGB(255, 41, 117, 199),
+          splashColor: Theme.of(context).splashColor,
           backgroundColor: Colors.transparent,
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
@@ -113,9 +118,9 @@ class NotepadPage extends StatelessWidget {
                       child: AddNotes(),
                     )));
           },
-          child: const Icon(
+          child: Icon(
             Icons.add,
-            color: Color.fromARGB(255, 56, 55, 55),
+            color: Theme.of(context).iconTheme.color,
           ),
         ),
       ),

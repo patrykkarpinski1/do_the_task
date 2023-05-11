@@ -20,14 +20,14 @@ class AlertWidget extends StatelessWidget {
                     style: GoogleFonts.arimo(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: const Color.fromARGB(255, 56, 55, 55),
+                      color: Theme.of(context).textTheme.bodyText1!.color,
                     ),
                   )),
                   content: Text(
                     'Are you sure you want to delete this file ?',
                     style: GoogleFonts.arimo(
                       fontSize: 16,
-                      color: const Color.fromARGB(255, 56, 55, 55),
+                      color: Theme.of(context).textTheme.bodyText1!.color,
                     ),
                   ),
                   actions: [
@@ -38,7 +38,7 @@ class AlertWidget extends StatelessWidget {
                           style: GoogleFonts.arimo(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: const Color.fromARGB(255, 56, 55, 55),
+                            color: Theme.of(context).textTheme.bodyText1!.color,
                           ),
                         )),
                     TextButton(
@@ -50,7 +50,7 @@ class AlertWidget extends StatelessWidget {
                           style: GoogleFonts.arimo(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: const Color.fromARGB(255, 56, 55, 55),
+                            color: Theme.of(context).textTheme.bodyText1!.color,
                           ),
                         ))
                   ],

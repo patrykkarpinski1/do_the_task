@@ -52,9 +52,9 @@ class DetalisPhotoNotePage extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.arrow_back,
-                    color: Color.fromARGB(255, 56, 55, 55),
+                    color: Theme.of(context).iconTheme.color,
                   ),
                 ),
                 actions: [
@@ -70,14 +70,16 @@ class DetalisPhotoNotePage extends StatelessWidget {
                       Navigator.pop(context, true);
                       Navigator.pop(context, true);
                     },
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.delete,
-                      color: Color.fromARGB(255, 56, 55, 55),
+                      color: Theme.of(context).iconTheme.color,
                     ),
                   )
                 ],
-                gradient:
-                    const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
+                gradient: LinearGradient(colors: [
+                  Theme.of(context).focusColor,
+                  Theme.of(context).bottomAppBarColor,
+                ]),
               ),
               body: Center(
                 child: ListView(

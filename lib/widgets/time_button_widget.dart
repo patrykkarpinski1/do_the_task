@@ -19,12 +19,11 @@ class TimeButtonWidget extends StatelessWidget {
       width: 150,
       height: 60,
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(55),
       ),
       child: ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).backgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(55),
           ),

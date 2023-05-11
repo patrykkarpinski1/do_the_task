@@ -51,18 +51,19 @@ class CategoryPageContent extends StatelessWidget {
           }
           final categoryModels = state.categories;
           return Scaffold(
-            backgroundColor: const Color.fromARGB(255, 208, 225, 234),
             appBar: NewGradientAppBar(
               automaticallyImplyLeading: false,
-              gradient:
-                  const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
+              gradient: LinearGradient(colors: [
+                Theme.of(context).focusColor,
+                Theme.of(context).bottomAppBarColor,
+              ]),
               title: Builder(
                 builder: (context) => Row(
                   children: [
                     IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.list,
-                        color: Color.fromARGB(255, 56, 55, 55),
+                        color: Theme.of(context).iconTheme.color,
                       ),
                       onPressed: () => Scaffold.of(context).openDrawer(),
                     ),
@@ -71,7 +72,7 @@ class CategoryPageContent extends StatelessWidget {
                       style: GoogleFonts.arimo(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: const Color.fromARGB(255, 56, 55, 55),
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                     )
                   ],
@@ -88,9 +89,9 @@ class CategoryPageContent extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.person,
-                    color: Color.fromARGB(255, 56, 55, 55),
+                    color: Theme.of(context).iconTheme.color,
                   ),
                 ),
               ],

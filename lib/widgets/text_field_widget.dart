@@ -12,12 +12,12 @@ class TextFieldWidget extends StatelessWidget {
     return TextField(
       maxLength: 2000,
       maxLines: 10,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
           hintText: 'write your tasks',
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(35)),
           ),
-          fillColor: Colors.white,
+          fillColor: Theme.of(context).backgroundColor,
           filled: true),
       onChanged: onTextChanged,
     );

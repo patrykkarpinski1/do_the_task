@@ -51,7 +51,6 @@ class DetalisTasksWidget extends StatelessWidget {
           final taskModel = state.taskModel;
 
           return Scaffold(
-            backgroundColor: Colors.white,
             appBar: NewGradientAppBar(
               leading: IconButton(
                 onPressed: () {
@@ -86,7 +85,7 @@ class DetalisTasksWidget extends StatelessWidget {
                     child: Text(
                       taskModel?.releaseTimeFormatted() ?? 'Unkown',
                       style: GoogleFonts.gruppo(
-                          color: const Color.fromARGB(255, 56, 55, 55),
+                          color: Theme.of(context).textTheme.bodyText1!.color,
                           fontWeight: FontWeight.bold,
                           fontSize: 36),
                     ),
@@ -120,10 +119,17 @@ class WorkTasks extends StatelessWidget {
       padding: const EdgeInsets.all(15.0),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12), color: Colors.white),
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: Text(encryptedText),
+          child: Text(
+            encryptedText,
+            style: GoogleFonts.arimo(
+              fontSize: 16,
+              color: Theme.of(context).textTheme.bodyText1!.color,
+            ),
+          ),
         ),
       ),
     );

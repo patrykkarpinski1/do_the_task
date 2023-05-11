@@ -44,8 +44,18 @@ class _UserPhotoWidgetState extends State<UserPhotoWidget> {
                       image: NetworkImage(state.user!.photoURL!),
                     ),
                     if (editing == true) ...[
-                      const Text('current'),
-                      const Text('photo'),
+                      Text('current',
+                          style: GoogleFonts.arimo(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w800,
+                            color: Theme.of(context).textTheme.bodyText1!.color,
+                          )),
+                      Text('photo',
+                          style: GoogleFonts.arimo(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w800,
+                            color: Theme.of(context).textTheme.bodyText1!.color,
+                          )),
                     ],
                   ],
                 );
@@ -100,7 +110,7 @@ class _UserPhotoWidgetState extends State<UserPhotoWidget> {
                         style: GoogleFonts.arimo(
                           fontSize: 12,
                           fontWeight: FontWeight.w800,
-                          color: const Color.fromARGB(255, 56, 55, 55),
+                          color: Theme.of(context).textTheme.bodyText1!.color,
                         )));
               })
             ],
@@ -113,8 +123,18 @@ class _UserPhotoWidgetState extends State<UserPhotoWidget> {
                     ? const SizedBox.shrink()
                     : Image.file(File(image!.path)),
               ),
-              const Text('select photo'),
-              const Text('and save '),
+              Text('select photo',
+                  style: GoogleFonts.arimo(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w800,
+                    color: Theme.of(context).textTheme.bodyText1!.color,
+                  )),
+              Text('and save ',
+                  style: GoogleFonts.arimo(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w800,
+                    color: Theme.of(context).textTheme.bodyText1!.color,
+                  )),
             ],
           )
         ],

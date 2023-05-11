@@ -58,6 +58,8 @@ dependencies:
   get_it: ^7.2.0
   injectable: ^2.1.1
   encrypt: ^5.0.1
+  shared_preferences: ^2.1.1
+  provider: ^6.0.5
 
 dependency_overrides:
   test_api: ^0.4.17

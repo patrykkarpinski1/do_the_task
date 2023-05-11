@@ -21,7 +21,7 @@ class _AccountActionsWidgetState extends State<AccountActionsWidget> {
         return Container(
           height: 80,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).backgroundColor,
             borderRadius: BorderRadius.circular(45),
           ),
           child: Row(
@@ -29,13 +29,16 @@ class _AccountActionsWidgetState extends State<AccountActionsWidget> {
             children: [
               Container(
                 height: 65,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [Colors.cyan, Colors.indigo],
+                    colors: [
+                      Theme.of(context).focusColor,
+                      Theme.of(context).bottomAppBarColor,
+                    ],
                   ),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(45),
                     bottomLeft: Radius.circular(45),
                   ),
@@ -52,14 +55,20 @@ class _AccountActionsWidgetState extends State<AccountActionsWidget> {
                               style: GoogleFonts.arimo(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: const Color.fromARGB(255, 56, 55, 55),
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .color,
                               ),
                             )),
                             content: Text(
                               'Are you sure you want to delete this account ?',
                               style: GoogleFonts.arimo(
                                 fontSize: 16,
-                                color: const Color.fromARGB(255, 56, 55, 55),
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .color,
                               ),
                             ),
                             actions: [
@@ -74,8 +83,10 @@ class _AccountActionsWidgetState extends State<AccountActionsWidget> {
                                     style: GoogleFonts.arimo(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color:
-                                          const Color.fromARGB(255, 56, 55, 55),
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!
+                                          .color,
                                     ),
                                   )),
                               TextButton(
@@ -87,8 +98,10 @@ class _AccountActionsWidgetState extends State<AccountActionsWidget> {
                                     style: GoogleFonts.arimo(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color:
-                                          const Color.fromARGB(255, 56, 55, 55),
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!
+                                          .color,
                                     ),
                                   ))
                             ],
@@ -103,7 +116,7 @@ class _AccountActionsWidgetState extends State<AccountActionsWidget> {
                         style: GoogleFonts.arimo(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 56, 55, 55),
+                          color: Theme.of(context).textTheme.bodyText1!.color,
                         ),
                       ),
                     ),
@@ -172,13 +185,16 @@ class _AccountActionsWidgetState extends State<AccountActionsWidget> {
               ],
               Container(
                 height: 65,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [Colors.cyan, Colors.indigo],
+                    colors: [
+                      Theme.of(context).focusColor,
+                      Theme.of(context).bottomAppBarColor,
+                    ],
                   ),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(45),
                     bottomRight: Radius.circular(45),
                   ),
@@ -197,7 +213,7 @@ class _AccountActionsWidgetState extends State<AccountActionsWidget> {
                         style: GoogleFonts.arimo(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 56, 55, 55),
+                          color: Theme.of(context).textTheme.bodyText1!.color,
                         ),
                       ),
                     ),

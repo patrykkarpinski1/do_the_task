@@ -62,17 +62,18 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
           }
           final categoriesList = state.categories;
           return Scaffold(
-            backgroundColor: const Color.fromARGB(255, 208, 225, 234),
             appBar: NewGradientAppBar(
-              gradient:
-                  const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
+              gradient: LinearGradient(colors: [
+                Theme.of(context).focusColor,
+                Theme.of(context).bottomAppBarColor,
+              ]),
               title: Center(
                 child: Text(
                   'ADD NEW TASKS',
                   style: GoogleFonts.arimo(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: const Color.fromARGB(255, 56, 55, 55),
+                    color: Theme.of(context).textTheme.bodyText1!.color,
                   ),
                 ),
               ),
@@ -133,8 +134,8 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
                       setState(() {
                         releaseDate = null;
                         releaseTime = null;
-                        selectedCategoryId == null;
-                        text == null;
+                        selectedCategoryId = null;
+                        text = null;
                       });
                     },
                   );

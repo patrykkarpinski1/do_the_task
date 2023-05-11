@@ -37,7 +37,7 @@ class _DropDownButtonWidget extends State<DropDownButtonWidget> {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).backgroundColor,
         borderRadius: BorderRadius.circular(55),
       ),
       child: DropdownButtonFormField(
@@ -63,10 +63,10 @@ class _DropDownButtonWidget extends State<DropDownButtonWidget> {
           labelStyle: GoogleFonts.arimo(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 56, 55, 55),
+            color: Colors.black,
           ),
         ),
-        dropdownColor: const Color.fromARGB(255, 208, 225, 234),
+        dropdownColor: Theme.of(context).textTheme.button!.color,
         items: widget.categoriesList.map((value) {
           return DropdownMenuItem(
             value: value,

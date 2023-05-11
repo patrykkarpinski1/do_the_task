@@ -51,25 +51,26 @@ class TasksPage extends StatelessWidget {
           final categoryModel = state.selectCategories;
 
           return Scaffold(
-            backgroundColor: const Color.fromARGB(237, 255, 255, 255),
             appBar: NewGradientAppBar(
               leading: IconButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back,
-                  color: Color.fromARGB(255, 56, 55, 55),
+                  color: Theme.of(context).iconTheme.color,
                 ),
               ),
-              gradient:
-                  const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
+              gradient: LinearGradient(colors: [
+                Theme.of(context).focusColor,
+                Theme.of(context).bottomAppBarColor,
+              ]),
               title: Text(
                 categoryModel?.title ?? 'Unkown',
                 style: GoogleFonts.arimo(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: const Color.fromARGB(255, 56, 55, 55),
+                  color: Theme.of(context).textTheme.bodyText1!.color,
                 ),
               ),
             ),

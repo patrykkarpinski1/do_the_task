@@ -38,23 +38,25 @@ class MyAccountPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back,
-                  color: Color.fromARGB(255, 56, 55, 55),
+                  color: Theme.of(context).iconTheme.color,
                 )),
-            gradient: const LinearGradient(
-              colors: [Colors.cyan, Colors.indigo],
+            gradient: LinearGradient(
+              colors: [
+                Theme.of(context).focusColor,
+                Theme.of(context).bottomAppBarColor,
+              ],
             ),
             title: Text(
               'ACCOUNT',
               style: GoogleFonts.arimo(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(255, 56, 55, 55),
+                color: Theme.of(context).textTheme.bodyText1!.color,
               ),
             ),
           ),
-          backgroundColor: const Color.fromARGB(255, 208, 225, 234),
           body: ListView(
             padding: const EdgeInsets.all(15.0),
             children: [
@@ -68,27 +70,27 @@ class MyAccountPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
+                    SizedBox(
                         height: 60,
                         width: 50,
                         child: Divider(
                           thickness: 1,
-                          color: Color.fromARGB(255, 56, 55, 55),
+                          color: Theme.of(context).textTheme.bodyText1!.color,
                         )),
                     Text(
                       '   Account Info   ',
                       style: GoogleFonts.arimo(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
-                        color: const Color.fromARGB(255, 56, 55, 55),
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 60,
                       width: 50,
                       child: Divider(
                         thickness: 1,
-                        color: Color.fromARGB(255, 56, 55, 55),
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                     ),
                   ],

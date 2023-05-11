@@ -32,16 +32,15 @@ class AddNotes extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: const Color.fromARGB(255, 208, 225, 234),
           appBar: NewGradientAppBar(
             leading: IconButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 context.read<NotepadCubit>().start();
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.arrow_back,
-                color: Color.fromARGB(255, 56, 55, 55),
+                color: Theme.of(context).iconTheme.color,
               ),
             ),
             actions: [
@@ -56,21 +55,23 @@ class AddNotes extends StatelessWidget {
                             .read<NotepadCubit>()
                             .add(encryptedNote, releaseDate);
                       },
-                icon: const Icon(
+                icon: Icon(
                   Icons.check,
-                  color: Color.fromARGB(255, 56, 55, 55),
+                  color: Theme.of(context).iconTheme.color,
                 ),
               ),
             ],
-            gradient:
-                const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
+            gradient: LinearGradient(colors: [
+              Theme.of(context).focusColor,
+              Theme.of(context).bottomAppBarColor,
+            ]),
             title: Center(
               child: Text(
                 'NOTE',
                 style: GoogleFonts.arimo(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: const Color.fromARGB(255, 56, 55, 55),
+                  color: Theme.of(context).textTheme.bodyText1!.color,
                 ),
               ),
             ),
@@ -80,11 +81,11 @@ class AddNotes extends StatelessWidget {
             children: [
               TextField(
                 controller: controller,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: "Your note",
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Theme.of(context).backgroundColor,
                 ),
                 maxLength: 1000,
                 maxLines: 30,

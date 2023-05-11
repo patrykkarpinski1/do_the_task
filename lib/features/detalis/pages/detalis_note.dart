@@ -61,16 +61,16 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back,
-                  color: Color.fromARGB(255, 56, 55, 55),
+                  color: Theme.of(context).iconTheme.color,
                 ),
               ),
               actions: [
                 PopupMenuButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.more_vert,
-                      color: Color.fromARGB(255, 56, 55, 55),
+                      color: Theme.of(context).iconTheme.color,
                     ),
                     itemBuilder: (context) {
                       return [
@@ -82,7 +82,10 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
                               style: GoogleFonts.arimo(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
-                                color: const Color.fromARGB(255, 56, 55, 55),
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .color,
                               ),
                             ),
                           ),
@@ -95,7 +98,10 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
                               style: GoogleFonts.arimo(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
-                                color: const Color.fromARGB(255, 56, 55, 55),
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .color,
                               ),
                             ),
                           ),
@@ -119,15 +125,17 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
                       }
                     }),
               ],
-              gradient:
-                  const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
+              gradient: LinearGradient(colors: [
+                Theme.of(context).focusColor,
+                Theme.of(context).bottomAppBarColor,
+              ]),
               title: Center(
                 child: Text(
                   noteModel?.releaseDateFormatted() ?? 'Unkown',
                   style: GoogleFonts.arimo(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: const Color.fromARGB(255, 56, 55, 55),
+                    color: Theme.of(context).textTheme.bodyText1!.color,
                   ),
                 ),
               ),
@@ -141,16 +149,20 @@ class _DetalisNotePageState extends State<DetalisNotePage> {
                       decryptedNote,
                       style: GoogleFonts.arimo(
                         fontSize: 16,
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                     ),
                   ],
                   if (editing == true) ...[
                     TextFormField(
                       initialValue: decryptedNote,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.bodyText1!.color,
+                      ),
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).backgroundColor,
                       ),
                       maxLength: 1000,
                       maxLines: 30,

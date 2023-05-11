@@ -106,7 +106,7 @@ class _TasksWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.only(left: 10),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(25),
         ),
         child: Row(
@@ -117,19 +117,24 @@ class _TasksWidget extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     height: 150,
-                    color: Colors.white,
+                    color: Theme.of(context).textTheme.bodyText2!.color,
                     child: Text(
                       encryptedText,
                       style: GoogleFonts.gruppo(
-                          fontWeight: FontWeight.bold, fontSize: 14),
+                          color: Theme.of(context).textTheme.bodyText1!.color,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14),
                     ),
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
+                      gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [Colors.cyan, Colors.indigo],
+                        colors: [
+                          Theme.of(context).focusColor,
+                          Theme.of(context).bottomAppBarColor,
+                        ],
                       ),
                       borderRadius: BorderRadius.circular(55),
                     ),
@@ -156,7 +161,7 @@ class _TasksWidget extends StatelessWidget {
                         style: GoogleFonts.gruppo(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
-                          color: Colors.white,
+                          color: Theme.of(context).textTheme.bodyText2!.color,
                         ),
                       ),
                     ),
@@ -167,14 +172,17 @@ class _TasksWidget extends StatelessWidget {
             Column(
               children: [
                 Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(25),
                         bottomRight: Radius.circular(25)),
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: [Colors.cyan, Colors.indigo],
+                      colors: [
+                        Theme.of(context).focusColor,
+                        Theme.of(context).bottomAppBarColor,
+                      ],
                     ),
                   ),
                   width: 120,
@@ -189,14 +197,16 @@ class _TasksWidget extends StatelessWidget {
                         Text(
                           taskmodel?.day() ?? 'Unkown',
                           style: GoogleFonts.gruppo(
-                              color: Colors.white,
+                              color:
+                                  Theme.of(context).textTheme.bodyText2!.color,
                               fontWeight: FontWeight.bold,
                               fontSize: 75),
                         ),
                         Text(
                           taskmodel?.month() ?? 'Unkown',
                           style: GoogleFonts.gruppo(
-                              color: Colors.white,
+                              color:
+                                  Theme.of(context).textTheme.bodyText2!.color,
                               fontWeight: FontWeight.bold,
                               fontSize: 18),
                         ),
@@ -207,7 +217,10 @@ class _TasksWidget extends StatelessWidget {
                             Text(
                               taskmodel?.releaseTimeFormatted() ?? 'Unkown',
                               style: GoogleFonts.gruppo(
-                                  color: Colors.white,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2!
+                                      .color,
                                   fontWeight: FontWeight.bold),
                             ),
                           ],

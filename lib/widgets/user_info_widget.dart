@@ -22,7 +22,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).backgroundColor,
         borderRadius: BorderRadius.circular(45),
       ),
       child: Column(
@@ -51,7 +51,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                         style: GoogleFonts.arimo(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 56, 55, 55),
+                          color: Theme.of(context).textTheme.bodyText1!.color,
                         ),
                       )),
                       content: TextField(
@@ -75,7 +75,10 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                               style: GoogleFonts.arimo(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: const Color.fromARGB(255, 56, 55, 55),
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .color,
                               ),
                             )),
                         TextButton(
@@ -87,7 +90,10 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                               style: GoogleFonts.arimo(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: const Color.fromARGB(255, 56, 55, 55),
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .color,
                               ),
                             ))
                       ],

@@ -70,9 +70,9 @@ class ViewPage extends StatelessWidget {
       appBar: NewGradientAppBar(
         actions: [
           PopupMenuButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.more_vert,
-                color: Color.fromARGB(255, 56, 55, 55),
+                color: Theme.of(context).iconTheme.color,
               ),
               itemBuilder: (context) {
                 return [
@@ -83,7 +83,7 @@ class ViewPage extends StatelessWidget {
                       style: GoogleFonts.arimo(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: const Color.fromARGB(255, 56, 55, 55),
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                     ),
                   ),
@@ -103,20 +103,23 @@ class ViewPage extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back,
-            color: Color.fromARGB(255, 56, 55, 55),
+            color: Theme.of(context).iconTheme.color,
           ),
         ),
-        gradient: const LinearGradient(
-          colors: [Colors.cyan, Colors.indigo],
+        gradient: LinearGradient(
+          colors: [
+            Theme.of(context).focusColor,
+            Theme.of(context).bottomAppBarColor,
+          ],
         ),
         title: Text(
           'PHOTO NOTE',
           style: GoogleFonts.arimo(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 56, 55, 55),
+            color: Theme.of(context).textTheme.bodyText1!.color,
           ),
         ),
       ),
@@ -139,7 +142,6 @@ class ViewPage extends StatelessWidget {
           ]
         ],
       ),
-      backgroundColor: const Color.fromARGB(255, 208, 225, 234),
     );
   }
 }

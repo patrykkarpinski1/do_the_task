@@ -28,7 +28,6 @@ class NoteWidget extends StatelessWidget {
         );
       },
       child: Card(
-        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.only(top: 10),
           child: Column(
@@ -39,6 +38,9 @@ class NoteWidget extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 5, right: 5),
                   child: Text(
                     decryptedNote,
+                    style: GoogleFonts.roboto(
+                      color: Theme.of(context).textTheme.bodyText1!.color,
+                    ),
                   ),
                 ),
               ),
@@ -50,7 +52,7 @@ class NoteWidget extends StatelessWidget {
                     child: Text(
                       noteModel.releaseDateFormatted(),
                       style: GoogleFonts.gruppo(
-                          color: const Color.fromARGB(255, 29, 28, 28),
+                          color: Theme.of(context).textTheme.bodyText1!.color,
                           fontWeight: FontWeight.bold),
                     ),
                   ),

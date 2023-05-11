@@ -41,32 +41,37 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                     onPressed: () {
                       context.read<PhotoNoteCubit>().add(image!);
                     },
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.save_as_outlined,
-                      color: Color.fromARGB(255, 56, 55, 55),
+                      color: Theme.of(context).iconTheme.color,
                     ))
               ],
               leading: IconButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back,
-                  color: Color.fromARGB(255, 56, 55, 55),
+                  color: Theme.of(context).iconTheme.color,
                 ),
               ),
-              gradient: const LinearGradient(
-                colors: [Colors.cyan, Colors.indigo],
+              gradient: LinearGradient(
+                colors: [
+                  Theme.of(context).focusColor,
+                  Theme.of(context).bottomAppBarColor,
+                ],
               ),
             ),
-            backgroundColor: const Color.fromARGB(255, 208, 225, 234),
             floatingActionButton: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Colors.cyan, Colors.indigo],
+                    gradient: LinearGradient(
+                      colors: [
+                        Theme.of(context).focusColor,
+                        Theme.of(context).bottomAppBarColor,
+                      ],
                     ),
                     borderRadius: BorderRadius.circular(55),
                   ),
@@ -82,9 +87,9 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                         image = pickedImage!;
                       });
                     },
-                    child: const Icon(
+                    child: Icon(
                       Icons.photo_library,
-                      color: Color.fromARGB(255, 56, 55, 55),
+                      color: Theme.of(context).iconTheme.color,
                     ),
                   ),
                 ),
@@ -92,8 +97,11 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   child: Container(
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Colors.cyan, Colors.indigo],
+                      gradient: LinearGradient(
+                        colors: [
+                          Theme.of(context).focusColor,
+                          Theme.of(context).bottomAppBarColor,
+                        ],
                       ),
                       borderRadius: BorderRadius.circular(55),
                     ),
@@ -109,9 +117,9 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                           image = pickedImage!;
                         });
                       },
-                      child: const Icon(
+                      child: Icon(
                         Icons.camera_alt,
-                        color: Color.fromARGB(255, 56, 55, 55),
+                        color: Theme.of(context).iconTheme.color,
                       ),
                     ),
                   ),

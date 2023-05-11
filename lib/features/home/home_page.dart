@@ -38,7 +38,6 @@ class _HomePageState extends State<HomePage> {
       },
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: const Color.fromARGB(255, 208, 225, 234),
           body: Builder(builder: (context) {
             if (currentIndex == 1) {
               return CategoryPageContent(
