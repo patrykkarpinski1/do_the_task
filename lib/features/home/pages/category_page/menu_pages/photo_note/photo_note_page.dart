@@ -7,7 +7,7 @@ import '/features/detalis/pages/detalis_photo_note.dart';
 import '/features/home/pages/category_page/menu_pages/photo_note/add_photo_page.dart';
 import '/features/home/pages/category_page/menu_pages/photo_note/cubit/photo_note_cubit.dart';
 import '/models/photo_note_model.dart';
-import '/widgets/photo_widget.dart';
+import '../../../../../../widgets/photo_note_widgets/photo_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class PhotoNotePage extends StatelessWidget {

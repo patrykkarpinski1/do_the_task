@@ -6,11 +6,11 @@ import 'package:intl/intl.dart';
 import '/app/core/enums.dart';
 import '/app/injection_container.dart';
 import '/features/home/pages/add_tasks/cubit/add_task_cubit.dart';
-import '/widgets/add_task_button_widget.dart';
-import '/widgets/date_button_widget.dart';
-import '/widgets/drop_down_button_widget.dart';
-import '/widgets/text_field_widget.dart';
-import '/widgets/time_button_widget.dart';
+import '../../../../widgets/add_tasks_widgets/add_task_button_widget.dart';
+import '../../../../widgets/add_tasks_widgets/date_button_widget.dart';
+import '../../../../widgets/add_tasks_widgets/drop_down_button_widget.dart';
+import '../../../../widgets/add_tasks_widgets/text_field_widget.dart';
+import '../../../../widgets/add_tasks_widgets/time_button_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class AddTasksPageContent extends StatefulWidget {

@@ -10,10 +10,14 @@ The app allows tasks to be added to their assigned categories, as well as storin
 - Firebase
 - Bloc & Cubit
 - Firebase
+- Google sign in
 - Injectable
 - Freezed
 - Get_it
 - Encrypt 
+- Shared preferences
+- Flutter local notifications
+- Provider
 - Units tests
 
 ### App preview

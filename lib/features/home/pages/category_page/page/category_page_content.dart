@@ -6,8 +6,8 @@ import '/app/core/enums.dart';
 import '/app/injection_container.dart';
 import '/features/home/my_account_page/my_account_page.dart';
 import '/features/home/pages/category_page/cubit/category_page_cubit.dart';
-import '/widgets/category_widget.dart';
-import '/widgets/drawer_menu_widget.dart';
+import '../../../../../widgets/category_page_widgets/category_widget.dart';
+import '../../../../../widgets/category_page_widgets/drawer_menu_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class CategoryPageContent extends StatelessWidget {

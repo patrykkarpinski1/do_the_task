@@ -60,6 +60,7 @@ dependencies:
   encrypt: ^5.0.1
   shared_preferences: ^2.1.1
   provider: ^6.0.5
+  flutter_local_notifications: ^14.0.0+2
 
 dependency_overrides:
   test_api: ^0.4.17

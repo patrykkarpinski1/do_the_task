@@ -5,7 +5,7 @@ import '/app/core/enums.dart';
 import '/app/injection_container.dart';
 import '/features/home/pages/category_page/cubit/category_page_cubit.dart';
 import '/models/task_model.dart';
-import '/widgets/tasks_widget.dart';
+import '../../../../widgets/tasks_widgets/tasks_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class TasksPage extends StatelessWidget {

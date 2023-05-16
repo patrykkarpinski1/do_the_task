@@ -14,10 +14,13 @@ class AddTaskButton extends StatelessWidget {
       width: 150,
       height: 60,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.cyan, Colors.indigo],
+          colors: [
+            Theme.of(context).focusColor,
+            Theme.of(context).bottomAppBarColor,
+          ],
         ),
         borderRadius: BorderRadius.circular(55),
       ),
@@ -35,7 +38,7 @@ class AddTaskButton extends StatelessWidget {
           style: GoogleFonts.arimo(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 56, 55, 55),
+            color: Theme.of(context).textTheme.bodyText2!.color,
           ),
         ),
       ),

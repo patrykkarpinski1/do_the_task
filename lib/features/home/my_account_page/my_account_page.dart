@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '/app/core/enums.dart';
 import '/app/cubit/auth_cubit.dart';
-import '/widgets/account_actions_widget.dart';
-import '/widgets/user_info_widget.dart';
-import '/widgets/user_photo_widget.dart';
+import '../../../widgets/my_account_page_widgets/account_actions_widget.dart';
+import '../../../widgets/my_account_page_widgets/user_info_widget.dart';
+import '../../../widgets/my_account_page_widgets/user_photo_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class MyAccountPage extends StatelessWidget {

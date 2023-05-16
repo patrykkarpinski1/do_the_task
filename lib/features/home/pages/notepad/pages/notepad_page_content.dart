@@ -6,7 +6,7 @@ import '/app/injection_container.dart';
 import '/features/home/pages/notepad/cubit/notepad_cubit.dart';
 import '/features/home/pages/notepad/pages/add_notes_page.dart';
 import '/models/note_model.dart';
-import '/widgets/note_widget.dart';
+import '../../../../../widgets/notepad_widgets/note_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class NotepadPageContent extends StatelessWidget {

@@ -1,13 +1,16 @@
+import 'package:do_the_task/services/notifi_serivice.dart';
 import 'package:flutter/material.dart';
 
 class DarkModeWidget extends StatefulWidget {
   final bool initialValue;
   final ValueChanged<bool> onChanged;
+  final NotificationService notificationService;
 
   const DarkModeWidget({
     Key? key,
     required this.initialValue,
     required this.onChanged,
+    required this.notificationService,
   }) : super(key: key);
 
   @override
@@ -41,24 +44,30 @@ class _DarkModeWidgetState extends State<DarkModeWidget>
     super.dispose();
   }
 
-  void switchValueChanged(bool value) {
+  void switchValueChanged() {
     setState(() {
-      switchValue = value;
+      switchValue = !switchValue;
     });
     widget.onChanged(switchValue);
     if (switchValue) {
       animationController.forward();
+      widget.notificationService.showNotification(
+        title: 'Notification',
+        body: 'Dark Mode Enabled',
+      );
     } else {
       animationController.reverse();
+      widget.notificationService.showNotification(
+        title: 'Notification',
+        body: 'Dark Mode Disabled',
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        switchValueChanged(!switchValue);
-      },
+      onTap: switchValueChanged,
       child: Container(
         width: 150,
         height: 30,

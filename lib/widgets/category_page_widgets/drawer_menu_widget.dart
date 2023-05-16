@@ -1,6 +1,9 @@
 import 'package:do_the_task/app/dark_theme/dark_theme_preference.dart';
 import 'package:do_the_task/app/dark_theme/dark_theme_provider.dart';
+import 'package:do_the_task/services/notifi_serivice.dart';
+import 'package:do_the_task/services/notification_provider.dart';
 import 'package:do_the_task/widgets/dark_mode_widget.dart';
+import 'package:do_the_task/widgets/notifications_enabled_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -17,13 +20,26 @@ class DrawerMenuWidget extends StatefulWidget {
 
 class _DrawerMenuWidgetState extends State<DrawerMenuWidget> {
   late DarkThemePreference darkThemePreference;
+  late NotificationProvider notificationProvider;
   bool switchValue = false;
+  bool notificationsEnabled = true;
+  late NotificationService notificationService;
 
   @override
   void initState() {
     super.initState();
     switchValue =
         Provider.of<DarkThemeProvider>(context, listen: false).darkTheme;
+    notificationProvider =
+        Provider.of<NotificationProvider>(context, listen: false);
+    notificationProvider.notificationPreference
+        .getNotificationStatus()
+        .then((value) {
+      setState(() {
+        notificationsEnabled = value;
+      });
+    });
+    notificationService = NotificationService(notificationProvider);
   }
 
   void darkModeSwitch(bool value) {
@@ -31,6 +47,14 @@ class _DrawerMenuWidgetState extends State<DrawerMenuWidget> {
       switchValue = value;
     });
     Provider.of<DarkThemeProvider>(context, listen: false).darkTheme = value;
+  }
+
+  void updateNotificationStatus(bool value) {
+    setState(() {
+      notificationsEnabled = value;
+    });
+    Provider.of<NotificationProvider>(context, listen: false)
+        .notificationsEnabled = value;
   }
 
   @override
@@ -67,6 +91,7 @@ class _DrawerMenuWidgetState extends State<DrawerMenuWidget> {
                     DarkModeWidget(
                       initialValue: switchValue,
                       onChanged: darkModeSwitch,
+                      notificationService: notificationService,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15, right: 10),
@@ -104,6 +129,26 @@ class _DrawerMenuWidgetState extends State<DrawerMenuWidget> {
                 color: const Color.fromARGB(255, 56, 55, 55),
               ),
             ),
+          ),
+          ExpansionTile(
+            title: Text(
+              'NOTIFCATIONS',
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                color: const Color.fromARGB(255, 56, 55, 55),
+              ),
+            ),
+            leading: const Icon(
+              Icons.notifications,
+              color: Color.fromARGB(255, 56, 55, 55),
+            ),
+            children: [
+              NotifiactionsEnabledWidget(
+                value: notificationsEnabled,
+                onChanged: updateNotificationStatus,
+              ),
+            ],
           ),
           ListTile(
             leading: const Icon(
