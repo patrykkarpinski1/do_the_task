@@ -1,3 +1,4 @@
+import 'package:do_the_task/widgets/my_account_page_widgets/delete_all_files_widgte.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -96,7 +97,23 @@ class MyAccountPage extends StatelessWidget {
                   ],
                 ),
               ),
-              UserInfoWidget(user: user)
+              UserInfoWidget(user: user),
+              const SizedBox(
+                height: 30,
+              ),
+              ExpansionTile(
+                title: Text(
+                  'Do you want to delete all documents and photos?',
+                  style: GoogleFonts.arimo(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w800,
+                    color: Theme.of(context).textTheme.bodyText1!.color,
+                  ),
+                ),
+                children: const [
+                  DeleteAllFilesWidget(),
+                ],
+              )
             ],
           ),
         );

@@ -7,7 +7,6 @@ The app allows tasks to be added to their assigned categories, as well as storin
 ### Technologies used:
 - Dart
 - Flutter
-- Firebase
 - Bloc & Cubit
 - Firebase
 - Google sign in

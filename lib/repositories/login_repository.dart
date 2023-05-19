@@ -80,23 +80,17 @@ class LoginRepository {
     await FirebaseAuth.instance.currentUser!.sendEmailVerification();
   }
 
-  Future<void> deleteAccount() async {
+  Future<void> deleteAllFiles() async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
     }
-
     final storageRefs = [
       firebase_storage.FirebaseStorage.instance
           .ref()
           .child('users')
           .child(userID)
           .child('photo_note'),
-      firebase_storage.FirebaseStorage.instance
-          .ref()
-          .child('users')
-          .child(userID)
-          .child('profil_images'),
     ];
 
     for (final storageRef in storageRefs) {
@@ -113,7 +107,6 @@ class LoginRepository {
       db.collection('users').doc(userID).collection('notepad'),
       db.collection('users').doc(userID).collection('photo_note'),
     ];
-
     for (final collectionRef in collectionRefs) {
       final querySnapshot = await collectionRef.get();
       final docs = querySnapshot.docs;
@@ -123,9 +116,39 @@ class LoginRepository {
       }
       await batch.commit();
     }
+  }
+
+  Future<void> deleteAccountData() async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    final storageRefs = [
+      firebase_storage.FirebaseStorage.instance
+          .ref()
+          .child('users')
+          .child(userID)
+          .child('profil_images'),
+    ];
+
+    for (final storageRef in storageRefs) {
+      final firebase_storage.ListResult result = await storageRef.listAll();
+      final List<Future<void>> futures = [];
+      for (final firebase_storage.Reference ref in result.items) {
+        futures.add(ref.delete());
+      }
+      await Future.wait(futures);
+    }
     final userInfo = FirebaseFirestore.instance;
     final collectionRef = userInfo.collection('users').doc(userID);
     await collectionRef.delete();
+  }
+
+  Future<void> deleteAccount() async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
     await FirebaseAuth.instance.currentUser?.delete();
   }
 }
