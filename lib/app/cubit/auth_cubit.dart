@@ -159,15 +159,6 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> deleteAccountData() async {
-    try {
-      await loginRepository.deleteAccountData();
-    } catch (error) {
-      emit(
-          state.copyWith(status: Status.error, errorMessage: error.toString()));
-    }
-  }
-
   Future<void> deleteAccount() async {
     try {
       await loginRepository.deleteAccount();

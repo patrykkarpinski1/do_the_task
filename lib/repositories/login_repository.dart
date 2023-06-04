@@ -119,32 +119,6 @@ class LoginRepository {
     }
   }
 
-  Future<void> deleteAccountData() async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
-    final storageRefs = [
-      firebase_storage.FirebaseStorage.instance
-          .ref()
-          .child('users')
-          .child(userID)
-          .child('profil_images'),
-    ];
-
-    for (final storageRef in storageRefs) {
-      final firebase_storage.ListResult result = await storageRef.listAll();
-      final List<Future<void>> futures = [];
-      for (final firebase_storage.Reference ref in result.items) {
-        futures.add(ref.delete());
-      }
-      await Future.wait(futures);
-    }
-    final userInfo = FirebaseFirestore.instance;
-    final collectionRef = userInfo.collection('users').doc(userID);
-    await collectionRef.delete();
-  }
-
   Future<void> deleteAccount() async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {

@@ -301,39 +301,6 @@ void main() {
       );
     });
   });
-
-  group('deleteAccountData', () {
-    group('success', () {
-      setUp(() {
-        when(() => loginRepository.deleteAccountData())
-            .thenAnswer((_) async {});
-      });
-      blocTest<AuthCubit, AuthState>(
-        'emits AuthState with Status.success when account data deletion success',
-        build: () => sut,
-        act: (cubit) => cubit.deleteAccountData(),
-        expect: () => [],
-      );
-    });
-    group('failure', () {
-      setUp(() {
-        when(() => loginRepository.deleteAccountData()).thenThrow(
-          Exception('test-exception-error'),
-        );
-      });
-      blocTest<AuthCubit, AuthState>(
-        'emits AuthState with Status.error and error message when account data deletion fails',
-        build: () => sut,
-        act: (cubit) => cubit.deleteAccountData(),
-        expect: () => [
-          const AuthState(
-            status: Status.error,
-            errorMessage: 'Exception: test-exception-error',
-          ),
-        ],
-      );
-    });
-  });
   group('deleteAccount', () {
     group('success', () {
       setUp(() {

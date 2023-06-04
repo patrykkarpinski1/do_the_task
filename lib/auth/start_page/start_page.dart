@@ -48,8 +48,8 @@ class StartPage extends StatelessWidget {
           return LoginPage();
         } else {
           fcm.subscribeToTopic('task_${user.uid}');
+          return HomePage(user: user);
         }
-        return HomePage(user: user);
       },
     );
   }

@@ -133,3 +133,73 @@ exports.deleteScheduledNotification = functions.firestore
     });
 
 
+/**
+ * Cloud Function to clean up user data when the user account is deleted.
+ *
+ * @param {Object} user - The user object provided by the onDelete trigger.
+ * @return  {Promise} - A promise that resolves
+ * when all user data has been deleted.
+ */
+exports.cleanupUserData = functions.auth.user().onDelete((user) => {
+  const uid = user.uid;
+
+  const defaultProfileImageRef = `users/${uid}/profil_images`;
+  const photoNoteRef = `users/${uid}/photo_note`;
+
+  const firestore = admin.firestore();
+
+  const collections = [
+    firestore.collection("users").doc(uid).collection("tasks"),
+    firestore.collection("users").doc(uid).collection("notepad"),
+    firestore.collection("users").doc(uid).collection("photo_note"),
+  ];
+
+  const promises = collections.map((collection) =>
+    deleteCollection(firestore, collection));
+
+  promises.push(deleteFiles(defaultProfileImageRef));
+  promises.push(deleteFiles(photoNoteRef));
+  promises.push(firestore.collection("users").doc(uid).delete());
+
+  return Promise.all(promises);
+});
+
+/**
+ * Deletes all documents in a Firestore collection.
+ *
+ * @param {Object} firestore - The Firestore instance.
+ * @param {Object} collection - The Firestore collection to delete.
+ * @return  {Promise} - A promise that resolves when all
+ * documents in the collection have been deleted.
+ */
+function deleteCollection(firestore, collection) {
+  return collection.get()
+      .then((snapshot) => {
+        const batch = firestore.batch();
+        snapshot.docs.forEach((doc) => {
+          batch.delete(doc.ref);
+        });
+        return batch.commit();
+      });
+}
+
+/**
+ * Deletes all files in a Firebase Storage folder.
+ *
+ * @param {string} folder - The folder in Firebase Storage to delete.
+ * @return  {Promise} - A promise that resolves when
+ * all files in the folder have been deleted.
+ */
+function deleteFiles(folder) {
+  const bucket = admin.storage().bucket();
+
+  return bucket.getFiles({prefix: folder})
+      .then((data) => {
+        const files = data[0];
+        const deleteOps = files.map((file) => file.delete());
+        return Promise.all(deleteOps);
+      })
+      .catch((err) => console.log("Failed to delete files:", err));
+}
+
+

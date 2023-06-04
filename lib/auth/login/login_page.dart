@@ -31,38 +31,6 @@ class LoginPage extends StatelessWidget {
             );
           }
         }
-        if (state.status == Status.success) {
-          if (state.message.isNotEmpty) {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                      content: Text(
-                    state.message,
-                    style: GoogleFonts.arimo(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: const Color.fromARGB(255, 32, 31, 31),
-                    ),
-                  ));
-                });
-          }
-        }
-        if (state.user?.emailVerified == false) {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                    content: Text(
-                  'please check your inbox and verify your email',
-                  style: GoogleFonts.arimo(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: const Color.fromARGB(255, 32, 31, 31),
-                  ),
-                ));
-              });
-        }
       },
       builder: (context, state) {
         if (state.status == Status.loading) {
