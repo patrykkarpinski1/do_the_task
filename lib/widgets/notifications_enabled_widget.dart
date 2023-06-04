@@ -1,5 +1,7 @@
+import 'package:do_the_task/app/cubit/auth_cubit.dart';
 import 'package:do_the_task/services/notification_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -36,35 +38,54 @@ class _NotifiactionsEnabledWidgetState
     }
   }
 
+  @override
+  void didUpdateWidget(NotifiactionsEnabledWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.value != oldWidget.value) {
+      onTapValue = widget.value;
+      if (onTapValue) {
+        context.read<AuthCubit>().enableNotifications();
+      } else {
+        context.read<AuthCubit>().disableNotifications();
+      }
+    }
+  }
+
   void onTapValueChanged(bool? value) {
     setState(() {
       onTapValue = value ?? true;
     });
     if (onTapValue) {
       notificationProvider.enableNotifications();
+      context.read<AuthCubit>().enableNotifications();
     } else {
       notificationProvider.disableNotifications();
+      context.read<AuthCubit>().disableNotifications();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 7),
-      child: CheckboxListTile(
-        controlAffinity: ListTileControlAffinity.trailing,
-        contentPadding: EdgeInsets.zero,
-        title: Text(
-          'NOTIFICATIONS ENABLED',
-          style: GoogleFonts.roboto(
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-            color: const Color.fromARGB(255, 56, 55, 55),
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 20, right: 7),
+          child: CheckboxListTile(
+            controlAffinity: ListTileControlAffinity.trailing,
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              'NOTIFICATIONS ENABLED',
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                color: const Color.fromARGB(255, 56, 55, 55),
+              ),
+            ),
+            value: onTapValue,
+            onChanged: onTapValueChanged,
           ),
-        ),
-        value: onTapValue,
-        onChanged: onTapValueChanged,
-      ),
+        );
+      },
     );
   }
 }

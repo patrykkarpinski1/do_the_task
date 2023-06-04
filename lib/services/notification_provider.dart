@@ -1,9 +1,18 @@
 import 'package:do_the_task/services/notification_preference.dart';
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class NotificationProvider with ChangeNotifier {
-  NotificationPreference notificationPreference = NotificationPreference();
+  NotificationPreference notificationPreference;
   bool _notificationsEnabled = true;
+
+  NotificationProvider(this.notificationPreference) {
+    notificationPreference.getNotificationStatus().then((status) {
+      _notificationsEnabled = status;
+      notifyListeners();
+    });
+  }
 
   bool get notificationsEnabled => _notificationsEnabled;
 

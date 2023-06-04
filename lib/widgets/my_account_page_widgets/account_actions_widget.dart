@@ -205,7 +205,6 @@ class _AccountActionsWidgetState extends State<AccountActionsWidget> {
                 child: TextButton(
                   onPressed: () {
                     context.read<AuthCubit>().signOut();
-                    context.read<AuthCubit>().start();
                     Navigator.of(context).pop();
                   },
                   child: SizedBox(

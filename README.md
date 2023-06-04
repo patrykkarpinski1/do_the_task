@@ -3,7 +3,8 @@
 Flutter application to save tasks
 ## Introduction & main goals
 
-The app allows tasks to be added to their assigned categories, as well as storing photos and creating notes. In future, it will be possible to set reminders for tasks.
+The app allows tasks to be added to their assigned categories, as well as storing photos and creating notes. 
+The updated application enabling the use of notifications is already ready and will be available soon on the Play Store.
 ### Technologies used:
 - Dart
 - Flutter
@@ -17,6 +18,9 @@ The app allows tasks to be added to their assigned categories, as well as storin
 - Shared preferences
 - Flutter local notifications
 - Provider
+- Firebase messaging
+- Cloud functions
+- Get
 - Units tests
 
 ### App preview

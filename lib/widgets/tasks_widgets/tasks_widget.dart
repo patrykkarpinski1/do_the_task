@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '/app/core/enums.dart';
 import '/app/injection_container.dart';
-import '/features/detalis/pages/detalis_task_widget_page.dart';
+import '../../features/detalis/pages/detalis_task_page.dart';
 import '/features/home/pages/tasks/cubit/task_cubit.dart';
 import '/models/task_model.dart';
 
@@ -145,7 +145,7 @@ class _TasksWidget extends StatelessWidget {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) =>
-                                DetalisTasksWidget(id: taskmodel!.id),
+                                DetalisTasksPage(id: taskmodel!.id),
                           ),
                         );
                       },

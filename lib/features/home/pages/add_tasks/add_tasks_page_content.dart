@@ -118,6 +118,26 @@ class _AddTasksPageContentState extends State<AddTasksPageContent> {
                 const SizedBox(
                   height: 10,
                 ),
+                Row(
+                  children: [
+                    Text('Notifications',
+                        style: GoogleFonts.arimo(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        )),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const Tooltip(
+                      message:
+                          'By adding this task, you will receive 3 notifications: 24 hours before, 1 hour before, and at the chosen time. If you do not want to receive notifications, you can turn them off in the options.',
+                      child: Icon(Icons.help_outline),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 Builder(builder: (context) {
                   if (text == null ||
                       selectedCategoryId == null ||

@@ -30,6 +30,7 @@ class LoginRepository {
     users.doc(FirebaseAuth.instance.currentUser!.uid).set({
       'name': '',
       'profile_image': '',
+      'notificationsEnabled': true,
     });
   }
 

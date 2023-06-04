@@ -8,5 +8,8 @@ class AuthState with _$AuthState {
     @Default(false) bool isCreatingAccount,
     @Default('') String errorMessage,
     @Default('') String message,
+    @Default(true) bool notificationsEnabled,
+    @Default(true) bool isAppOpenedViaNotification,
+    String? taskId,
   }) = _AuthState;
 }

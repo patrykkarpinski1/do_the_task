@@ -21,6 +21,9 @@ mixin _$AuthState {
   bool get isCreatingAccount => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
+  bool get notificationsEnabled => throw _privateConstructorUsedError;
+  bool get isAppOpenedViaNotification => throw _privateConstructorUsedError;
+  String? get taskId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthStateCopyWith<AuthState> get copyWith =>
@@ -37,7 +40,10 @@ abstract class $AuthStateCopyWith<$Res> {
       Status status,
       bool isCreatingAccount,
       String errorMessage,
-      String message});
+      String message,
+      bool notificationsEnabled,
+      bool isAppOpenedViaNotification,
+      String? taskId});
 }
 
 /// @nodoc
@@ -58,6 +64,9 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
     Object? isCreatingAccount = null,
     Object? errorMessage = null,
     Object? message = null,
+    Object? notificationsEnabled = null,
+    Object? isAppOpenedViaNotification = null,
+    Object? taskId = freezed,
   }) {
     return _then(_value.copyWith(
       user: freezed == user
@@ -80,6 +89,18 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      notificationsEnabled: null == notificationsEnabled
+          ? _value.notificationsEnabled
+          : notificationsEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAppOpenedViaNotification: null == isAppOpenedViaNotification
+          ? _value.isAppOpenedViaNotification
+          : isAppOpenedViaNotification // ignore: cast_nullable_to_non_nullable
+              as bool,
+      taskId: freezed == taskId
+          ? _value.taskId
+          : taskId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -96,7 +117,10 @@ abstract class _$$_AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
       Status status,
       bool isCreatingAccount,
       String errorMessage,
-      String message});
+      String message,
+      bool notificationsEnabled,
+      bool isAppOpenedViaNotification,
+      String? taskId});
 }
 
 /// @nodoc
@@ -115,6 +139,9 @@ class __$$_AuthStateCopyWithImpl<$Res>
     Object? isCreatingAccount = null,
     Object? errorMessage = null,
     Object? message = null,
+    Object? notificationsEnabled = null,
+    Object? isAppOpenedViaNotification = null,
+    Object? taskId = freezed,
   }) {
     return _then(_$_AuthState(
       user: freezed == user
@@ -137,6 +164,18 @@ class __$$_AuthStateCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      notificationsEnabled: null == notificationsEnabled
+          ? _value.notificationsEnabled
+          : notificationsEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAppOpenedViaNotification: null == isAppOpenedViaNotification
+          ? _value.isAppOpenedViaNotification
+          : isAppOpenedViaNotification // ignore: cast_nullable_to_non_nullable
+              as bool,
+      taskId: freezed == taskId
+          ? _value.taskId
+          : taskId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -149,7 +188,10 @@ class _$_AuthState implements _AuthState {
       this.status = Status.initial,
       this.isCreatingAccount = false,
       this.errorMessage = '',
-      this.message = ''});
+      this.message = '',
+      this.notificationsEnabled = true,
+      this.isAppOpenedViaNotification = true,
+      this.taskId});
 
   @override
   final User? user;
@@ -165,10 +207,18 @@ class _$_AuthState implements _AuthState {
   @override
   @JsonKey()
   final String message;
+  @override
+  @JsonKey()
+  final bool notificationsEnabled;
+  @override
+  @JsonKey()
+  final bool isAppOpenedViaNotification;
+  @override
+  final String? taskId;
 
   @override
   String toString() {
-    return 'AuthState(user: $user, status: $status, isCreatingAccount: $isCreatingAccount, errorMessage: $errorMessage, message: $message)';
+    return 'AuthState(user: $user, status: $status, isCreatingAccount: $isCreatingAccount, errorMessage: $errorMessage, message: $message, notificationsEnabled: $notificationsEnabled, isAppOpenedViaNotification: $isAppOpenedViaNotification, taskId: $taskId)';
   }
 
   @override
@@ -182,12 +232,27 @@ class _$_AuthState implements _AuthState {
                 other.isCreatingAccount == isCreatingAccount) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.notificationsEnabled, notificationsEnabled) ||
+                other.notificationsEnabled == notificationsEnabled) &&
+            (identical(other.isAppOpenedViaNotification,
+                    isAppOpenedViaNotification) ||
+                other.isAppOpenedViaNotification ==
+                    isAppOpenedViaNotification) &&
+            (identical(other.taskId, taskId) || other.taskId == taskId));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, user, status, isCreatingAccount, errorMessage, message);
+      runtimeType,
+      user,
+      status,
+      isCreatingAccount,
+      errorMessage,
+      message,
+      notificationsEnabled,
+      isAppOpenedViaNotification,
+      taskId);
 
   @JsonKey(ignore: true)
   @override
@@ -202,7 +267,10 @@ abstract class _AuthState implements AuthState {
       final Status status,
       final bool isCreatingAccount,
       final String errorMessage,
-      final String message}) = _$_AuthState;
+      final String message,
+      final bool notificationsEnabled,
+      final bool isAppOpenedViaNotification,
+      final String? taskId}) = _$_AuthState;
 
   @override
   User? get user;
@@ -214,6 +282,12 @@ abstract class _AuthState implements AuthState {
   String get errorMessage;
   @override
   String get message;
+  @override
+  bool get notificationsEnabled;
+  @override
+  bool get isAppOpenedViaNotification;
+  @override
+  String? get taskId;
   @override
   @JsonKey(ignore: true)
   _$$_AuthStateCopyWith<_$_AuthState> get copyWith =>

@@ -1,0 +1,5 @@
+<resources>
+    <!-- Default notification channel ID -->
+    <string name="default_notification_channel_id">default_channel_id</string>
+    <string name="app_name">do_the_task</string>
+</resources>

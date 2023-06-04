@@ -62,16 +62,16 @@ class DeleteAllFilesWidget extends StatelessWidget {
               );
             });
       },
-      leading: const Icon(
+      leading: Icon(
         Icons.delete,
-        color: Color.fromARGB(255, 56, 55, 55),
+        color: Theme.of(context).iconTheme.color,
       ),
       title: Text(
         'DELETE ALL FILES',
         style: GoogleFonts.roboto(
           fontWeight: FontWeight.bold,
           fontSize: 14,
-          color: const Color.fromARGB(255, 56, 55, 55),
+          color: Theme.of(context).textTheme.bodyText1!.color,
         ),
       ),
     );

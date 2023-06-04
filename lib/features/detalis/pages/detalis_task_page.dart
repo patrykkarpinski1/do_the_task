@@ -8,14 +8,15 @@ import '/features/detalis/cubit/detalis_cubit.dart';
 import '/models/task_model.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
-class DetalisTasksWidget extends StatelessWidget {
-  const DetalisTasksWidget({
+class DetalisTasksPage extends StatelessWidget {
+  const DetalisTasksPage({
     this.taskModel,
     required this.id,
     Key? key,
   }) : super(key: key);
   final String id;
   final TaskModel? taskModel;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<DetalisCubit>(

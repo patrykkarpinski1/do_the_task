@@ -3,6 +3,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:do_the_task/app/core/enums.dart';
 import 'package:do_the_task/app/cubit/auth_cubit.dart';
 import 'package:do_the_task/repositories/login_repository.dart';
+import 'package:do_the_task/services/notifi_serivice.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,13 +11,19 @@ import 'package:mocktail/mocktail.dart';
 
 class MockLoginRepository extends Mock implements LoginRepository {}
 
+class MockNotificationService extends Mock implements NotificationService {}
+
 void main() {
   late AuthCubit sut;
   late MockLoginRepository loginRepository;
+  late NotificationService notificationService;
 
   setUp(() {
+    notificationService = MockNotificationService();
     loginRepository = MockLoginRepository();
-    sut = AuthCubit(loginRepository: loginRepository);
+    sut = AuthCubit(
+        loginRepository: loginRepository,
+        notificationService: notificationService);
   });
   group('passwordReset', () {
     const email = 'test@example.com';
@@ -65,11 +72,16 @@ void main() {
       blocTest<AuthCubit, AuthState>(
         'emits success status when password reset is successful',
         build: () => sut,
-        act: (cubit) => cubit.signOut(),
+        act: (cubit) {
+          cubit.signOut();
+          cubit.setIsAppOpenedViaNotification(true);
+        },
         expect: () => [
+          const AuthState(isAppOpenedViaNotification: true),
           const AuthState(
-            status: Status.success,
-          ),
+              status: Status.initial, isAppOpenedViaNotification: false),
+          const AuthState(
+              status: Status.success, isAppOpenedViaNotification: false),
         ],
       );
     });
@@ -390,5 +402,98 @@ void main() {
         ],
       );
     });
+  });
+  group('enableNotifications', () {
+    group('success', () {
+      setUp(() {
+        when(() => notificationService.enableFirebaseNotifications())
+            .thenAnswer((_) async {});
+      });
+
+      blocTest<AuthCubit, AuthState>(
+        'emits AuthState with status Status.authenticated when enable notifications successfully',
+        build: () => sut,
+        act: (cubit) => cubit.enableNotifications(),
+        expect: () => [],
+      );
+    });
+
+    group('failure', () {
+      setUp(() {
+        when(() => notificationService.enableFirebaseNotifications()).thenThrow(
+          Exception('test-exception-error'),
+        );
+      });
+
+      blocTest<AuthCubit, AuthState>(
+        'emits AuthState with status Status.error and error message when enable notifications fails',
+        build: () => sut,
+        act: (cubit) => cubit.enableNotifications(),
+        expect: () => [
+          const AuthState(
+            status: Status.error,
+            errorMessage: 'Exception: test-exception-error',
+          ),
+        ],
+      );
+    });
+  });
+  group('disableNotifications', () {
+    group('success', () {
+      setUp(() {
+        when(() => notificationService.disableFirebaseNotifications())
+            .thenAnswer((_) async {});
+      });
+
+      blocTest<AuthCubit, AuthState>(
+        'emits AuthState with status Status.authenticated when enable notifications successfully',
+        build: () => sut,
+        act: (cubit) => cubit.disableNotifications(),
+        expect: () => [],
+      );
+    });
+
+    group('failure', () {
+      setUp(() {
+        when(() => notificationService.disableFirebaseNotifications())
+            .thenThrow(
+          Exception('test-exception-error'),
+        );
+      });
+
+      blocTest<AuthCubit, AuthState>(
+        'emits AuthState with status Status.error and error message when enable notifications fails',
+        build: () => sut,
+        act: (cubit) => cubit.disableNotifications(),
+        expect: () => [
+          const AuthState(
+            status: Status.error,
+            errorMessage: 'Exception: test-exception-error',
+          ),
+        ],
+      );
+    });
+  });
+  group('setTaskId', () {
+    const testTaskId = '123';
+
+    blocTest<AuthCubit, AuthState>(
+      'emits state with updated taskId when setTaskId is called',
+      build: () => sut,
+      act: (cubit) => cubit.setTaskId(testTaskId),
+      expect: () => [
+        const AuthState(taskId: testTaskId),
+      ],
+    );
+  });
+  group('setIsAppOpenedViaNotification', () {
+    blocTest<AuthCubit, AuthState>(
+      'emits state with updated isAppOpenedViaNotification when called',
+      build: () => sut,
+      act: (cubit) => cubit.setIsAppOpenedViaNotification(true),
+      expect: () => [
+        const AuthState(isAppOpenedViaNotification: true),
+      ],
+    );
   });
 }

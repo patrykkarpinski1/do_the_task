@@ -1,3 +1,4 @@
+import 'package:do_the_task/services/notifi_serivice.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,12 +11,26 @@ import '../../../../../widgets/category_page_widgets/category_widget.dart';
 import '../../../../../widgets/category_page_widgets/drawer_menu_widget.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
-class CategoryPageContent extends StatelessWidget {
+class CategoryPageContent extends StatefulWidget {
   const CategoryPageContent({
     required this.user,
+    this.notificationService,
     Key? key,
   }) : super(key: key);
   final User? user;
+
+  final NotificationService? notificationService;
+
+  @override
+  State<CategoryPageContent> createState() => _CategoryPageContentState();
+}
+
+class _CategoryPageContentState extends State<CategoryPageContent> {
+  @override
+  void initState() {
+    super.initState();
+    widget.notificationService?.setupPushNotifications();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +99,7 @@ class CategoryPageContent extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (_) => MyAccountPage(
-                          user: user!,
+                          user: widget.user!,
                         ),
                       ),
                     );

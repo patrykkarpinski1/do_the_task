@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:do_the_task/services/notifi_serivice.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,8 +13,10 @@ part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit({required this.loginRepository}) : super(const AuthState());
+  AuthCubit({required this.loginRepository, required this.notificationService})
+      : super(const AuthState());
   final LoginRepository loginRepository;
+  final NotificationService notificationService;
 
   Future<void> passwordReset({
     required String email,
@@ -45,6 +49,7 @@ class AuthCubit extends Cubit<AuthState> {
       users.doc(FirebaseAuth.instance.currentUser!.uid).set({
         'name': googleUser!.displayName,
         'profile_image': googleUser.photoUrl,
+        'notificationsEnabled': true,
       });
     });
   }
@@ -52,8 +57,10 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> signOut() async {
     try {
       await loginRepository.signOut();
+      setIsAppOpenedViaNotification(false);
       emit(
-        state.copyWith(status: Status.success),
+        state.copyWith(
+            status: Status.success, isAppOpenedViaNotification: false),
       );
     } on FirebaseAuthException catch (error) {
       emit(state.copyWith(
@@ -185,6 +192,32 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> enableNotifications() async {
+    try {
+      notificationService.enableFirebaseNotifications();
+    } catch (error) {
+      emit(
+          state.copyWith(status: Status.error, errorMessage: error.toString()));
+    }
+  }
+
+  Future<void> disableNotifications() async {
+    try {
+      notificationService.disableFirebaseNotifications();
+    } catch (error) {
+      emit(
+          state.copyWith(status: Status.error, errorMessage: error.toString()));
+    }
+  }
+
+  Future<void> setTaskId(String taskId) async {
+    emit(state.copyWith(taskId: taskId));
+  }
+
+  Future<void> setIsAppOpenedViaNotification(bool value) async {
+    emit(state.copyWith(isAppOpenedViaNotification: value));
+  }
+
   StreamSubscription? _streamSubscription;
 
   Future<void> start() async {
@@ -197,6 +230,14 @@ class AuthCubit extends Cubit<AuthState> {
           isCreatingAccount: false,
         ),
       );
+      final initialMessage =
+          await FirebaseMessaging.instance.getInitialMessage();
+      if (initialMessage != null) {
+        emit(state.copyWith(
+          taskId: initialMessage.data['task_id'],
+          isAppOpenedViaNotification: true,
+        ));
+      }
 
       _streamSubscription = FirebaseAuth.instance.userChanges().listen((user) {
         emit(
@@ -205,6 +246,17 @@ class AuthCubit extends Cubit<AuthState> {
             user: user,
           ),
         );
+        if (user != null) {
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .snapshots()
+              .listen((snapshot) {
+            final notificationsEnabled =
+                snapshot.data()?['notificationsEnabled'] ?? false;
+            emit(state.copyWith(notificationsEnabled: notificationsEnabled));
+          });
+        }
       });
     } on FirebaseAuthException catch (error) {
       emit(state.copyWith(
