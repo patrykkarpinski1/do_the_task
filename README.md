@@ -24,7 +24,7 @@ The updated application enabling the use of notifications is already ready and w
 - Units tests
 
 ### App preview
-![ezgif-4-4f64a256d0](https://user-images.githubusercontent.com/119192369/232629486-a51e6ebc-6fdb-483c-aca0-0128624ea693.gif)
+![ezgif com-gif-maker](https://github.com/patrykkarpinski1/do_the_task/assets/119192369/7583bb83-c9c6-485d-b31d-1bd49b04e49b)
 
 #### images
 - <a href="https://www.flaticon.com/free-icons/real-estate" title="real estate icons">Real estate icons created by Freepik - Flaticon</a>
